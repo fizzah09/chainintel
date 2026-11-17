@@ -1,0 +1,143 @@
+{
+  "trained": "2026-11-16",
+  "dataset": {
+    "rows": 9816,
+    "positives": 2179,
+    "negatives": 7637,
+    "test_rows": 1964
+  },
+  "model": {
+    "type": "GradientBoostingClassifier",
+    "n_estimators": 200,
+    "max_depth": 3,
+    "learning_rate": 0.1,
+    "subsample": 0.8,
+    "random_state": 42
+  },
+  "test": {
+    "roc_auc": 0.9853,
+    "pr_auc": 0.9624,
+    "brier": 0.0338,
+    "at_0_5": {
+      "threshold": 0.5,
+      "precision": 0.9407,
+      "recall": 0.8739,
+      "f1": 0.9061,
+      "confusion": {
+        "tp": 381,
+        "fp": 24,
+        "tn": 1504,
+        "fn": 55
+      }
+    },
+    "best_f1": {
+      "threshold": 0.5,
+      "precision": 0.9407,
+      "recall": 0.8739,
+      "f1": 0.9061,
+      "confusion": {
+        "tp": 381,
+        "fp": 24,
+        "tn": 1504,
+        "fn": 55
+      }
+    }
+  },
+  "cv_roc_auc": {
+    "mean": 0.9885,
+    "std": 0.0014,
+    "folds": 5
+  },
+  "baseline_logistic_regression": {
+    "roc_auc": 0.7943,
+    "pr_auc": 0.5012
+  },
+  "feature_importance": [
+    {
+      "feature": "total_ether_received",
+      "label": "Total ETH received",
+      "importance": 0.2661
+    },
+    {
+      "feature": "time_diff_first_last_min",
+      "label": "Wallet active span (minutes)",
+      "importance": 0.2143
+    },
+    {
+      "feature": "unique_received_from",
+      "label": "Unique senders",
+      "importance": 0.0898
+    },
+    {
+      "feature": "max_value_received",
+      "label": "Largest amount received (ETH)",
+      "importance": 0.082
+    },
+    {
+      "feature": "erc20_total_tnxs",
+      "label": "Token (ERC-20) transfers",
+      "importance": 0.0656
+    },
+    {
+      "feature": "avg_min_between_received",
+      "label": "Average minutes between incoming transactions",
+      "importance": 0.0571
+    },
+    {
+      "feature": "min_value_sent",
+      "label": "Smallest amount sent (ETH)",
+      "importance": 0.0532
+    },
+    {
+      "feature": "total_ether_balance",
+      "label": "ETH balance (received - sent)",
+      "importance": 0.041
+    },
+    {
+      "feature": "received_tnx",
+      "label": "Incoming transactions",
+      "importance": 0.0352
+    },
+    {
+      "feature": "avg_value_received",
+      "label": "Average amount received (ETH)",
+      "importance": 0.0337
+    },
+    {
+      "feature": "min_value_received",
+      "label": "Smallest amount received (ETH)",
+      "importance": 0.0244
+    },
+    {
+      "feature": "avg_min_between_sent",
+      "label": "Average minutes between outgoing transactions",
+      "importance": 0.0114
+    },
+    {
+      "feature": "sent_tnx",
+      "label": "Outgoing transactions",
+      "importance": 0.0095
+    },
+    {
+      "feature": "avg_value_sent",
+      "label": "Average amount sent (ETH)",
+      "importance": 0.0065
+    },
+    {
+      "feature": "max_value_sent",
+      "label": "Largest amount sent (ETH)",
+      "importance": 0.0053
+    },
+    {
+      "feature": "total_ether_sent",
+      "label": "Total ETH sent",
+      "importance": 0.0028
+    },
+    {
+      "feature": "unique_sent_to",
+      "label": "Unique recipients",
+      "importance": 0.0021
+    }
+  ],
+  "export_parity_max_abs_diff": 1.4418854998865527e-10
+}

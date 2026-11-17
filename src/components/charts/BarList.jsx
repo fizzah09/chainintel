@@ -1,0 +1,2 @@
+
+export const HBars = ({ items }) => { const mx = Math.max(...items.map((i) => i[1]), 1); return <div>{items.map(([l, v, c]) => <div key={l} style={{ display: 'grid', gridTemplateColumns: '132px 1fr 44px', gap: 12, alignItems: 'center', margin: '9px 0' }}><span className="mu">{l}</span><div className="bar"><i style={{ width: `${(v / mx) * 100}%`, background: c }} /></div><b style={{ textAlign: 'right' }}>{v}</b></div>)}</div>; };

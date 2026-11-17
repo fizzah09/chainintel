@@ -1,0 +1,93 @@
+:root {
+    /* Brand */
+    --navy: #0B1F3A;
+    --navy2: #13294B;
+    --navy3: #1B3560;
+    --pri: #1769E0;
+    --prid: #124FB5;
+    --pril: #E8F0FD;
+
+    /* Surfaces */
+    --bg: #F5F8FC;
+    --card: #FFFFFF;
+    --tx: #0F172A;
+    --mu: #5B6B82;
+    --ln: #E2E8F0;
+    --ln2: #CBD5E1;
+
+    /* Risk tiers */
+    --tier-low: #16A34A;
+    --tier-low-text: #166534;
+    --tier-low-bg: #DCFCE7;
+    --tier-moderate: #F59E0B;
+    --tier-moderate-text: #92400E;
+    --tier-moderate-bg: #FEF3C7;
+    --tier-high: #EA580C;
+    --tier-high-text: #9A3412;
+    --tier-high-bg: #FFEDD5;
+    --tier-critical: #DC2626;
+    --tier-critical-text: #991B1B;
+    --tier-critical-bg: #FEE2E2;
+    --tier-unknown: #64748B;
+    --tier-unknown-text: #475569;
+    --tier-unknown-bg: #E2E8F0;
+
+    /* Chips */
+    --chip-default-text: #334155;
+    --chip-default-bg: #EEF2F7;
+    --chip-ok-text: #166534;
+    --chip-ok-bg: #DCFCE7;
+    --chip-warn-text: #92400E;
+    --chip-warn-bg: #FEF3C7;
+    --chip-bad-text: #991B1B;
+    --chip-bad-bg: #FEE2E2;
+    --chip-blue-text: #124FB5;
+    --chip-blue-bg: #E8F0FD;
+    --chip-gray-text: #475569;
+    --chip-gray-bg: #E2E8F0;
+    --chip-pur-text: #5B21B6;
+    --chip-pur-bg: #EDE9FE;
+
+    /* Banners */
+    --banner-warn-bg: #FFFBEB;
+    --banner-warn-border: #FDE68A;
+    --banner-warn-text: #78350F;
+    --banner-info-bg: #EFF6FF;
+    --banner-info-border: #BFDBFE;
+    --banner-info-text: #1E3A8A;
+    --banner-error-bg: #FEF2F2;
+    --banner-error-border: #FECACA;
+    --banner-error-text: #7F1D1D;
+    --banner-success-bg: #F0FDF4;
+    --banner-success-border: #BBF7D0;
+    --banner-success-text: #14532D;
+    --banner-neutral-bg: #F1F5F9;
+    --banner-neutral-border: #CBD5E1;
+    --banner-neutral-text: #334155;
+
+    /* Sidebar */
+    --sb-text: #C9D6EA;
+    --sb-group: #7E94B6;
+    --sb-sub: #93A8C8;
+    --sb-border: #1E3763;
+    --sb-count-bg: #25416F;
+    --sb-count-text: #DCE8FA;
+
+    /* Neutrals */
+    --th-bg: #F8FAFC;
+    --row-divider: #EDF1F6;
+    --row-hover: #FAFCFF;
+    --btn-hover: #F1F5F9;
+    --placeholder: #7A8AA0;
+    --disabled-bg: #F1F5F9;
+    --progress-track: #E8EDF4;
+    --skeleton-a: #EDF1F6;
+    --skeleton-b: #F6F8FB;
+    --graph-bg: #F8FAFD;
+    --graph-dot: #DCE4EE;
+    --graph-edge: #7C8CA3;
+    --input-error-ring: #FEE2E2;
+    --danger-border: #FCA5A5;
+    --danger-text: #B91C1C;
+    --scrim: rgba(15, 23, 42, 0.45);
+}

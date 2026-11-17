@@ -1,0 +1,45 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+ml/data/*
+!ml/data/.gitkeep
+__pycache__/
+.pytest_cache/
+.venv/
+
+# Secrets: never commit real keys
+.env
+**/.env
+!.env.example
+
+# Contracts build output
+contracts/artifacts
+contracts/cache
+
+# Legacy Node reference code
+backend/legacy/**/node_modules
+backend/legacy/**/.ponder
+
+# Model store (content-addressed artefacts): runtime data; back it up, do not commit
+backend/model_store/

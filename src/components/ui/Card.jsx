@@ -1,0 +1,1 @@
+export const Card = ({ title, sub, act: a, children, style, cls = '' }) => <div className={`card ${cls}`} style={style}>{title && <div className="ct-h"><div><h3>{title}</h3>{sub && <p>{sub}</p>}</div><div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>{a}</div></div>}{children}</div>;

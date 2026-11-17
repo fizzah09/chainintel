@@ -1,0 +1,2 @@
+
+export const Person = ({ n, sub }) => { if (!n) return <span className="mu">Unassigned</span>; const ini = n.replace('Dr. ', '').split(' ').slice(0, 2).map((x) => x[0]).join(''); return <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}><span className="av" style={{ width: 26, height: 26, fontSize: 10.5, background: '#DCE6F5', color: '#1B3560' }}>{ini}</span><div style={{ lineHeight: 1.25 }}><div style={{ fontWeight: 550 }}>{n}</div>{sub && <div className="mu" style={{ fontSize: 11.5 }}>{sub}</div>}</div></div>; };
