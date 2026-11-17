@@ -41,12 +41,13 @@ def synced(db):
 def test_snapshot_matches_engine_features_and_model_order(db):
     synced(db)
     row = feature_store.build(db, ALICE, W, 1, SETTINGS, as_of=T0)
-    assert set(row.features) == set(load_model().data["features"])  # same names as the model (JSONB sorts keys)
+    assert set(load_model().data["features"]) <= set(row.features)  # every model feature is present (JSONB sorts keys)
+    assert {"w30_tx_count", "rapid_pass_through_share", "fan_out_24h_max"} <= set(row.features)  # v2 additions
     f = row.features
     assert (f["received_tnx"], f["sent_tnx"]) == (1, 1)
     assert (f["total_ether_received"], f["total_ether_sent"], f["total_ether_balance"]) == (2.0, 1.0, 1.0)
     assert row.transfers == 2 and row.data_quality["native_transfers"] == 2 and not row.data_quality["empty"]
-    assert row.feature_set == feature_store.FEATURE_SET and row.created_by == "alice@bank-a"
+    assert row.feature_set == "wallet-features-v2" and row.created_by == "alice@bank-a"
 
 
 def test_snapshot_is_reproducible_from_stored_transfers(db):
@@ -54,7 +55,7 @@ def test_snapshot_is_reproducible_from_stored_transfers(db):
     row = feature_store.build(db, ALICE, W, 1, SETTINGS, as_of=T0)
     assert feature_store.verify(db, ALICE, row, SETTINGS)
     # A tampered copy (the stored row itself is append-only) must fail verification.
-    tampered = FeatureSnapshot(address=row.address, chain_id=row.chain_id, as_of=row.as_of,
+    tampered = FeatureSnapshot(address=row.address, chain_id=row.chain_id, as_of=row.as_of, feature_set=row.feature_set,
                                features={**row.features, "sent_tnx": 99.0}, feature_sha256=row.feature_sha256)
     assert not feature_store.verify(db, ALICE, tampered, SETTINGS)
 
@@ -85,6 +86,17 @@ def test_latest_returns_newest_and_is_tenant_scoped(db):
     assert feature_store.latest(db, ALICE, W, 1).id == second.id
     assert feature_store.latest(db, BOB_OTHER_TENANT, W, 1) is None
     assert db.get(FeatureSnapshot, first.id) is not None  # history kept
+
+
+def test_v1_snapshots_still_verify_after_v2_ships(db):
+    synced(db)
+    old = FeatureSnapshot(tenant_id=ALICE.tenant_id, chain_id=1, address=W, as_of=T0, created_at=T0,
+                          created_by="old", feature_set=feature_store.FEATURE_SET_V1, transfers=0,
+                          features={}, feature_sha256="x", data_quality={})
+    vector, _c, _q = feature_store.compute_vector(db, W, 1, T0, SETTINGS, feature_set=feature_store.FEATURE_SET_V1)
+    from app.modules.m4_risk.service import sha256
+    old.features, old.feature_sha256 = vector, sha256(vector)
+    assert set(vector) == set(load_model().data["features"]) and feature_store.verify(db, ALICE, old, SETTINGS)
 
 
 def test_wallet_never_synced_gives_empty_vector_not_an_error(db):

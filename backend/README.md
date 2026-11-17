@@ -115,6 +115,8 @@ Every assessment is appended to `risk_assessments` with: knowledge time (`as_of`
 
 `POST /api/v1/chains/{chain_id}/addresses/{address}/features` appends a snapshot of the 17 features the illicit model reads (roles: compliance_manager, model_owner). `GET …/features/latest` returns the newest one. Snapshots are append-only (`feature_snapshots`), built only from stored transfers, and `feature_store.verify` recomputes one to prove it. Code: `app/modules/m4_risk/feature_store.py`. EVM wallets only.
 
+Feature set `wallet-features-v2` (default for new builds, 51 features): the 17 model features plus 30/90/180/365-day windows (counts, counterparties, USD volume, pass-through ratio), rapid pass-through share (USD forwarded within 24 hours), fan-out and fan-in bursts (distinct counterparties in any 24 hours), round-amount and just-under-limit shares, exposure to labelled risky counterparties, and age and recency. USD features skip unpriced transactions and report the share left out. Pure logic: `app/modules/m4_risk/features_v2.py`. Old `wallet-features-v1` snapshots still verify.
+
 ## M4 API
 
 | Method | Path | What it does |

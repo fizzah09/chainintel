@@ -20,11 +20,13 @@ from app.modules.m4_risk.engine.classifier import load_model
 from app.modules.m4_risk.engine.config import RULESET_V1, RuleSet
 from app.modules.m4_risk.engine.features import compute_features
 from app.modules.m4_risk.inputs import _wallet_view
+from app.modules.m4_risk import features_v2
 from app.modules.m4_risk.models import FeatureSnapshot
 from app.modules.m4_risk.service import sha256
 from app.modules.m3_data.providers.base import normalize_address
 
-FEATURE_SET = "wallet-features-v1"
+FEATURE_SET_V1 = "wallet-features-v1"  # the 17 model features only
+FEATURE_SET = FEATURE_SET_V2 = features_v2.FEATURE_SET_V2  # v1 features plus the R4 set (default for new builds)
 
 # What each feature means, for analysts. Names must match the model artifact (checked on every build).
 DESCRIPTIONS: dict[str, str] = {
@@ -76,13 +78,14 @@ def model_features() -> list[str]:
 
 
 def compute_vector(
-    db: Session, address: str, chain_id: int, as_of: datetime, settings: Settings, rules: RuleSet = RULESET_V1
+    db: Session, address: str, chain_id: int, as_of: datetime, settings: Settings, rules: RuleSet = RULESET_V1,
+    feature_set: str = FEATURE_SET_V2,
 ) -> tuple[dict[str, float], int, dict]:
-    """(features in model order, usable transfer count, data quality) from transfers known at `as_of`."""
+    """(features, usable transfer count, data quality) from transfers known at `as_of`, for one feature set."""
+    if feature_set not in (FEATURE_SET_V1, FEATURE_SET_V2):
+        raise ValueError(f"unknown feature set {feature_set!r}")
     me = normalize_address(address)
-    _wallet, mine, _priced, txs, _labels = _wallet_view(
-        db, me, chain_id, as_of, as_of, None, rules, settings
-    )
+    _wallet, mine, _priced, txs, labels = _wallet_view(db, me, chain_id, as_of, as_of, None, rules, settings)
     raw = compute_features(txs)
     names = model_features()
     vector = {n: float(raw[n]) for n in names}
@@ -94,7 +97,15 @@ def compute_vector(
         "empty": len(txs) == 0,
         "no_native_activity": native == 0,
     }
+    if feature_set == FEATURE_SET_V2:
+        extra, v2_quality = features_v2.v2_features(txs, labels, to_iso_at(as_of), set(rules.risk_cats))
+        vector = {**vector, **extra}
+        quality = {**quality, **v2_quality}
     return vector, len(mine), quality
+
+
+def to_iso_at(at: datetime) -> str:
+    return at.astimezone(UTC).isoformat().replace("+00:00", "Z")
 
 
 def build(
@@ -103,7 +114,7 @@ def build(
 ) -> FeatureSnapshot:
     """Append one snapshot. Never updates or deletes an earlier one."""
     at = as_of or _now()
-    vector, count, quality = compute_vector(db, address, chain_id, at, settings, rules)
+    vector, count, quality = compute_vector(db, address, chain_id, at, settings, rules, FEATURE_SET_V2)
     row = FeatureSnapshot(
         tenant_id=principal.tenant_id, chain_id=chain_id, address=normalize_address(address), as_of=at,
         created_at=_now(), created_by=principal.user_id, feature_set=FEATURE_SET, transfers=count,
@@ -129,7 +140,9 @@ def latest(db: Session, principal: Principal, address: str, chain_id: int) -> Fe
 
 def verify(db: Session, principal: Principal, snapshot: FeatureSnapshot, settings: Settings) -> bool:
     """Recompute the vector as of the stored knowledge time and compare hashes."""
-    vector, _count, _quality = compute_vector(db, snapshot.address, snapshot.chain_id, snapshot.as_of, settings)
+    vector, _count, _quality = compute_vector(
+        db, snapshot.address, snapshot.chain_id, snapshot.as_of, settings, feature_set=snapshot.feature_set
+    )
     return sha256(vector) == snapshot.feature_sha256 and vector == snapshot.features
 
 
