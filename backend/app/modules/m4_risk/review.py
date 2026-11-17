@@ -4,14 +4,11 @@ them. These flags route the assessment to manual review and say why, in plain la
 from app.core.config import Settings
 from app.modules.m4_risk.engine.config import RuleSet
 
-_RANK = {"low": 0, "mod": 1, "high": 2, "crit": 3}
-
-
 def review_reasons(report: dict, data_quality: dict, model_status: str, rules: RuleSet, settings: Settings) -> list[str]:
     reasons: list[str] = []
     p = report["ml"]["probability"]
     pct = round(p * 100)
-    rules_high = _RANK[report["tier"]] >= _RANK["high"]
+    rules_high = rules.band_rank(report["tier"]) >= rules.band_rank("high")
     ml_high = p >= 0.5
     if ml_high and not rules_high:
         reasons.append(

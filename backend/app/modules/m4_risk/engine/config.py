@@ -21,13 +21,15 @@ class RuleSet:
     hop_decay: tuple[float, ...]  # multiplier by distance; index 0 = direct counterparty
     max_hops: int
     full_amount_usd: float  # exposure at which a factor reaches full points (never below 40%)
-    tiers: tuple[int, int, int]  # lower bounds of Moderate, High, Critical
+    tiers: tuple[int, ...]  # lower bound of each band above the lowest: Moderate, High, Critical (rule set 1-3)
     sanctions_floor: bool  # direct sanctions exposure always lands in Critical
     baseline_days: int
     recent_days: int
     # Reference ETH price when a transaction carries no USD value. None (rule set 2+): no guess; an
     # unpriced transfer counts as $0 in totals and is reported in the data-quality section.
     eth_usd: float | None
+    # Band names from lowest to highest; len(bands) == len(tiers) + 1. Rule set 4 adds "elev" (Elevated).
+    bands: tuple[str, ...] = ("low", "mod", "high", "crit")
     # Label category -> exposure factor. Categories not listed carry no exposure risk.
     risk_cats: Mapping[str, str] = field(default_factory=dict)
     # Label categories where exposure tracing stops (rule set 2+). A large service such as an exchange
@@ -35,10 +37,23 @@ class RuleSet:
     terminal_cats: frozenset[str] = frozenset()
     # Rule set 3+: score the wallet's own risk label (a sanctioned wallet with no counterparties is not 0).
     score_own_label: bool = False
+    # Rule set 4: exposure older than this counts for less (half every this many days, never below half);
+    # None = no decay.
+    decay_half_life_days: float | None = None
+    # Rule set 4: exposure is weighted by its share of the wallet's volume (a 0.1% trickle counts for less).
+    share_weighting: bool = False
+    # Rule set 4: each FATF red flag (pass-through, fan-out, just-under-limit, round amounts) is a factor.
+    fatf_rules: bool = False
+
+    def bound(self, band: str) -> int:
+        """Lowest score in `band` (the Moderate bound, High bound, Critical bound ...)."""
+        return self.tiers[self.bands.index(band) - 1]
+
+    def band_rank(self, band: str) -> int:
+        return self.bands.index(band)
 
     def tier_for(self, score: float) -> str:
-        t = self.tiers
-        return "low" if score < t[0] else "mod" if score < t[1] else "high" if score < t[2] else "crit"
+        return self.bands[sum(1 for b in self.tiers if score >= b)]
 
     def as_dict(self) -> dict:
         """JS-shaped config, as exported by the prototype (used to prove rule set 1 matches)."""
@@ -55,7 +70,7 @@ class RuleSet:
         }
 
 
-TIER_NAME = MappingProxyType({"low": "Low", "mod": "Moderate", "high": "High", "crit": "Critical"})
+TIER_NAME = MappingProxyType({"low": "Low", "mod": "Moderate", "elev": "Elevated", "high": "High", "crit": "Critical"})
 CAT_NAME = MappingProxyType(
     {
         "sanctions": "Sanctions exposure",
@@ -66,9 +81,14 @@ CAT_NAME = MappingProxyType(
         "counterparties": "Suspicious counterparties",
         "crossChain": "Cross-chain movement",
         "newWallet": "New wallet, high value",
+        "passThrough": "Rapid pass-through (FATF layering)",
+        "fanBurst": "Fan-out / fan-in burst",
+        "structuring": "Amounts just under reporting limits",
+        "roundAmounts": "Round-amount transfers",
     }
 )
 EXPOSURE_FACTORS = ("sanctions", "mixer", "ransomware", "scam")
+FATF_FACTORS = ("passThrough", "fanBurst", "structuring", "roundAmounts")
 
 RULESET_V1 = RuleSet(
     version=1,
@@ -97,4 +117,20 @@ RULESET_V2 = replace(
     terminal_cats=frozenset({"exchange", "bridge", "defi", "service"}),
 )
 RULESET_V3 = replace(RULESET_V2, version=3, score_own_label=True)
-RULESETS = MappingProxyType({1: RULESET_V1, 2: RULESET_V2, 3: RULESET_V3})
+# Rule set 4: five bands, decay and share-weighted exposure, FATF red flags as rules. Points for the
+# original factors are unchanged; the four FATF factors are new. Adopt only after a back-test against
+# rule set 3 on reviewed cases (backtest.py): a new version never replaces an old one.
+RULESET_V4 = replace(
+    RULESET_V3,
+    version=4,
+    points=MappingProxyType({
+        **RULESET_V3.points,
+        "passThrough": 6, "fanBurst": 4, "structuring": 4, "roundAmounts": 2,
+    }),
+    tiers=(20, 40, 60, 80),
+    bands=("low", "mod", "elev", "high", "crit"),
+    decay_half_life_days=365,
+    share_weighting=True,
+    fatf_rules=True,
+)
+RULESETS = MappingProxyType({1: RULESET_V1, 2: RULESET_V2, 3: RULESET_V3, 4: RULESET_V4})

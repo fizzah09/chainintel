@@ -4,6 +4,7 @@ Every point is traceable: score -> factor -> calculation -> transaction -> addre
 """
 
 from app.modules.m4_risk.engine.config import CAT_NAME, EXPOSURE_FACTORS, LabelLookup, RuleSet
+from app.modules.m4_risk.engine.fatf import exposure_weight, fatf_factors
 from app.modules.m4_risk.engine.jscompat import DAY_MS, en_us, js_round, js_str, js_sum, parse_ms, r1, to_fixed
 
 
@@ -20,6 +21,7 @@ def score_rules(
     labels: LabelLookup, rules: RuleSet, address: str | None = None,
 ) -> dict:
     P = rules.points
+    total_usd = facts["inflowUsd"] + facts["outflowUsd"]
     factors: list[dict] = []
     # Rule set 3+: the wallet's own risk label counts as the strongest possible exposure of its kind.
     own = labels(address) if rules.score_own_label and address else None
@@ -48,7 +50,9 @@ def score_rules(
         for e in items:
             hop = rules.hop_decay[e["hops"] - 1] if e["hops"] - 1 < len(rules.hop_decay) else 0
             amt = _amount_factor(e["usd"], rules)
-            scored.append({"e": e, "pts": P[cat] * hop * amt, "hop": hop, "amt": amt})
+            decay, share, weight = exposure_weight(e, rules, total_usd, as_of)
+            scored.append({"e": e, "pts": P[cat] * hop * amt * weight, "hop": hop, "amt": amt,
+                           "decay": decay, "share": share})
         scored.sort(key=lambda s: -s["pts"])
         best = scored[0]
         pts = r1(best["pts"])
@@ -62,7 +66,10 @@ def score_rules(
                 "severity": _severity(pts, P[cat]),
                 "summary": f"{be['relationship']} exposure of ${en_us(be['usd'])} to {be['name'] or 'a labelled address'}",
                 "calc": f"{js_str(P[cat])} max × {js_str(best['hop'])} ({be['relationship'].lower()}) × "
-                f"{to_fixed(best['amt'], 2)} (amount) = {js_str(pts)}",
+                f"{to_fixed(best['amt'], 2)} (amount)"
+                + (f" × {to_fixed(best['decay'], 2)} (age) × {to_fixed(best['share'], 2)} (share of volume)"
+                   if rules.decay_half_life_days or rules.share_weighting else "")
+                + f" = {js_str(pts)}",
                 "evidence": [
                     {
                         "counterparty": e["address"], "relationship": e["relationship"], "hops": e["hops"], "usd": e["usd"],
@@ -88,6 +95,8 @@ def score_rules(
                 ],
             }
         )
+
+    factors.extend(fatf_factors(txs, labels, as_of, rules))
 
     risky = len(counterparties["risky"])
     if risky:
@@ -145,11 +154,12 @@ def score_rules(
     factors.sort(key=lambda f: -f["points"])
     score = min(100, js_round(js_sum(f["points"] for f in factors)))
     floor = None
-    if rules.sanctions_floor and score < rules.tiers[2]:
+    crit = rules.bound("crit")
+    if rules.sanctions_floor and score < crit:
         if own_cat == "sanctions":
-            floor = f"Raised from {score} to {rules.tiers[2]}: a wallet on a sanctions list is always Critical."
-            score = rules.tiers[2]
+            floor = f"Raised from {score} to {crit}: a wallet on a sanctions list is always Critical."
+            score = crit
         elif any(e["cat"] == "sanctions" and e["hops"] == 1 for e in exposure):
-            floor = f"Raised from {score} to {rules.tiers[2]}: direct sanctions exposure is always Critical."
-            score = rules.tiers[2]
+            floor = f"Raised from {score} to {crit}: direct sanctions exposure is always Critical."
+            score = crit
     return {"score": score, "tier": rules.tier_for(score), "factors": factors, "floor": floor, "version": rules.version}

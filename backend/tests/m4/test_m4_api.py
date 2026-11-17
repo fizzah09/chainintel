@@ -75,7 +75,7 @@ def test_assess_read_reproduce_and_verify_over_http(api):
     assert c.post(f"/api/v1/chains/1/addresses/{W}/assessments", json={"ruleset_version": 9}).status_code == 409
 
     rs = {x["version"]: x for x in c.get("/api/v1/rulesets").json()}
-    assert sorted(rs) == [1, 2, 3] and rs[3]["default"] and rs[3]["score_own_label"] and rs[1]["eth_usd"] == 3000
+    assert sorted(rs) == [1, 2, 3, 4] and rs[3]["default"] and rs[3]["score_own_label"] and rs[1]["eth_usd"] == 3000
 
 
 @pytest.mark.integration

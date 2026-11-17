@@ -59,7 +59,7 @@ def forecast_scores(
     end = forecast[-1]
     delta = end["score"] - ys[-1]
     # Chance the score is High or above in about 30 days (normal approximation).
-    z = (rules.tiers[1] - (level + damp(horizon) * trend)) / (sigma * math.sqrt(horizon))
+    z = (rules.bound("high") - (level + damp(horizon) * trend)) / (sigma * math.sqrt(horizon))
     return {
         "history": history,
         "forecast": forecast,

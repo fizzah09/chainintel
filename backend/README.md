@@ -117,6 +117,10 @@ Every assessment is appended to `risk_assessments` with: knowledge time (`as_of`
 
 Feature set `wallet-features-v2` (default for new builds, 51 features): the 17 model features plus 30/90/180/365-day windows (counts, counterparties, USD volume, pass-through ratio), rapid pass-through share (USD forwarded within 24 hours), fan-out and fan-in bursts (distinct counterparties in any 24 hours), round-amount and just-under-limit shares, exposure to labelled risky counterparties, and age and recency. USD features skip unpriced transactions and report the share left out. Pure logic: `app/modules/m4_risk/features_v2.py`. Old `wallet-features-v1` snapshots still verify.
 
+## Rule set 4 (R5)
+
+Rule set 4 (`RULESET_V4`) adds five bands (Low, Moderate, Elevated, High, Critical; boundaries 20, 40, 60, 80), exposure that decays with age (half every 365 days, never below half) and is weighted by its share of the wallet's volume, and four FATF red-flag factors: rapid pass-through, fan-out/fan-in bursts, amounts just under reporting limits, and round amounts (`engine/fatf.py`). Rule sets 1–3 are unchanged. The default stays at rule set 3 until a back-test on reviewed cases shows rule set 4 is better (`POST …/backtests` with `ruleset_version: 4`).
+
 ## M4 API
 
 | Method | Path | What it does |

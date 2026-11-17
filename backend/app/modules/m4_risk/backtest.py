@@ -98,7 +98,7 @@ def _cutoff(rows: list[dict], key: str, threshold: float) -> dict:
 
 
 def summarise(rows: list[dict], rules: RuleSet, excluded: int) -> dict:
-    t = rules.tiers
+    high = rules.bound("high")
     pos = [r for r in rows if r["outcome"] == "illicit"]
     neg = [r for r in rows if r["outcome"] == "legitimate"]
     tiers: dict[str, Counter] = defaultdict(Counter)
@@ -115,9 +115,9 @@ def summarise(rows: list[dict], rules: RuleSet, excluded: int) -> dict:
     return {
         "evaluated": len(rows), "illicit": len(pos), "legitimate": len(neg), "excludedNoData": excluded,
         "rules": {
-            "moderateOrAbove": _cutoff(rows, "score", t[0]),
-            "highOrAbove": _cutoff(rows, "score", t[1]),
-            "critical": _cutoff(rows, "score", t[2]),
+            "moderateOrAbove": _cutoff(rows, "score", rules.bound("mod")),
+            "highOrAbove": _cutoff(rows, "score", rules.bound("high")),
+            "critical": _cutoff(rows, "score", rules.bound("crit")),
             "rocAuc": roc_auc([r["score"] for r in pos], [r["score"] for r in neg]),
         },
         "model": {
@@ -126,11 +126,11 @@ def summarise(rows: list[dict], rules: RuleSet, excluded: int) -> dict:
         },
         "tierDistribution": {k: dict(v) for k, v in sorted(tiers.items())},
         "byCategory": {
-            c: {"cases": len(rs), "recallHighOrAbove": round(sum(r["score"] >= t[1] for r in rs) / len(rs), 4),
+            c: {"cases": len(rs), "recallHighOrAbove": round(sum(r["score"] >= high for r in rs) / len(rs), 4),
                 "meanScore": round(sum(r["score"] for r in rs) / len(rs), 1)}
             for c, rs in sorted(by_cat.items())
         },
-        "disagreementRate": round(sum((r["score"] >= t[1]) != (r["probability"] >= 0.5) for r in rows) / len(rows), 4) if rows else None,
+        "disagreementRate": round(sum((r["score"] >= high) != (r["probability"] >= 0.5) for r in rows) / len(rows), 4) if rows else None,
         "warnings": warnings,
     }
 
