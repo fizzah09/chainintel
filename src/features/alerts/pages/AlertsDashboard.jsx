@@ -5,15 +5,44 @@ import { Addr, Btn, Card, DataTable, Head, Kpis, Status, Tier, useToast } from '
 import { AlertDetail } from './AlertDetail';
 import { ago, csv, download } from '../../../lib/format';
 import { CFG, TN } from '../../../lib/risk';
+import { useAlerts } from '../../../lib/apiHooks';
+import { mapAlerts } from '../../../lib/apiAdapters';
+import * as api from '../../../lib/api';
 import { act, useStore } from '../../../mocks/store';
 
 export function Alerts({ mine }) {
   const s = useStore(); const nav = useNavigate(); const toast = useToast();
-  const k = (st) => s.alerts.filter((a) => a.status === st).length;
-  return <><Head title="Alerts" desc="Wallets that matched a watchlist rule." acts={<Btn icon="dl" onClick={() => download('alerts.csv', csv(['ID', 'Wallet', 'Trigger', 'Score', 'Time', 'Status'], s.alerts.map((a) => [a.id, a.wallet, a.trigger, a.score, a.at, a.status])))}>Export</Btn>} /><MonitoringPanel />
-    <Kpis items={[['Unacknowledged', k('Unacknowledged'), 'Needs attention', 'crit'], ['Acknowledged', k('Acknowledged'), 'In progress', 'mod'], ['Resolved', k('Resolved'), 'Closed out', 'low'], ['Total', s.alerts.length, 'All time']]} />
-    <Card><DataTable exportName="alerts" search="Search alerts" searchText={(a) => a.id + a.wallet + a.trigger} rows={s.alerts} filters={[{ label: 'Status', options: ['Unacknowledged', 'Acknowledged', 'Resolved', 'False Positive'], test: (a, v) => a.status === v }, { label: 'Tier', options: ['Low', 'Moderate', 'High', 'Critical'], test: (a, v) => TN[CFG.thr && (a.score >= CFG.thr[2] ? 'crit' : a.score >= CFG.thr[1] ? 'high' : a.score >= CFG.thr[0] ? 'mod' : 'low')] === v }]}
-      cols={[{ h: 'Alert', render: (a) => <button className="link mono" onClick={() => { act.setCtx({ alert: a.id }); nav(pathOf('AlertDetail')); }}>{a.id}</button>, val: (a) => a.id }, { h: 'Wallet', render: (a) => <Addr a={a.wallet} />, val: (a) => a.wallet }, { h: 'Trigger', render: (a) => a.trigger }, { h: 'Score', render: (a) => <><span className="mu">{a.from} →</span> <b>{a.score}</b></>, val: (a) => a.score }, { h: 'Tier', render: (a) => <Tier score={a.score} /> }, { h: 'Time', render: (a) => ago(a.at), val: (a) => a.at }, { h: 'Status', render: (a) => <Status s={a.status} />, val: (a) => a.status }, { h: '', render: (a) => a.status === 'Unacknowledged' && <Btn sm onClick={() => { act.alertStatus(a.id, 'Acknowledged'); toast('Acknowledged'); }}>Acknowledge</Btn> }]} defaultSort={{ i: 5, d: -1 }} /></Card></>;
+
+  // Real data from M7 API
+  const { data: apiAlerts, refetch } = useAlerts({}, s.session);
+  const realAlerts = apiAlerts ? mapAlerts(apiAlerts) : null;
+
+  // Fall back to mock when backend unavailable
+  const alerts = realAlerts ?? s.alerts;
+
+  const k = (st) => alerts.filter((a) => a.status === st).length;
+
+  const acknowledge = async (a) => {
+    if (a._apiId) {
+      try {
+        await api.alerts.resolve(a._apiId, { resolution: 'Acknowledged' }, s.session);
+        refetch();
+        toast('Acknowledged');
+      } catch {
+        // Fall back to mock action
+        act.alertStatus(a.id, 'Acknowledged');
+        toast('Acknowledged');
+      }
+    } else {
+      act.alertStatus(a.id, 'Acknowledged');
+      toast('Acknowledged');
+    }
+  };
+
+  return <><Head title="Alerts" desc="Wallets that matched a watchlist rule." acts={<Btn icon="dl" onClick={() => download('alerts.csv', csv(['ID', 'Wallet', 'Trigger', 'Score', 'Time', 'Status'], alerts.map((a) => [a.id, a.wallet, a.trigger, a.score, a.at, a.status])))}>Export</Btn>} /><MonitoringPanel />
+    <Kpis items={[['Unacknowledged', k('Unacknowledged'), 'Needs attention', 'crit'], ['Acknowledged', k('Acknowledged'), 'In progress', 'mod'], ['Resolved', k('Resolved'), 'Closed out', 'low'], ['Total', alerts.length, 'All time']]} />
+    <Card><DataTable exportName="alerts" search="Search alerts" searchText={(a) => a.id + a.wallet + a.trigger} rows={alerts} filters={[{ label: 'Status', options: ['Unacknowledged', 'Acknowledged', 'Resolved', 'False Positive'], test: (a, v) => a.status === v }, { label: 'Tier', options: ['Low', 'Moderate', 'High', 'Critical'], test: (a, v) => TN[CFG.thr && (a.score >= CFG.thr[2] ? 'crit' : a.score >= CFG.thr[1] ? 'high' : a.score >= CFG.thr[0] ? 'mod' : 'low')] === v }]}
+      cols={[{ h: 'Alert', render: (a) => <button className="link mono" onClick={() => { act.setCtx({ alert: a.id }); nav(pathOf('AlertDetail')); }}>{a.id}</button>, val: (a) => a.id }, { h: 'Wallet', render: (a) => <Addr a={a.wallet} />, val: (a) => a.wallet }, { h: 'Trigger', render: (a) => a.trigger }, { h: 'Score', render: (a) => <><span className="mu">{a.from} →</span> <b>{a.score}</b></>, val: (a) => a.score }, { h: 'Tier', render: (a) => <Tier score={a.score} /> }, { h: 'Time', render: (a) => ago(a.at), val: (a) => a.at }, { h: 'Status', render: (a) => <Status s={a.status} />, val: (a) => a.status }, { h: '', render: (a) => a.status === 'Unacknowledged' && <Btn sm onClick={() => acknowledge(a)}>Acknowledge</Btn> }]} defaultSort={{ i: 5, d: -1 }} /></Card></>;
 }
 
 export default Alerts;

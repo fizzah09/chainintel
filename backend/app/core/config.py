@@ -21,7 +21,12 @@ class Settings(BaseSettings):
     database_url: str = "postgresql+psycopg://chainintel:chainintel@127.0.0.1:5432/chainintel"
     redis_url: str = "redis://127.0.0.1:6379/0"
 
-    cors_origins: list[str] = Field(default_factory=lambda: ["http://localhost:5173"])
+    cors_origins: list[str] = Field(default_factory=lambda: [
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "http://127.0.0.1:5173",
+        "http://127.0.0.1:5174",
+    ])
 
     # Seconds a readiness probe waits for a dependency before calling it down.
     health_timeout: float = 2.0

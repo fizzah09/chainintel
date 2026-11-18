@@ -7,6 +7,9 @@ from app.api import health
 from app.core.config import get_settings
 from app.modules.m3_data import api as m3_api
 from app.modules.m4_risk import api as m4_api
+from app.modules.m5_flow import api as m5_api
+from app.modules.m6_cases import api as m6_api
+from app.modules.m7_monitoring import api as m7_api
 
 
 def create_app() -> FastAPI:
@@ -29,6 +32,9 @@ def create_app() -> FastAPI:
     app.include_router(health.router)
     app.include_router(m3_api.router)
     app.include_router(m4_api.router)
+    app.include_router(m5_api.router)
+    app.include_router(m6_api.router)
+    app.include_router(m7_api.router)
     return app
 
 

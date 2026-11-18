@@ -8,7 +8,7 @@ from typing import Annotated, Literal
 
 from fastapi import APIRouter, Body, Depends, HTTPException, Path, Query, status
 from pydantic import BaseModel, Field
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.core.config import Settings, get_settings
@@ -422,3 +422,112 @@ def get_backtest(run_id: uuid.UUID, db: DB, me: Me) -> BacktestDetail:
     if r is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "back-test not found")
     return _bt(r, detail=True)
+
+
+# ---- R7 analytics endpoints -----------------------------------------------------------------------
+
+
+class RiskTimelinePoint(BaseModel):
+    as_of: datetime
+    score: int
+    tier: str
+    tier_name: str
+    ruleset_version: int
+
+
+class PortfolioStats(BaseModel):
+    total_assessments: int
+    wallets_assessed: int
+    by_tier: dict[str, int]
+    avg_score: float
+    high_risk_count: int  # high or critical
+    review_required_count: int
+
+
+class WalletStats(BaseModel):
+    address: str
+    chain_id: int
+    total_assessments: int
+    latest_score: int | None
+    latest_tier: str | None
+    latest_as_of: datetime | None
+    review_required: bool
+    not_applicable: bool  # R6: too little data to score reliably
+
+
+@router.get("/chains/{chain_id}/addresses/{address}/risk-timeline", response_model=list[RiskTimelinePoint])
+def risk_timeline(chain_id: ChainId, address: Address, db: DB, me: Me,
+                  limit: Annotated[int, Query(ge=1, le=365)] = 30) -> list[RiskTimelinePoint]:
+    """R7: Score history for a wallet — most recent first."""
+    q = (
+        select(RiskAssessment)
+        .where(RiskAssessment.tenant_id == me.tenant_id, RiskAssessment.chain_id == chain_id,
+               RiskAssessment.address == normalize_address(address))
+        .order_by(RiskAssessment.id.desc())
+        .limit(limit)
+    )
+    rows = list(db.scalars(q))
+    return [RiskTimelinePoint(as_of=r.as_of, score=r.score, tier=r.tier, tier_name=TIER_NAME[r.tier],
+                              ruleset_version=r.ruleset_version) for r in rows]
+
+
+@router.get("/analytics/portfolio", response_model=PortfolioStats)
+def portfolio_stats(db: DB, me: Me) -> PortfolioStats:
+    """R7: Overview of all assessments for this tenant."""
+    from sqlalchemy import func as _f, distinct
+    rows = db.execute(
+        select(
+            _f.count().label("total"),
+            _f.count(distinct(RiskAssessment.address)).label("wallets"),
+            _f.avg(RiskAssessment.score).label("avg_score"),
+        ).where(RiskAssessment.tenant_id == me.tenant_id)
+    ).one()
+    tier_counts = dict(db.execute(
+        select(RiskAssessment.tier, _f.count().label("n"))
+        .where(RiskAssessment.tenant_id == me.tenant_id)
+        .group_by(RiskAssessment.tier)
+    ).all())
+    review_count = db.scalar(
+        select(_f.count()).select_from(RiskAssessment)
+        .where(RiskAssessment.tenant_id == me.tenant_id, RiskAssessment.review_required.is_(True))
+    ) or 0
+    high_risk = (tier_counts.get("high", 0) + tier_counts.get("crit", 0))
+    return PortfolioStats(
+        total_assessments=rows.total or 0,
+        wallets_assessed=rows.wallets or 0,
+        by_tier=tier_counts,
+        avg_score=round(float(rows.avg_score or 0), 1),
+        high_risk_count=high_risk,
+        review_required_count=review_count,
+    )
+
+
+@router.get("/chains/{chain_id}/addresses/{address}/stats", response_model=WalletStats)
+def wallet_stats(chain_id: ChainId, address: Address, db: DB, me: Me) -> WalletStats:
+    """R6+R7: Summary stats for one wallet including applicability flag."""
+    addr = normalize_address(address)
+    total = db.scalar(
+        select(func.count()).select_from(RiskAssessment).where(
+            RiskAssessment.tenant_id == me.tenant_id, RiskAssessment.chain_id == chain_id,
+            RiskAssessment.address == addr,
+        )
+    ) or 0
+    latest = db.scalar(
+        select(RiskAssessment)
+        .where(RiskAssessment.tenant_id == me.tenant_id, RiskAssessment.chain_id == chain_id,
+               RiskAssessment.address == addr)
+        .order_by(RiskAssessment.id.desc()).limit(1)
+    )
+    not_applicable = False
+    if latest:
+        dq = latest.data_quality or {}
+        usable = dq.get("usable_transfers", dq.get("native_transfers", None))
+        not_applicable = usable is not None and int(usable) < 5
+    return WalletStats(
+        address=addr, chain_id=chain_id, total_assessments=total,
+        latest_score=latest.score if latest else None,
+        latest_tier=latest.tier if latest else None,
+        latest_as_of=latest.as_of if latest else None,
+        review_required=latest.review_required if latest else False,
+        not_applicable=not_applicable,
+    )

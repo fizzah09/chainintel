@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { pathOf } from '../../app/config/paths';
 import { Btn, Card, Chip, Icon, Modal, SelectIn, Tabs, Tier, WalletGraph, useToast } from '../../components/ui';
@@ -9,9 +9,70 @@ import { Risk } from './pages/RiskTab';
 import { Transactions } from './pages/TransactionsTab';
 import { fd, sh } from '../../lib/format';
 import { TN, walletProfile } from '../../lib/risk';
+import { mapAssessment, mapTimeline, mapTransfers, deriveCps } from '../../lib/apiAdapters';
+import { useLatestAssessment, useTransfers, useRiskTimeline, useWalletStats } from '../../lib/apiHooks';
 import { act, can, useStore } from '../../mocks/store';
 
-export const useWallet = () => { const s = useStore(); return [walletProfile(s.ctx.wallet), s]; };
+export const DEFAULT_CHAIN = 1;
+
+/**
+ * Returns [profile, store].
+ * `profile` is the mock wallet profile enriched with any real data the backend has.
+ * When the backend is unreachable the mock profile is returned unchanged.
+ */
+export const useWallet = () => {
+  const s = useStore();
+  const address = s.ctx.wallet;
+  const session = s.session;
+
+  // Backend hooks — all silent-fail (error means backend unavailable)
+  const { data: assessment } = useLatestAssessment(address, DEFAULT_CHAIN, session);
+  const { data: transfersResp } = useTransfers(address, DEFAULT_CHAIN, { limit: 200 }, session);
+  const { data: stats } = useWalletStats(address, DEFAULT_CHAIN, session);
+  const { data: timeline } = useRiskTimeline(address, DEFAULT_CHAIN, 30, session);
+
+  const p = useMemo(() => {
+    const base = walletProfile(address);
+
+    // Overlay risk score from latest backend assessment
+    if (assessment) {
+      const mapped = mapAssessment(assessment);
+      if (mapped) {
+        base.score = mapped.score;
+        base.tier = mapped.tier;
+        base.report = mapped;
+      }
+    }
+
+    // Overlay real transfers when available
+    const realTxs = transfersResp ? mapTransfers(transfersResp, address) : null;
+    if (realTxs?.length) {
+      base.txs = realTxs;
+      base.tx = transfersResp.total ?? realTxs.length;
+      const inTxs = realTxs.filter((t) => t.dir === 'in');
+      const outTxs = realTxs.filter((t) => t.dir === 'out');
+      base.counts = { in: inTxs.length, out: outTxs.length };
+      base.cps = deriveCps(realTxs);
+    }
+
+    // Overlay balance / volume from stats
+    if (stats && !stats.not_applicable) {
+      if (stats.balance_eth != null) base.bal = stats.balance_eth;
+      if (stats.volume_usd_30d != null) base.vol = stats.volume_usd_30d;
+      if (stats.unique_counterparties != null) base.cp = stats.unique_counterparties;
+    }
+
+    // Overlay risk timeline
+    const realHistory = timeline ? mapTimeline(timeline) : null;
+    if (realHistory?.length) {
+      base.history = realHistory;
+    }
+
+    return base;
+  }, [address, assessment, transfersResp, stats, timeline]);
+
+  return [p, s];
+};
 
 export const TABS = [['Overview', 'WalletOverview'], ['Transactions', 'WalletTransactions'], ['Counterparties', 'WalletCounterparties'], ['Risk Assessment', 'RiskAssessment'], ['Graph', 'WalletGraph'], ['Evidence', 'WalletEvidence'], ['Cases', 'WalletCases'], ['Watchlists', 'WalletWatchlists'], ['History', 'WalletHistory']];
 
