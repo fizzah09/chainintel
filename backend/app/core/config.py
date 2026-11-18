@@ -38,7 +38,9 @@ class Settings(BaseSettings):
     etherscan_rps: float = 3.0  # free plan; Advanced allows 20
     alchemy_api_key: SecretStr | None = None
     alchemy_rps: float = 2.0  # getAssetTransfers costs 120 CU; free tier allows 300 CU/s
-    provider_order: list[str] = Field(default_factory=lambda: ["etherscan", "alchemy"])
+    infura_api_key: SecretStr | None = None
+    infura_rps: float = 10.0  # free tier: 100K req/day ≈ ~1 req/s sustained; allow bursts
+    provider_order: list[str] = Field(default_factory=lambda: ["infura", "etherscan", "alchemy"])
     provider_timeout: float = 15.0
     provider_max_retries: int = 4
     provider_page_size: int = 1000
