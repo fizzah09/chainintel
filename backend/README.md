@@ -27,7 +27,7 @@ python -m venv .venv
 .venv/Scripts/python -m pip install -e ".[dev]"   # macOS/Linux: .venv/bin/...
 docker compose up -d --wait                       # PostgreSQL 16 + Redis 7, bound to 127.0.0.1
 .venv/Scripts/alembic upgrade head                # apply migrations
-.venv/Scripts/uvicorn app.main:app --reload --port 8000
+.venv/Scripts/uvicorn app.main:app --reload --port 8003
 ```
 
 - `GET /health`: process is up (never checks dependencies).
@@ -62,7 +62,7 @@ Labels carry a `network` (`evm`, `bitcoin`, `tron`, `litecoin` ...). Every addre
 
 ## M3 API
 
-Interactive docs at http://localhost:8000/docs while the server runs. Amounts are strings (`value_raw` in base units, `amount` formatted with the token's decimals) because JSON numbers lose precision above 2^53.
+Interactive docs at http://localhost:8003/docs while the server runs. Amounts are strings (`value_raw` in base units, `amount` formatted with the token's decimals) because JSON numbers lose precision above 2^53.
 
 | Method | Path | What it does |
 |---|---|---|

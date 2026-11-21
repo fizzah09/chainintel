@@ -277,6 +277,6 @@ export const act = {
   setting(k, v) { mutate((d) => { d.settings[k] = v; }); },
   saveSettings(scope) { mutate((d) => log(d, `Saved ${scope} settings`, scope)); },
   pref(k, v) { mutate((d) => { d.prefs[k] = v; }); },
-  saveCfg(cfg) { mutate((d) => { d.cfg = { weights: cfg.weights, thr: cfg.thr, points: cfg.points || d.cfg.points, hopDecay: cfg.hopDecay || d.cfg.hopDecay, version: d.cfg.version + 1 }; d.monitor.snapshots = {}; log(d, `Published methodology v${d.cfg.version}`, 'Risk engine'); }); setCfg(state.cfg); mutate(() => {}); },
+  saveCfg(cfg) { mutate((d) => { d.cfg = { thr: cfg.thr, points: cfg.points || d.cfg.points, hopDecay: cfg.hopDecay || d.cfg.hopDecay, version: d.cfg.version + 1 }; d.monitor.snapshots = {}; log(d, `Published methodology v${d.cfg.version}`, 'Risk engine'); }); setCfg(state.cfg); mutate(() => {}); },
 };
 export { walletProfile };

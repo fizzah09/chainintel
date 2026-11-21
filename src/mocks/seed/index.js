@@ -126,7 +126,7 @@ export function seed() {
   ];
   return {
     v: 3, session: { authed: false, mfa: false, role: 'inv', name: 'Sara Ali' }, ctx: { wallet: TG, tx: txh('1'), caseId: 'CASE-2026-00128', watchlist: 'WL-1', alert: 'ALR-2026-0912', report: 'RPT-2026-0214', evidence: 'EVD-000184', trace: null }, recent: [TG, KW.E, KW.G, KW.mix, KW.C, KW.dex, KW.ex, KW.F, KW.D],
-    cfg: { weights: { T: 0.35, E: 0.25, B: 0.2, A: 0.1, O: 0.1 }, thr: [25, 50, 75], version: 3 }, perms,
+    cfg: { thr: [25, 50, 75], version: 3 }, perms,
     settings: { orgName: 'Example Bank', tz: 'UTC+05:00', mfaRequired: true, timeout: 30, branding: true, ipAllow: false, sso: false, lockFails: true, pwPolicy: 'Strong', critThr: 75, requireReview: true, reviewSla: 48, autoAssign: false, retention: '7 years', maintenance: false, selfReg: false, errAlert: 2, queueAlert: 500, oncall: true, traceHops: 3, traceNodes: 100, traceEdges: 250, tracePeriod: 30 },
     prefs: { lang: 'English', tz: 'UTC+05:00 Karachi', email: true, mfa: true },
     cases, evidence, findings, complaints, tasks, notes, comms, reviews, audit, watchlists, alerts, reports, users, teams, tenants, providers, jobs, notifications, counters: { cmp: 4, case: 131, evd: 192, fnd: 16, tsk: 36, rpt: 215, wl: 5, alr: 913, usr: 10 },

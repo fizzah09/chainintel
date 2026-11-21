@@ -1,9 +1,9 @@
 import { rng, addr, txh, pick } from './format';
 import { assessSimulated, registerLabels, ENGINE, BASE_AS_OF } from '../engine';
 
-export const CFG = { weights: { T: 0.35, E: 0.25, B: 0.2, A: 0.1, O: 0.1 }, thr: [25, 50, 75], version: 3 };
+export const CFG = { thr: [25, 50, 75], version: 3 };
 export const setCfg = (c) => {
-  CFG.weights = { ...c.weights }; CFG.thr = [...c.thr]; CFG.version = c.version;
+  CFG.thr = [...c.thr]; CFG.version = c.version;
   ENGINE.tiers = [...c.thr]; if (c.points) Object.assign(ENGINE.points, c.points); if (c.hopDecay) ENGINE.hopDecay = [...c.hopDecay]; ENGINE.version = c.version;
   cache.clear();
 };
@@ -13,8 +13,6 @@ export const setAsOf = (t) => { if (t !== AS_OF) { AS_OF = t; cache.clear(); } }
 export const tierOf = (s) => (s == null ? 'unk' : s < CFG.thr[0] ? 'low' : s < CFG.thr[1] ? 'mod' : s < CFG.thr[2] ? 'high' : 'crit');
 export const TN = { low: 'Low', mod: 'Moderate', high: 'High', crit: 'Critical', unk: 'Unknown' };
 export const TC = { low: '#16A34A', mod: '#F59E0B', high: '#EA580C', crit: '#DC2626', unk: '#64748B' };
-export const COMP = { T: 'Transaction risk', E: 'Exposure risk', B: 'Behaviour risk', A: 'Attribute risk', O: 'Other signals' };
-export const calc = (c) => Math.round(Object.keys(CFG.weights).reduce((s, k) => s + CFG.weights[k] * c[k], 0) * 10) / 10;
 
 export const TG = '0x7a3f1c5e8b2d4096a1f7c3e5d8b2a49e0c619B21';
 export const KW = {
@@ -48,23 +46,19 @@ registerLabels({
 const KL = Object.fromEntries(Object.entries(K).map(([a, v]) => [a.toLowerCase(), v]));
 
 const cache = new Map();
-const TEXT = {
-  T: ['Direct transfer to a mixing service', 'Transfers within two hops of a flagged address', 'Large outbound value to unlabelled wallets', 'Unusual token swaps before outbound transfer'],
-  E: ['Exposure to flagged counterparties', 'Funds sourced from high-risk wallets', 'Indirect exposure to a sanctioned cluster'],
-  B: ['Velocity above 30-day baseline', 'Rapid pass-through of inbound funds', 'Repeated sub-threshold transfers', 'Dormant wallet reactivated with large transfer'],
-  A: ['Attribute: no ENS, fresh funding source', 'Attribute: wallet younger than 90 days', 'Attribute: funded by a single address'],
-  O: ['Other: repeated micro-transfers', 'Other: ML anomaly score above baseline'],
-};
-export function evidenceFor(a, c) {
-  const r = rng('ev' + a);
-  let n = 184;
-  const items = [];
-  for (const k of Object.keys(CFG.weights)) {
-    const contrib = Math.round(CFG.weights[k] * c[k] * 10) / 10;
-    if (k === 'T' && a.toLowerCase() === TG.toLowerCase()) { items.push({ id: 'EVD-000184', text: TEXT.T[0], comp: 'T', pts: 18.0 }, { id: 'EVD-000185', text: 'Exposure to 9 flagged counterparties', comp: 'T', pts: Math.round((contrib - 18) * 10) / 10 }); n = 186; continue; }
-    items.push({ id: 'EVD-' + String(n++).padStart(6, '0'), text: TEXT[k][Math.floor(r() * TEXT[k].length)], comp: k, pts: contrib });
-  }
-  return items;
+// Evidence rows come from the engine's factors, so they match the score shown beside them.
+export function evidenceFor(report) {
+  return report.factors.map((f, i) => ({ id: 'EVD-' + String(184 + i).padStart(6, '0'), text: f.summary, comp: f.id, name: f.name, pts: f.points, max: f.max }));
+}
+// Score of a counterparty from the same engine (cached; does not recurse into walletProfile).
+function cpScore(a) {
+  const key = 'cp|' + a.toLowerCase() + '|' + CFG.version + '|' + AS_OF;
+  if (cache.has(key)) return cache.get(key);
+  const kp = KL[a.toLowerCase()];
+  const hints = { first: kp.first, tx: kp.tx, vol: kp.vol, cp: kp.cp, c: kp.c, entities: { exchange: KW.ex, dex: KW.dex, bridge: KW.bridge, mixer: KW.mix }, anchor: null };
+  const score = assessSimulated(a, hints, AS_OF, { withForecast: false }).score;
+  cache.set(key, score);
+  return score;
 }
 export function walletProfile(address) {
   const key = address.toLowerCase() + '|' + CFG.version + '|' + AS_OF;
@@ -85,12 +79,12 @@ export function walletProfile(address) {
   const hist = [], end = score;
   for (let i = 0; i < 8; i++) hist.push(Math.max(2, Math.min(100, Math.round(end - (7 - i) * (3 + r() * 5) + (r() - 0.5) * 4))));
   hist[7] = end;
-  const evidence = evidenceFor(address, p.c);
+  const evidence = evidenceFor(report);
   const pool = [KW.E, KW.mix, KW.dex, KW.B, KW.ex, KW.G, KW.C, KW.D, KW.F, KW.bridge].filter((x) => x.toLowerCase() !== address.toLowerCase());
   const cps = (address.toLowerCase() === TG.toLowerCase() ? [KW.E, KW.mix, KW.dex, KW.B, KW.ex, KW.G] : [...pool].sort(() => r() - 0.5).slice(0, 4 + Math.floor(r() * 3))).map((a, i) => {
     const kp = KL[a.toLowerCase()];
     const dir = ['Inbound', 'Outbound', 'Both'][Math.floor(r() * 3)];
-    return { a, label: kp.label, n: 2 + Math.floor(r() * 30), vol: Math.round(kp.cat === 'exchange' ? 401000 : 20000 + r() * 200000), dir, risk: Math.round(calc(kp.c)) };
+    return { a, label: kp.label, n: 2 + Math.floor(r() * 30), vol: Math.round(kp.cat === 'exchange' ? 401000 : 20000 + r() * 200000), dir, risk: cpScore(a) };
   });
   const txs = [];
   let t = new Date('2026-11-02T09:41:00Z').getTime();

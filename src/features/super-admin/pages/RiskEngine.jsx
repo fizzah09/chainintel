@@ -13,7 +13,7 @@ export function SaRisk() {
   const okP = Object.values(pts).every((v) => Number(v) >= 0 && Number(v) <= 100);
   const okD = decay.every((v, i) => Number(v) >= 0 && Number(v) <= 1 && (i === 0 || Number(v) <= Number(decay[i - 1])));
   const publish = () => {
-    act.saveCfg({ weights: s.cfg.weights, thr: t.map(Number), points: Object.fromEntries(Object.entries(pts).map(([k, v]) => [k, Number(v)])), hopDecay: decay.map(Number) });
+    act.saveCfg({ thr: t.map(Number), points: Object.fromEntries(Object.entries(pts).map(([k, v]) => [k, Number(v)])), hopDecay: decay.map(Number) });
     toast(`Methodology v${s.cfg.version + 1} published. All wallets re-scored.`);
   };
 

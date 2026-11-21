@@ -33,7 +33,7 @@ def _fetch_txs(addr: str, blockscout_host: str) -> list[dict]:
     url = f"{blockscout_host}/api/v2/addresses/{addr}/transactions"
     try:
         with httpx.Client(timeout=12) as client:
-            r = client.get(url, params={"filter": "to | from"})
+            r = client.get(url)  # no filter: Blockscout returns both incoming and outgoing transactions
         if r.status_code != 200:
             return []
         items = r.json().get("items", [])
