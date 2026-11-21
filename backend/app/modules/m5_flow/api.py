@@ -14,7 +14,7 @@ from app.core.db import get_db
 from app.core.security import Principal, require_principal
 from app.modules.m3_data.providers.base import normalize_address
 from app.modules.m5_flow.models import TraceRun
-from app.modules.m5_flow.tracer import run_trace
+from app.modules.m5_flow.live_tracer import run_live_trace
 
 router = APIRouter(prefix="/api/v1", tags=["M5 fund flow"], dependencies=[Depends(require_principal)])
 
@@ -119,10 +119,10 @@ def trace_wallet(
     settings: Settings = Depends(get_settings),
 ):
     as_of = body.as_of or datetime.now(UTC)
-    result = run_trace(
-        db=db, settings=settings, start=address, chain_id=chain_id,
-        hops=body.hops, direction=body.direction, period_days=body.period_days,
-        min_usd=body.min_usd, method=body.method, as_of=as_of,
+    result = run_live_trace(
+        start=address, chain_id=chain_id,
+        hops=body.hops, direction=body.direction,
+        min_usd=body.min_usd, method=body.method,
     )
     run = TraceRun(
         public_id=uuid.uuid4(),

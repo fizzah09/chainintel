@@ -119,12 +119,17 @@ export function seed() {
     { id: 'NT5', title: 'Report ready', desc: 'Wallet Risk Assessment Report RPT-2026-0214 finished generating.', at: iso('11-01', 15, 32), kind: 'report', read: true, to: 'ReportLibrary' },
     { id: 'NT6', title: 'Provider degraded', desc: 'Forta labels error rate above threshold. Some labels may be missing.', at: iso('10-31', 9), kind: 'system', read: true, to: 'PA_Provider' },
   ];
+  const complaints = [
+    { id: 'CMP-0001', by: 'Bilal Qureshi', caseId: 'CASE-2026-00128', thread: [], subject: 'Alert did not fire for a watched wallet', problem: 'Something is not working', where: 'Alerts', details: 'Wallet on the High-risk list crossed score 80 but no alert was raised.', shot: '', priority: 'High', status: 'Resolved', handledBy: 'Hina Raza', raisedAt: iso('10-26', 10, 12), updated: iso('10-28', 15, 40), reply: 'Fixed in release 2.4. The alert was re-evaluated and is now visible.' },
+    { id: 'CMP-0002', by: 'Bilal Qureshi', caseId: '', thread: [], subject: 'Report export shows wrong bank name', problem: 'Wrong or missing data', where: 'Reports', details: 'The PDF export shows the previous organisation name.', shot: 'report-export.png', priority: 'Medium', status: 'In progress', handledBy: 'Hina Raza', raisedAt: iso('11-03', 9, 5), updated: iso('11-04', 11, 20), reply: '' },
+    { id: 'CMP-0003', by: 'Bilal Qureshi', caseId: '', thread: [], subject: 'Trace is slow for four hops', problem: 'Slow or unclear', where: 'Transaction tracing', details: 'Tracing with four hops takes more than two minutes to show results.', shot: '', priority: 'Low', status: 'Open', handledBy: '', raisedAt: iso('11-10', 16, 30), updated: iso('11-10', 16, 30), reply: '' },
+  ];
   return {
     v: 3, session: { authed: false, mfa: false, role: 'inv', name: 'Sara Ali' }, ctx: { wallet: TG, tx: txh('1'), caseId: 'CASE-2026-00128', watchlist: 'WL-1', alert: 'ALR-2026-0912', report: 'RPT-2026-0214', evidence: 'EVD-000184', trace: null }, recent: [TG, KW.E, KW.G, KW.mix, KW.C, KW.dex, KW.ex, KW.F, KW.D],
     cfg: { weights: { T: 0.35, E: 0.25, B: 0.2, A: 0.1, O: 0.1 }, thr: [25, 50, 75], version: 3 }, perms,
     settings: { orgName: 'Example Bank', tz: 'UTC+05:00', mfaRequired: true, timeout: 30, branding: true, ipAllow: false, sso: false, lockFails: true, pwPolicy: 'Strong', critThr: 75, requireReview: true, reviewSla: 48, autoAssign: false, retention: '7 years', maintenance: false, selfReg: false, errAlert: 2, queueAlert: 500, oncall: true, traceHops: 3, traceNodes: 100, traceEdges: 250, tracePeriod: 30 },
     prefs: { lang: 'English', tz: 'UTC+05:00 Karachi', email: true, mfa: true },
-    cases, evidence, findings, tasks, notes, comms, reviews, audit, watchlists, alerts, reports, users, teams, tenants, providers, jobs, notifications, counters: { case: 131, evd: 192, fnd: 16, tsk: 36, rpt: 215, wl: 5, alr: 913, usr: 10 },
+    cases, evidence, findings, complaints, tasks, notes, comms, reviews, audit, watchlists, alerts, reports, users, teams, tenants, providers, jobs, notifications, counters: { cmp: 4, case: 131, evd: 192, fnd: 16, tsk: 36, rpt: 215, wl: 5, alr: 913, usr: 10 },
     wizard: { title: '', type: 'Transaction monitoring', desc: '', source: 'Manual', ref: '', subjects: [], priority: 'Medium', due: '', assignee: '', team: 'Financial Crime', evidence: [] },
   };
 }

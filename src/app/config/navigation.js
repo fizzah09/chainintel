@@ -68,11 +68,6 @@ export const NAV = {
         "label": "Notifications",
         "key": "NotificationCenter",
         "icon": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" ><path d=\"M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 2h-15z\"/><path d=\"M10 21h4\"/></svg>"
-      },
-      {
-        "label": "Personal Preferences",
-        "key": "PersonalPrefs",
-        "icon": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" ><path d=\"M4 7h10M18 7h2M4 17h2M10 17h10M14 4v6M6 14v6\"/></svg>"
       }
     ]
   },
@@ -134,11 +129,6 @@ export const NAV = {
         "label": "Notifications",
         "key": "NotificationCenter",
         "icon": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" ><path d=\"M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 2h-15z\"/><path d=\"M10 21h4\"/></svg>"
-      },
-      {
-        "label": "Personal Preferences",
-        "key": "PersonalPrefs",
-        "icon": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" ><path d=\"M4 7h10M18 7h2M4 17h2M10 17h10M14 4v6M6 14v6\"/></svg>"
       }
     ]
   },
@@ -213,11 +203,6 @@ export const NAV = {
         "heading": "Manage",
         "items": [
           {
-            "label": "Team Performance",
-            "key": "CM_Team",
-            "icon": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" ><path d=\"M3 12h4l3-8 4 16 3-8h4\"/></svg>"
-          },
-          {
             "label": "Compliance Configuration",
             "key": "CM_Config",
             "icon": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" ><path d=\"M12 4v16M6 20h12M5 7h14M5 7l-3 7a3.5 3.5 0 0 0 6 0zM19 7l-3 7a3.5 3.5 0 0 0 6 0z\"/></svg>"
@@ -230,11 +215,6 @@ export const NAV = {
         "label": "Notifications",
         "key": "NotificationCenter",
         "icon": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" ><path d=\"M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 2h-15z\"/><path d=\"M10 21h4\"/></svg>"
-      },
-      {
-        "label": "Personal Preferences",
-        "key": "PersonalPrefs",
-        "icon": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" ><path d=\"M4 7h10M18 7h2M4 17h2M10 17h10M14 4v6M6 14v6\"/></svg>"
       }
     ]
   },
@@ -309,9 +289,9 @@ export const NAV = {
             "icon": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" ><path d=\"M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6z\"/><path d=\"M8.5 12l2.5 2.5 4.5-5\"/></svg>"
           },
           {
-            "label": "Bank Settings",
-            "key": "BA_Settings",
-            "icon": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" ><circle cx=\"12\" cy=\"12\" r=\"3\"/><path d=\"M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1\"/></svg>"
+            "label": "Raise a complaint",
+            "key": "RaiseComplaint",
+            "icon": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" ><path d=\"M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 2h-15z\"/><path d=\"M10 21h4\"/></svg>"
           }
         ]
       }
@@ -321,11 +301,6 @@ export const NAV = {
         "label": "Notifications",
         "key": "NotificationCenter",
         "icon": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" ><path d=\"M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 2h-15z\"/><path d=\"M10 21h4\"/></svg>"
-      },
-      {
-        "label": "Personal Preferences",
-        "key": "PersonalPrefs",
-        "icon": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" ><path d=\"M4 7h10M18 7h2M4 17h2M10 17h10M14 4v6M6 14v6\"/></svg>"
       }
     ]
   },
@@ -397,11 +372,6 @@ export const NAV = {
         "label": "Notifications",
         "key": "NotificationCenter",
         "icon": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" ><path d=\"M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 2h-15z\"/><path d=\"M10 21h4\"/></svg>"
-      },
-      {
-        "label": "Personal Preferences",
-        "key": "PersonalPrefs",
-        "icon": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" ><path d=\"M4 7h10M18 7h2M4 17h2M10 17h10M14 4v6M6 14v6\"/></svg>"
       }
     ]
   },
@@ -463,13 +433,7 @@ export const NAV = {
         ]
       }
     ],
-    "foot": [
-      {
-        "label": "Personal Preferences",
-        "key": "PersonalPrefs",
-        "icon": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" ><path d=\"M4 7h10M18 7h2M4 17h2M10 17h10M14 4v6M6 14v6\"/></svg>"
-      }
-    ]
+    "foot": []
   },
   "pa": {
     "name": "Platform Admin",
@@ -541,20 +505,19 @@ export const NAV = {
             "to": "/ops/audit"
           },
           {
-            "label": "Operations Settings",
-            "key": "PA_Settings",
-            "icon": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" ><circle cx=\"12\" cy=\"12\" r=\"3\"/><path d=\"M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1\"/></svg>"
+            "label": "Complaints",
+            "key": "Complaints",
+            "icon": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" ><path d=\"M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 2h-15z\"/><path d=\"M10 21h4\"/></svg>"
+          },
+          {
+            "label": "Raise a complaint",
+            "key": "RaiseComplaint",
+            "icon": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" ><path d=\"M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 2h-15z\"/><path d=\"M10 21h4\"/></svg>"
           }
         ]
       }
     ],
-    "foot": [
-      {
-        "label": "Personal Preferences",
-        "key": "PersonalPrefs",
-        "icon": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" ><path d=\"M4 7h10M18 7h2M4 17h2M10 17h10M14 4v6M6 14v6\"/></svg>"
-      }
-    ]
+    "foot": []
   },
   "sa": {
     "name": "Platform Super Admin",
@@ -640,15 +603,20 @@ export const NAV = {
             "label": "Platform Settings",
             "key": "SA_Settings",
             "icon": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" ><circle cx=\"12\" cy=\"12\" r=\"3\"/><path d=\"M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1\"/></svg>"
+          },
+          {
+            "label": "Raise a complaint",
+            "key": "RaiseComplaint",
+            "icon": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" ><path d=\"M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 2h-15z\"/><path d=\"M10 21h4\"/></svg>"
           }
         ]
       }
     ],
     "foot": [
       {
-        "label": "Personal Preferences",
-        "key": "PersonalPrefs",
-        "icon": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" ><path d=\"M4 7h10M18 7h2M4 17h2M10 17h10M14 4v6M6 14v6\"/></svg>"
+        "label": "Complaints",
+        "key": "Complaints",
+        "icon": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" ><path d=\"M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 2h-15z\"/><path d=\"M10 21h4\"/></svg>"
       }
     ]
   }

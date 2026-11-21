@@ -3,16 +3,20 @@
 Secrets are never hard-coded: in production the environment is filled from the bank's vault.
 """
 
+import json
 from functools import lru_cache
 from pathlib import Path
-from typing import Literal
+from typing import Annotated, Literal
 
-from pydantic import Field, SecretStr
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import Field, SecretStr, field_validator
+from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
+
+
+_ENV_FILE = Path(__file__).resolve().parents[2] / ".env"
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_prefix="CI_", env_file=".env", extra="ignore")
+    model_config = SettingsConfigDict(env_prefix="CI_", env_file=str(_ENV_FILE), extra="ignore")
 
     env: Literal["development", "test", "staging", "production"] = "development"
     app_name: str = "Chain Intel API"
@@ -21,12 +25,26 @@ class Settings(BaseSettings):
     database_url: str = "postgresql+psycopg://chainintel:chainintel@127.0.0.1:5432/chainintel"
     redis_url: str = "redis://127.0.0.1:6379/0"
 
-    cors_origins: list[str] = Field(default_factory=lambda: [
+    cors_origins: Annotated[list[str], NoDecode] = Field(default_factory=lambda: [
         "http://localhost:5173",
         "http://localhost:5174",
         "http://127.0.0.1:5173",
         "http://127.0.0.1:5174",
     ])
+
+    @field_validator('cors_origins', mode='before')
+    @classmethod
+    def _parse_cors(cls, v):
+        if isinstance(v, str):
+            value = v.strip()
+            if not value:
+                return []
+            if value.startswith("["):
+                return json.loads(value)
+            return [origin.strip() for origin in value.split(",") if origin.strip()]
+        return v
+    # Set CI_CORS_ALLOW_ALL=true in production to allow any origin (use behind auth).
+    cors_allow_all: bool = False
 
     # Seconds a readiness probe waits for a dependency before calling it down.
     health_timeout: float = 2.0

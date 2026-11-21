@@ -88,9 +88,11 @@ export function mapCase(c) {
     tags: c.tags ?? [],
     subjects: (c.subjects ?? []).map((s) => ({
       id: s.id,
-      kind: s.subject_type,
-      ref: s.subject_ref,
+      kind: s.kind ?? s.subject_type,
+      ref: s.ref ?? s.subject_ref,
       role: s.role,
+      label: s.label ?? null,
+      riskScore: s.risk_score ?? null,
     })),
     evidence: c.evidence ?? [],
     notes: c.notes ?? [],
@@ -112,12 +114,12 @@ export function mapAlert(a) {
   return {
     id: a.id,
     _apiId: a.id,
-    wallet: a.subject_address ?? a.wallet ?? '',
+    wallet: a.wallet ?? a.subject_address ?? '',
     trigger: a.trigger,
     score: a.score ?? 0,
     tier: a.tier ?? null,
     from: a.prev_score ?? 0,
-    at: a.created_at,
+    at: a.at ?? a.created_at,
     status: mapAlertStatus(a.status),
     details: a.details ?? {},
   };

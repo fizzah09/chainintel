@@ -17,10 +17,10 @@ export function WatchCreate() {
     const id = act.createWatchlist({ name: v.name.trim(), scope: v.scope, desc: v.desc, rule: v.rule, thr: v.rule === 'any' ? 0 : thr, email: v.email, app: v.app });
     seeds.forEach((a) => act.addToWatchlist(id, a)); act.setCtx({ watchlist: id }); toast('Watchlist created'); nav(pathOf('WatchlistDetail'));
   };
-  return <><Head title="New watchlist" desc="Define what to watch and when to alert." /><Card style={{ maxWidth: 860 }}>
+  return <><Head title="Create watchlist" desc="Define what to watch and when to alert." /><Card style={{ maxWidth: 860 }}>
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}><TextIn label="Name" req value={v.name} onChange={set('name')} err={err.name} w="2 1 340px" /><SelectIn label="Scope" value={v.scope} onChange={set('scope')} options={['Personal', 'Tenant', ...(s.session.role === 'pa' ? ['Platform'] : [])]} /></div><div style={{ height: 14 }} />
     <TextArea label="Description" value={v.desc} onChange={set('desc')} /><div style={{ height: 14 }} />
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}><SelectIn label="Alert rule" value={v.rule} onChange={set('rule')} options={[['score', 'Score at or above threshold'], ['any', 'Any activity']]} />{v.rule === 'score' && <TextIn label="Score threshold" type="number" value={v.thr} onChange={set('thr')} err={err.thr} hint={`Critical starts at ${CFG.thr[2]}`} />}</div><div style={{ height: 14 }} />
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}><SelectIn label="Alert when" value={v.rule} onChange={set('rule')} options={[['score', 'Score at or above threshold'], ['any', 'Any activity']]} />{v.rule === 'score' && <TextIn label="Threshold" type="number" value={v.thr} onChange={set('thr')} err={err.thr} hint={`Critical starts at ${CFG.thr[2]}`} />}</div><div style={{ height: 14 }} />
     <SetRow title="In-app notification"><Toggle on={v.app} onChange={set('app')} label="In-app" /></SetRow><SetRow title="Email notification"><Toggle on={v.email} onChange={set('email')} label="Email" /></SetRow><div style={{ height: 14 }} />
     <TextArea label="Initial wallets (optional)" value={v.seed} onChange={set('seed')} err={err.seed} hint="Paste addresses separated by spaces, commas or new lines." />
     <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10, marginTop: 22 }}><Btn onClick={() => nav(pathOf('WatchlistList'))}>Cancel</Btn><Btn kind="pri" icon="check" onClick={save}>Create watchlist</Btn></div></Card></>;

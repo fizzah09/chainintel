@@ -1,13 +1,30 @@
-import { useState } from 'react';
+import { pathOf } from '../../../app/config/paths';
 import { CaseLink, open } from '../../../components/domain/workspace';
-import { Btn, Card, DataTable, HBars, Head, Prio, Row, useToast } from '../../../components/ui';
+import { Btn, Card, DataTable, Head, Prio, useToast } from '../../../components/ui';
+import { fd } from '../../../lib/format';
 import { act, useStore } from '../../../mocks/store';
 
 export function CmAssign() {
-  const s = useStore(); const toast = useToast(); const [pick, setPick] = useState({}); const staff = s.users.filter((u) => u.status === 'Active' && ['inv', 'cm'].includes(u.role)).map((u) => u.name);
-  const rows = s.cases.filter((c) => open(c) && (!c.assignee || c.status === 'Open'));
-  return <><Head title="Case assignment" desc="Assign unowned cases and balance workload." /><Row><Card title="Unassigned cases" style={{ flex: '2 1 560px' }}><DataTable tools={false} rows={rows} cols={[{ h: 'Case', render: (c) => <CaseLink c={c} /> }, { h: 'Title', render: (c) => c.title }, { h: 'Priority', render: (c) => <Prio p={c.priority} /> }, { h: 'Assign to', render: (c) => <select className="in" style={{ minHeight: 32 }} aria-label="Assignee" value={pick[c.id] || ''} onChange={(e) => setPick({ ...pick, [c.id]: e.target.value })}><option value="">Choose…</option>{staff.map((n) => <option key={n}>{n}</option>)}</select> }, { h: '', render: (c) => <Btn sm kind="pri" onClick={() => { if (!pick[c.id]) return toast('Choose an assignee first', 'bad'); act.assign(c.id, pick[c.id]); toast('Assigned'); }}>Assign</Btn> }]} empty="Every open case has an owner." /></Card>
-    <Card title="Workload" style={{ flex: '1 1 300px' }}><HBars items={staff.map((n) => [n, s.cases.filter((c) => c.assignee === n && open(c)).length, '#1769E0'])} /></Card></Row></>;
+  const s = useStore(); const toast = useToast();
+  const staff = s.users.filter((u) => u.status === 'Active' && ['inv', 'cm'].includes(u.role)).map((u) => u.name);
+  const load = (n) => s.cases.filter((c) => c.assignee === n && open(c)).length;
+  // Suggested assignee: the investigator with the fewest open cases.
+  const suggested = [...staff].sort((a, b) => load(a) - load(b) || a.localeCompare(b))[0];
+  const rows = s.cases.filter((c) => open(c) && !c.assignee);
+
+  return <>
+    <Head title="Case assignment" desc="Assign unassigned cases to investigators." acts={<Btn kind="pri" icon="plus" to={pathOf('CaseCreate')}>Create case</Btn>} />
+    <Card title="Unassigned cases">
+      <DataTable tools={false} rows={rows} empty="Every open case has an owner." cols={[
+        { h: 'Case ID', render: (c) => <CaseLink c={c} /> },
+        { h: 'Title', render: (c) => c.title },
+        { h: 'Priority', render: (c) => <Prio p={c.priority} /> },
+        { h: 'Opened', render: (c) => fd(c.opened) },
+        { h: 'Suggested assignee', render: () => suggested ?? '—' },
+        { h: '', render: (c) => <Btn sm kind="pri" disabled={!suggested} onClick={() => { act.assign(c.id, suggested); toast(`Assigned to ${suggested}`); }}>Assign</Btn> },
+      ]} />
+    </Card>
+  </>;
 }
 
 export default CmAssign;

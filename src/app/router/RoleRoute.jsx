@@ -8,7 +8,7 @@ import AccessDenied from '../../features/errors/pages/AccessDenied';
 import NotFound from '../../features/errors/pages/NotFound';
 
 // Which collection a path id must exist in.
-const COLLECTION = { caseId: 'cases', evidence: 'evidence', watchlist: 'watchlists', alert: 'alerts', report: 'reports' };
+const COLLECTION = { caseId: 'cases', evidence: 'evidence', watchlist: 'watchlists', alert: 'alerts', report: 'reports', complaint: 'complaints' };
 
 function valid(s, field, v) {
   if (field === 'wallet') return isAddr(v);

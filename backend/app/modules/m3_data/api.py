@@ -302,4 +302,263 @@ def probe_data_source(
     source = sources.get_source(key)
     if source is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, f"unknown data source {key}")
+
+
+# ---- Graph endpoint (Arkham-style force-directed graph) -------------------------------------------
+
+class GraphNode(BaseModel):
+    id: str
+    label: str
+    root: bool = False
+    labelInfo: dict | None = None
+
+
+class GraphEdge(BaseModel):
+    id: str
+    hash: str
+    from_: str = None
+    to: str | None = None
+    value: float = 0.0
+    asset: str = "ETH"
+    timestamp: int | None = None
+    isError: bool = False
+    source: str = ""
+
+    model_config = {"populate_by_name": True}
+
+    @classmethod
+    def from_dict(cls, d: dict) -> "GraphEdge":
+        return cls(id=d["id"], hash=d["hash"], from_=d["from"], to=d.get("to"),
+                   value=d.get("value", 0.0), asset=d.get("asset", "ETH"),
+                   timestamp=d.get("timestamp"), isError=d.get("isError", False),
+                   source=d.get("source", ""))
+
+    def model_dump(self, **kwargs):
+        d = super().model_dump(**kwargs)
+        d["from"] = d.pop("from_", None)
+        return d
+
+
+class GraphMeta(BaseModel):
+    rootAddress: str
+    depth: int
+    nodeCount: int
+    edgeCount: int
+    labelsAvailable: int
+
+
+class GraphOut(BaseModel):
+    nodes: list[GraphNode]
+    edges: list[dict]
+    meta: GraphMeta
+
+
+# Blockscout chain slug map (free public API, no key required)
+_BLOCKSCOUT_HOSTS = {
+    1: "https://eth.blockscout.com",
+    10: "https://optimism.blockscout.com",
+    137: "https://polygon.blockscout.com",
+    8453: "https://base.blockscout.com",
+    42161: "https://arbitrum.blockscout.com",
+}
+
+
+@router.get("/graph/{chain_id}/{address}", response_model=GraphOut)
+async def get_graph(
+    chain_id: ChainId,
+    address: Address,
+    db: DB,
+    depth: Annotated[int, Query(ge=0, le=2)] = 1,
+    minValueEth: Annotated[float, Query(ge=0)] = 0.0,
+    settings: Settings = Depends(get_settings),
+) -> GraphOut:
+    """Build a real-data transaction graph using Blockscout (no API key needed).
+
+    Falls back to Etherscan if CI_ETHERSCAN_API_KEY is set in .env.
+    Expands outward up to `depth` hops. Mirrors the wallet-graph-api reference.
+    """
+    import asyncio
+    import httpx
+    from app.modules.m3_data.labels.lookup import labels_for
+
+    blockscout_host = _BLOCKSCOUT_HOSTS.get(chain_id, "https://eth.blockscout.com")
+    etherscan_key = settings.etherscan_api_key.get_secret_value() if settings.etherscan_api_key else ""
+
+    async def fetch_blockscout_txs(addr: str) -> list[dict]:
+        """Fetch up to 200 recent txs from Blockscout (native + token transfers)."""
+        txs: list[dict] = []
+        url = f"{blockscout_host}/api/v2/addresses/{addr}/transactions"
+        try:
+            async with httpx.AsyncClient(timeout=20) as client:
+                r = await client.get(url)
+                if r.status_code != 200:
+                    return []
+                data = r.json()
+            for item in data.get("items", []):
+                from_a = item.get("from") or {}
+                to_a = item.get("to") or {}
+                from_addr = (from_a.get("hash") or "").lower() if isinstance(from_a, dict) else str(from_a).lower()
+                to_addr = (to_a.get("hash") or "").lower() if isinstance(to_a, dict) else str(to_a).lower()
+                if not from_addr or not to_addr:
+                    continue
+                val = int(item.get("value") or 0) / 1e18
+                txs.append({
+                    "hash": item.get("hash", ""),
+                    "from": from_addr, "to": to_addr,
+                    "valueEth": val, "asset": "ETH",
+                    "timestamp": 0,
+                    "isError": item.get("status") == "error",
+                    "source": "blockscout",
+                })
+        except Exception:
+            pass
+        return txs
+
+    async def fetch_etherscan_txs(addr: str) -> list[dict]:
+        """Full Etherscan fallback (native + tokens) when Blockscout returns nothing."""
+        if not etherscan_key:
+            return []
+        base = "https://api.etherscan.io/v2/api"
+        result: list[dict] = []
+        for action in ("txlist", "tokentx", "txlistinternal"):
+            params = {"chainid": str(chain_id), "module": "account", "action": action,
+                      "address": addr, "sort": "desc", "page": "1", "offset": "200",
+                      "apikey": etherscan_key}
+            try:
+                async with httpx.AsyncClient(timeout=15) as client:
+                    r = await client.get(base, params=params)
+                    data = r.json()
+                if data.get("status") != "1" and data.get("message") != "No transactions found":
+                    continue
+                raw = data.get("result") or []
+                for tx in (raw if isinstance(raw, list) else []):
+                    from_ = (tx.get("from") or "").lower()
+                    to_ = (tx.get("to") or "").lower()
+                    if not from_ or not to_:
+                        continue
+                    if action == "tokentx":
+                        decimals = int(tx.get("tokenDecimal") or 18)
+                        val = int(tx.get("value") or 0) / (10 ** decimals)
+                        asset = tx.get("tokenSymbol") or "TOKEN"
+                    else:
+                        val = int(tx.get("value") or 0) / 1e18
+                        asset = "ETH"
+                    result.append({"hash": tx.get("hash", ""), "from": from_, "to": to_,
+                                   "valueEth": val, "asset": asset,
+                                   "timestamp": int(tx.get("timeStamp") or 0),
+                                   "isError": tx.get("isError") == "1",
+                                   "source": f"etherscan:{action}"})
+            except Exception:
+                pass
+        return result
+
+    async def fetch_etherscan_token_txs(addr: str) -> list[dict]:
+        """Fetch ERC-20 token transfers from Etherscan in parallel with Blockscout native txs."""
+        if not etherscan_key:
+            return []
+        base = "https://api.etherscan.io/v2/api"
+        params = {"chainid": str(chain_id), "module": "account", "action": "tokentx",
+                  "address": addr, "sort": "desc", "page": "1", "offset": "200",
+                  "apikey": etherscan_key}
+        try:
+            async with httpx.AsyncClient(timeout=15) as client:
+                r = await client.get(base, params=params)
+                data = r.json()
+            if data.get("status") != "1" and data.get("message") != "No transactions found":
+                return []
+            raw = data.get("result") or []
+            result = []
+            for tx in (raw if isinstance(raw, list) else []):
+                from_ = (tx.get("from") or "").lower()
+                to_ = (tx.get("to") or "").lower()
+                if not from_ or not to_:
+                    continue
+                decimals = int(tx.get("tokenDecimal") or 18)
+                val = int(tx.get("value") or 0) / (10 ** decimals)
+                asset = tx.get("tokenSymbol") or "TOKEN"
+                result.append({"hash": tx.get("hash", ""), "from": from_, "to": to_,
+                               "valueEth": val, "asset": asset,
+                               "timestamp": int(tx.get("timeStamp") or 0),
+                               "isError": tx.get("isError") == "1",
+                               "source": "etherscan:tokentx"})
+            return result
+        except Exception:
+            return []
+
+    async def fetch_txs(addr: str) -> list[dict]:
+        # Run Blockscout (native ETH) and Etherscan token transfers in parallel.
+        # Fall back to full Etherscan if Blockscout returns nothing.
+        eth_txs, token_txs = await asyncio.gather(
+            fetch_blockscout_txs(addr),
+            fetch_etherscan_token_txs(addr),
+        )
+        if not eth_txs:
+            return await fetch_etherscan_txs(addr)
+        seen: set[str] = set()
+        merged: list[dict] = []
+        for tx in eth_txs + token_txs:
+            key = f"{tx['hash']}:{tx['asset']}"
+            if key not in seen:
+                seen.add(key)
+                merged.append(tx)
+        return merged
+
+    def short_addr(a: str) -> str:
+        return f"{a[:6]}…{a[-4:]}" if a else ""
+
+    def node_label(addr: str) -> tuple[str, dict | None]:
+        lbl_map = labels_for(db, [addr], chain_id)
+        lbl_list = lbl_map.get(addr.lower(), [])
+        if lbl_list:
+            info = {"name": lbl_list[0].name, "labels": [l.category for l in lbl_list]}
+            return lbl_list[0].name, info
+        return short_addr(addr), None
+
+    nodes: dict[str, dict] = {}
+    edges: list[dict] = []
+    edge_keys: set[str] = set()
+    visited: set[str] = set()
+    queue = [(address.lower(), 0)]
+
+    root_lbl, root_info = node_label(address)
+    nodes[address.lower()] = {"id": address.lower(), "label": root_lbl, "root": True, "labelInfo": root_info}
+
+    MAX_NODES = 150
+
+    while queue and len(nodes) < MAX_NODES:
+        addr, level = queue.pop(0)
+        if addr in visited:
+            continue
+        visited.add(addr)
+
+        all_txs = await fetch_txs(addr)
+
+        for tx in all_txs:
+            # Only apply minValueEth to native ETH — token amounts are in token units
+            if tx["asset"] == "ETH" and tx["valueEth"] < minValueEth:
+                continue
+            counterpart = tx["to"] if tx["from"] == addr else tx["from"]
+            if counterpart not in nodes:
+                lbl, info = node_label(counterpart)
+                nodes[counterpart] = {"id": counterpart, "label": lbl, "root": False, "labelInfo": info}
+            ekey = f"{tx['hash']}:{tx['source']}"
+            if ekey not in edge_keys:
+                edge_keys.add(ekey)
+                edges.append({
+                    "id": ekey, "hash": tx["hash"],
+                    "from": tx["from"], "to": tx["to"],
+                    "value": tx["valueEth"], "asset": tx["asset"],
+                    "timestamp": tx["timestamp"], "isError": tx["isError"],
+                    "source": tx["source"],
+                })
+            if level < depth and len(nodes) < MAX_NODES and counterpart not in visited:
+                queue.append((counterpart, level + 1))
+
+    lbl_count = sum(1 for n in nodes.values() if n["labelInfo"])
+    return GraphOut(
+        nodes=[GraphNode(**n) for n in nodes.values()],
+        edges=edges,
+        meta=GraphMeta(rootAddress=address, depth=depth, nodeCount=len(nodes),
+                       edgeCount=len(edges), labelsAvailable=lbl_count),
+    )
     return sources._out(sources.probe_and_store(db, source, settings, actor=me.user_id))

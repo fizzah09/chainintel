@@ -42,7 +42,7 @@ export default function Mfa() {
       <form onSubmit={verify} style={{ display: 'flex', flexDirection: 'column', gap: 18 }} noValidate>
         <BackLink onClick={back}><Icon n="left" s={16} />Use a different account</BackLink>
         <div>
-          <h2 style={{ fontSize: 28 }}>Check your email</h2>
+          <h2 style={{ fontSize: 28 }}>Two-step verification</h2>
           <p className="mu" style={{ margin: '6px 0 0' }}>We sent a 6-digit code to <b style={{ color: 'var(--tx)' }}>{maskEmail(s.session.email)}</b>. It expires in 10 minutes.</p>
         </div>
         <Note k="info" icon="help">Demo code: <b className="mono">123456</b></Note>

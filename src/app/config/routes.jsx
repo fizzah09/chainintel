@@ -11,6 +11,10 @@ import { AudEvidence } from '../../features/audit/pages/EvidenceRecords';
 import { AudReview } from '../../features/audit/pages/ReviewHistory';
 import { BaAudit } from '../../features/bank-admin/pages/BankAuditLogs';
 import { BaDash } from '../../features/bank-admin/pages/BankDashboard';
+import { PlatformDashboard } from '../../features/platform-ops/pages/PlatformDashboard';
+import { PlatformNetwork } from '../../features/platform-ops/pages/PlatformNetwork';
+import { PlatformProviders } from '../../features/platform-ops/pages/PlatformProviders';
+import { PlatformTenants } from '../../features/platform-ops/pages/PlatformTenants';
 import { BaInvite } from '../../features/bank-admin/pages/InviteUser';
 import { BaPerms } from '../../features/bank-admin/pages/PermissionMatrix';
 import { BaTeams } from '../../features/bank-admin/pages/Teams';
@@ -33,7 +37,6 @@ import { CmOversight } from '../../features/compliance/pages/CaseOversight';
 import { CmConfig } from '../../features/compliance/pages/ComplianceConfig';
 import { CmDash } from '../../features/compliance/pages/ComplianceDashboard';
 import { CmReviewQueue } from '../../features/compliance/pages/ReviewQueue';
-import { CmTeam } from '../../features/compliance/pages/TeamPerformance';
 import { StateDenied } from '../../features/errors/pages/AccessDenied';
 import { StateConfirm } from '../../features/errors/pages/StateConfirm';
 import { StateEmpty } from '../../features/errors/pages/StateEmpty';
@@ -53,6 +56,9 @@ import { InvCases } from '../../features/investigator/pages/MyCases';
 import { InvReports } from '../../features/investigator/pages/MyReports';
 import { InvTasks } from '../../features/investigator/pages/MyTasks';
 import { Notifications } from '../../features/notifications/pages/NotificationCenter';
+import { RaiseComplaint } from '../../features/complaints/pages/RaiseComplaint';
+import { Complaints } from '../../features/complaints/pages/Complaints';
+import { ComplaintDetail } from '../../features/complaints/pages/ComplaintDetail';
 import { PaJobs } from '../../features/platform-ops/pages/JobQueue';
 import { ReportBuilder } from '../../features/reports/pages/ReportBuilder';
 import { ReportLibrary } from '../../features/reports/pages/ReportLibrary';
@@ -64,7 +70,7 @@ import { RevQueue } from '../../features/reviewer/pages/ReviewQueue';
 import { Search } from '../../features/search/pages/GlobalSearch';
 import { Prefs } from '../../features/settings/pages/PersonalPrefs';
 import { Profile } from '../../features/settings/pages/ProfilePage';
-import { Settings } from '../../features/settings/pages/SettingsPage';
+import { SuperSettings } from '../../features/super-admin/pages/SuperSettings';
 import { SaNetworks } from '../../features/super-admin/pages/BlockchainNetworks';
 import { SaTenantCreate } from '../../features/super-admin/pages/CreateTenant';
 import { SaProviders } from '../../features/super-admin/pages/DataProviders';
@@ -97,6 +103,9 @@ import { PAGES, ALIASES } from './paths';
 // The element rendered for each screen key.
 const SCREENS = {
   NotificationCenter: <Notifications />,
+  RaiseComplaint: <RaiseComplaint />,
+  Complaints: <Complaints />,
+  ComplaintDetail: <ComplaintDetail />,
   ProfileMenu: <Profile />,
   GlobalSearch: <Search />,
   PersonalPrefs: <Prefs />,
@@ -157,7 +166,6 @@ const SCREENS = {
   CM_Assignment: <CmAssign />,
   CM_ReviewQueue: <CmReviewQueue />,
   CM_Oversight: <CmOversight />,
-  CM_Team: <CmTeam />,
   CM_Config: <CmConfig />,
   BA_Dashboard: <BaDash />,
   BA_Users: <BaUsers />,
@@ -165,8 +173,6 @@ const SCREENS = {
   BA_Permissions: <BaPerms />,
   BA_Teams: <BaTeams />,
   BA_Audit: <BaAudit />,
-  BA_Settings: <Settings />,
-  BA_SettingsSecurity: <Settings scope="security" />,
   AUD_Dashboard: <AudDash />,
   AUD_Cases: <AudCases />,
   AUD_Evidence: <AudEvidence />,
@@ -187,12 +193,11 @@ const SCREENS = {
   SA_Health: <SaHealth />,
   PA_Jobs: <PaJobs />,
   SA_Audit: <SaAudit />,
-  SA_Settings: <Settings scope="platform" />,
-  PA_Dashboard: <SaDash />,
-  PA_Tenants: <SaTenants />,
-  PA_Network: <SaNetworks />,
-  PA_Provider: <SaProviders />,
-  PA_Settings: <Settings scope="platform" />,
+  SA_Settings: <SuperSettings />,
+  PA_Dashboard: <PlatformDashboard />,
+  PA_Tenants: <PlatformTenants />,
+  PA_Network: <PlatformNetwork />,
+  PA_Provider: <PlatformProviders />,
   StateEmpty: <StateEmpty />,
   StateLoading: <StateLoading />,
   StateError: <StateError />,

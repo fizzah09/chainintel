@@ -40,7 +40,7 @@ export function Risk() {
 
       <Row>
         <Col flex="2 1 560px">
-          <Card title="Why this score" sub="Logical score: each factor's points, how they were calculated, and the cap per factor" act={<><Btn sm icon="dl" onClick={exportCsv}>CSV</Btn><Btn sm icon="dl" onClick={exportJson}>Full report</Btn></>}>
+          <Card title="Score explanation" sub="Logical score: each factor's points, how they were calculated, and the cap per factor" act={<><Btn sm icon="dl" onClick={exportCsv}>CSV</Btn><Btn sm icon="dl" onClick={exportJson}>Full report</Btn></>}>
             {r.factors.length === 0 && <div className="mu">No risk factors found. The wallet has no labelled risky exposure or unusual behaviour in the analysed history.</div>}
             {r.factors.map((x) => (
               <div key={x.id} style={{ padding: '12px 0', borderBottom: '1px solid #EDF1F6' }}>
@@ -65,7 +65,7 @@ export function Risk() {
         </Col>
       </Row>
 
-      <Card title="Evidence trail" sub="Score → factor → transaction → address → source">
+      <Card title="Contributing evidence" sub="Score → factor → transaction → address → source">
         <DataTable exportName={`evidence-${sh(p.address)}`} size={8} rows={evidenceRows} cols={[
           { h: 'Factor', render: (e) => e.factor },
           { h: 'Counterparty / signal', render: (e) => (e.counterparty ? <Addr a={e.counterparty} /> : e.signal) },

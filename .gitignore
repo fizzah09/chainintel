@@ -39,6 +39,13 @@ contracts/cache
 
 # Legacy Node reference code
 backend/legacy/**/node_modules
+
+# ML model artefacts — large binary files, not needed in repo
+backend/model_store/*.json
+backend/model_store/*.pkl
+
+# Python egg-info
+backend/*.egg-info/
 backend/legacy/**/.ponder
 
 # Model store (content-addressed artefacts): runtime data; back it up, do not commit

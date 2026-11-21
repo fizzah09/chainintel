@@ -10,6 +10,8 @@ let state;
 try { const raw = localStorage.getItem(KEY); state = raw ? JSON.parse(raw) : null; if (state && state.v !== 3) state = null; } catch { state = null; }
 if (!state) state = seed();
 if (!state.monitor) state.monitor = { clock: BASE_AS_OF, runs: [], snapshots: {} };
+if (!state.complaints) { const fresh = seed(); state.complaints = fresh.complaints; state.counters = { ...state.counters, cmp: fresh.counters.cmp }; }
+state.complaints = state.complaints.map((c) => { const f = seed().complaints.find((x) => x.id === c.id) || {}; return { ...f, ...c, caseId: c.caseId ?? f.caseId ?? '', thread: c.thread ?? [] }; });
 setCfg(state.cfg);
 setAsOf(state.monitor.clock);
 const subs = new Set();
@@ -36,6 +38,7 @@ export function can(s, perm) {
   return !!s.perms[perm]?.[r];
 }
 
+export const PRIORITY = { 'Something is not working': 'High', 'Wrong or missing data': 'Medium', 'Slow or unclear': 'Low', Other: 'Low' };
 export const act = {
   // ---- Authentication: invite-only. No sign-up and no wallet sign-in; accounts exist only when an admin invites them.
   // Demo rules mirror docs/BACKEND-NOTES.md: generic errors, lockout after 5 failures for 15 minutes,
@@ -176,6 +179,45 @@ export const act = {
   // watchlists & alerts
   createWatchlist(w) { return mutate((d) => { const id = 'WL-' + d.counters.wl++; d.watchlists.unshift({ id, owner: actor(d), updated: nowIso(), wallets: [], ...w, id }); log(d, 'Created watchlist', w.name); return id; }); },
   updateWatchlist(id, p) { mutate((d) => { Object.assign(d.watchlists.find((x) => x.id === id), p, { updated: nowIso() }); log(d, 'Updated watchlist', id); }); },
+  raiseComplaint(v) {
+    return mutate((d) => {
+      const id = 'CMP-' + pad(d.counters.cmp++, 4);
+      d.complaints.unshift({ id, by: actor(d), caseId: v.caseId || '', thread: [], subject: v.subject, problem: v.problem, where: v.where, details: v.details, shot: v.shot || '', priority: PRIORITY[v.problem] || 'Low', status: 'Open', handledBy: '', raisedAt: nowIso(), updated: nowIso(), reply: '' });
+      log(d, 'Raised complaint', id);
+      notify(d, 'Complaint raised', `${id}: ${v.subject}`, 'system', 'Complaints');
+      return id;
+    });
+  },
+  updateCaseTeam(id, { phase, assignees, due, note }) {
+    mutate((d) => {
+      const c = d.cases.find((x) => x.id === id);
+      c.phase = phase;
+      c.assignees = assignees;
+      c.reviewDue = due || '';
+      c.reviewNote = note || '';
+      if (phase === 'Review') { c.status = 'Under Review'; c.reviewer = assignees[0]; }
+      log(d, `Case ${phase.toLowerCase()}: ${assignees.join(', ')}`, id, id);
+      notify(d, 'Case assigned', `${id}: ${phase.toLowerCase()} assigned to ${assignees.join(', ')}.`, 'case', 'CaseDetails');
+    });
+  },
+  postComplaintMessage(id, text) {
+    mutate((d) => {
+      const c = d.complaints.find((x) => x.id === id);
+      c.thread = [...(c.thread || []), { by: actor(d), role: d.session.role, at: nowIso(), text }];
+      c.updated = nowIso();
+      log(d, 'Posted complaint message', id);
+      notify(d, 'Complaint message', `${id}: new message from ${actor(d)}.`, 'system', ['pa', 'sa'].includes(d.session.role) ? 'RaiseComplaint' : 'Complaints');
+    });
+  },
+  answerComplaint(id, status, reply) {
+    mutate((d) => {
+      const c = d.complaints.find((x) => x.id === id);
+      Object.assign(c, { status, reply, handledBy: actor(d), updated: nowIso() });
+      c.thread = [...(c.thread || []), { by: actor(d), role: d.session.role, at: nowIso(), text: reply }];
+      log(d, `Complaint ${status.toLowerCase()}`, id);
+      notify(d, 'Complaint answered', `${id} is now ${status.toLowerCase()}.`, 'system', 'RaiseComplaint');
+    });
+  },
   deleteWatchlist(id) { mutate((d) => { d.watchlists = d.watchlists.filter((x) => x.id !== id); log(d, 'Deleted watchlist', id); }); },
   addToWatchlist(id, a) {
     if (!isAddr(a)) return { ok: false, error: 'Enter a valid Ethereum address.' };
