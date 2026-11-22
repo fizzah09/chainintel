@@ -17,7 +17,7 @@ export function BaDash() {
   const rows = s.users.map((u) => ({ ...u, openCases: s.cases.filter((c) => c.assignee === u.name && open(c)).length }));
 
   return <>
-    <Head title="Bank dashboard" desc="Tenant usage, users and compliance activity for Example Bank."
+    <Head title="Bank dashboard" desc="Tenant usage, users and compliance activity for your organisation."
       acts={<Btn kind="pri" to={pathOf('RaiseComplaint')}>Raise complaint</Btn>} />
     <Kpis items={[
       ['Total users', s.users.length, `${active.length} active · ${invited.length} invited`],

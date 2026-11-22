@@ -39,10 +39,10 @@ export function Monitoring() {
       <div className="mu sm" style={{ marginTop: 10 }}>Try: <button className="link" onClick={() => go(s.recent[0])}>{sh(s.recent[0], 10, 6)}</button> (critical example). Any valid 0x address works.</div>
     </Card>
     <Kpis items={[
-      ['Wallets analysed', num(s.recent.length), 'In your recent list'],
+      ['Monitored wallets', num(s.recent.length), 'In your recent list'],
       ['Critical risk', num(rows.filter((p) => p.tier === 'crit').length), 'Score ≥ ' + CFG.thr[2], 'crit'],
       ['High risk', num(rows.filter((p) => p.tier === 'high').length), `Score ${CFG.thr[1]}–${CFG.thr[2] - 1}`, 'high'],
-      ['Alerts', alerts.length, `${unacked} unacknowledged`],
+      ['Alerts today', alerts.length, `${unacked} unacknowledged`],
     ]} />
     <Card title="Recently analysed wallets">
       <DataTable exportName="wallets" search="Filter wallets" searchText={(p) => p.address + p.label} size={8}

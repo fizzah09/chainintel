@@ -13,7 +13,7 @@ export function InvTasks() {
   return <>
     <Head title="My tasks" desc="Tasks across all your cases." />
     <Card>
-      <DataTable rows={rows} cols={[
+      <DataTable rows={rows} search="Search tasks" searchText={(t) => t.title + t.caseId} filters={[{ label: 'Status', options: ['In Progress', 'Waiting', 'Overdue', 'Completed'], test: (t, v) => t.shown === v }]} cols={[
         { h: 'Task', render: (t) => t.title, val: (t) => t.title },
         { h: 'Assigned by', render: (t) => t.assignedBy, val: (t) => t.assignedBy },
         { h: 'Due', render: (t) => fd(t.due), val: (t) => t.due },

@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { pathOf } from '../../../app/config/paths';
 import { Btn, Card, Dl, Head, Note, Row, SelectIn, useToast } from '../../../components/ui';
 import { DEF } from '../shared';
-import { PERIODS, TG } from '../../../lib/risk';
+import { PERIODS } from '../../../lib/risk';
 import { act, useStore } from '../../../mocks/store';
 
 export function TraceFilters() {
-  const s = useStore(); const nav = useNavigate(); const toast = useToast(); const sv = s.ctx.trace || {}; const [f, setF] = useState({ ...DEF, start: TG, ...sv });
+  const s = useStore(); const nav = useNavigate(); const toast = useToast(); const sv = s.ctx.trace || {}; const [f, setF] = useState({ ...DEF, start: '', ...sv });
   const set = (k) => (v) => setF({ ...f, [k]: v });
   return <><Head title="Trace filters" desc="Control how much of the graph is retrieved and displayed." />
     <Row><Card title="Filters" style={{ flex: '1 1 440px' }}><div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}><SelectIn label="Direction" value={f.dir} onChange={set('dir')} options={['Forward', 'Backward', 'Forward and backward']} /><SelectIn label="Hops" value={f.hops} onChange={set('hops')} options={['1', '2', '3', '4', '5']} /></div><div style={{ height: 14 }} /><div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}><SelectIn label="Period" value={f.period} onChange={set('period')} options={Object.keys(PERIODS)} /><SelectIn label="Minimum amount" value={f.min} onChange={set('min')} options={[['0', 'Any'], ['100', '100 USDT'], ['1000', '1,000 USDT']]} /></div>

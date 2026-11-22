@@ -1,11 +1,10 @@
 import { useSyncExternalStore } from 'react';
 import { seed, ACCOUNTS, chainLog, ROLE_NAMES } from './seed';
 import { setCfg, setAsOf, quickScore, walletProfile } from '../lib/risk';
-import { assessSimulated, BASE_AS_OF } from '../engine';
-import { monitorWallets } from '../engine/monitor';
+import { BASE_AS_OF } from '../engine';
 import { isAddr, isEmail, kec, txh } from '../lib/format';
 
-const KEY = 'chainintel-state-v1';
+const KEY = 'chainintel-state-v2';
 let state;
 try { const raw = localStorage.getItem(KEY); state = raw ? JSON.parse(raw) : null; if (state && state.v !== 3) state = null; } catch { state = null; }
 if (!state) state = seed();
@@ -223,38 +222,17 @@ export const act = {
     if (!isAddr(a)) return { ok: false, error: 'Enter a valid Ethereum address.' };
     const w = state.watchlists.find((x) => x.id === id);
     if (w.wallets.some((x) => x.a.toLowerCase() === a.toLowerCase())) return { ok: false, error: 'This wallet is already on the watchlist.' };
+    if (w.wallets.length >= 3) return { ok: false, error: 'A watchlist holds up to 3 addresses.' };
     const sc = quickScore(a);
     mutate((d) => {
       const wl = d.watchlists.find((x) => x.id === id); wl.wallets.push({ a, added: nowIso(), by: actor(d) }); wl.updated = nowIso(); log(d, 'Added wallet to watchlist', a);
-      if (wl.rule === 'any' || sc >= wl.thr) { const aid = `ALR-2026-${pad(d.counters.alr++, 4)}`; d.alerts.unshift({ id: aid, wallet: a, trigger: wl.rule === 'any' ? 'Watchlist activity' : `Score at or above ${wl.thr}`, from: Math.max(0, sc - 12), score: sc, at: nowIso(), status: 'Unacknowledged', tx: txh('al' + aid), list: wl.name }); notify(d, 'Watchlist match', `${a.slice(0, 6)}…${a.slice(-4)} matched "${wl.name}" (score ${sc}).`, 'watch', 'AlertsDashboard'); }
+      if (wl.rule === 'any' || (sc != null && sc >= wl.thr)) { const aid = `ALR-2026-${pad(d.counters.alr++, 4)}`; d.alerts.unshift({ id: aid, wallet: a, trigger: wl.rule === 'any' ? 'Watchlist activity' : `Score at or above ${wl.thr}`, from: Math.max(0, sc - 12), score: sc, at: nowIso(), status: 'Unacknowledged', tx: txh('al' + aid), list: wl.name }); notify(d, 'Watchlist match', `${a.slice(0, 6)}…${a.slice(-4)} matched "${wl.name}" (score ${sc}).`, 'watch', 'AlertsDashboard'); }
     });
     return { ok: true, score: sc };
   },
   removeFromWatchlist(id, a) { mutate((d) => { const w = d.watchlists.find((x) => x.id === id); w.wallets = w.wallets.filter((x) => x.a !== a); log(d, 'Removed wallet from watchlist', a); }); },
-  // Monitoring job: re-assess every watchlist wallet and raise alerts on changes (engine/monitor.js).
-  runMonitoring(days = 1) {
-    let summary;
-    mutate((d) => {
-      const entries = d.watchlists.flatMap((w) => w.wallets.map((x) => ({ address: x.a, list: w.name, rule: w.rule, thr: w.thr })));
-      const assessAt = (at) => (a) => assessSimulated(a, walletProfile(a).hints, at, { withForecast: false });
-      const first = Object.keys(d.monitor.snapshots).length === 0;
-      if (first) d.monitor.snapshots = monitorWallets(entries, {}, assessAt(d.monitor.clock)).snapshots; // baseline
-      const clock = new Date(Date.parse(d.monitor.clock) + days * 864e5).toISOString();
-      setAsOf(clock);
-      const { snapshots, alerts } = monitorWallets(entries, d.monitor.snapshots, assessAt(clock));
-      d.monitor.snapshots = { ...d.monitor.snapshots, ...snapshots }; d.monitor.clock = clock;
-      for (const al of alerts) {
-        const id = `ALR-2026-${pad(d.counters.alr++, 4)}`;
-        d.alerts.unshift({ id, wallet: al.wallet, trigger: al.trigger, reasons: al.reasons, from: al.from, score: al.score, at: nowIso(), observedAt: clock, status: 'Unacknowledged', list: al.list, tx: al.tx || txh(id) });
-        notify(d, 'New alert', `${al.trigger} (${al.wallet.slice(0, 8)}…)`, 'alert', 'AlertsDashboard');
-      }
-      d.monitor.runs.unshift({ ranAt: nowIso(), clock, wallets: Object.keys(snapshots).length, alerts: alerts.length });
-      d.monitor.runs = d.monitor.runs.slice(0, 20);
-      log(d, `Monitoring run: ${alerts.length} alert(s)`, `${Object.keys(snapshots).length} wallets`);
-      summary = { alerts: alerts.length, wallets: Object.keys(snapshots).length, baseline: first };
-    });
-    return summary;
-  },
+  // Monitoring needs backend scores for watchlist wallets; the frontend no longer simulates them.
+  runMonitoring() { return { alerts: 0, wallets: 0, baseline: false, unavailable: true }; },
   alertStatus(id, status) { mutate((d) => { d.alerts.find((x) => x.id === id).status = status; log(d, `Alert ${status.toLowerCase()}`, id); }); },
   // reports
   createReport(r) { return mutate((d) => { const id = `RPT-2026-${pad(d.counters.rpt++, 4)}`; d.reports.unshift({ id, by: actor(d), date: nowIso(), status: 'Draft', ...r, id }); log(d, 'Generated report', id); notify(d, 'Report ready', `${r.title} (${id}) finished generating.`, 'report', 'ReportLibrary'); d.ctx.report = id; return id; }); },

@@ -145,3 +145,35 @@ details.demo summary{cursor:pointer;color:var(--mu);font-size:13px;font-weight:5
 @media (max-width:860px){.side{max-width:none;flex-basis:100%}.content{padding:20px 16px 48px}.top{padding:10px 16px}.auth-l{padding:32px 24px;min-height:0;gap:32px}.auth-l h1{font-size:30px}}
 @media (max-width:420px){.otp input{width:40px;height:46px;font-size:18px}}
 @media print{.side,.top,.acts,.banner,.toasts{display:none!important}.content{padding:0}body{background:#fff}}
+
+/* Responsive shell: the sidebar becomes a drawer below 860px; the top bar keeps only essentials. */
+.menu-btn{display:none}
+.side-scrim{display:none}
+@media (max-width:860px){
+  .app{display:block;min-height:100vh}
+  .side{position:fixed;top:0;left:0;bottom:0;width:272px;max-width:85vw;z-index:70;transform:translateX(-100%);transition:transform .2s ease;overflow-y:auto}
+  .side.open{transform:none;box-shadow:0 0 40px rgba(0,0,0,.35)}
+  .side-scrim{display:block;position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:65}
+  .menu-btn{display:inline-flex;flex:none}
+  .main{width:100%}
+  .top{padding:10px 16px;gap:10px;flex-wrap:nowrap;overflow-x:auto}
+  .top .pill{display:none}
+  .top .search{flex:1 1 auto;min-width:140px}
+  .top .user div{display:none}
+  .top .user{flex:none}
+  .content{padding:16px 16px 40px;gap:16px}
+  .row{flex-direction:column;gap:16px}
+  .row>*{flex:1 1 auto!important;width:100%;min-width:0}
+  .card{padding:16px}
+  .modal{padding:18px;max-width:none}
+  .overlay{padding:12px}
+  .ph{flex-direction:column;align-items:flex-start}
+  .ph h1{font-size:22px}
+  .acts{width:100%}
+  .acts .btn{flex:1 1 auto}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tools{gap:8px}
+  .tools .s{flex:1 1 100%}
+  .tbl{-webkit-overflow-scrolling:touch}
+}
+@media (max-width:480px){.kpis{grid-template-columns:1fr}}

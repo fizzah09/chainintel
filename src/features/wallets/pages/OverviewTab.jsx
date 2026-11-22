@@ -24,7 +24,7 @@ export function Overview() {
   const alerts = s.alerts.filter((a) => a.wallet.toLowerCase() === p.address.toLowerCase() && a.status !== 'Resolved');
   return <W active="Overview"><LiveWalletCard address={p.address} />
     <Kpis items={[
-      ['Current balance', `${num(p.bal, 2)} ETH`, `≈ $${num(p.bal * 1900)}`],
+      ['Current balance', p.bal == null ? '—' : `${num(p.bal, 2)} ETH`, 'On-chain balance'],
       ['Total transactions', num(p.tx), `${num(p.counts.in)} in · ${num(p.counts.out)} out`],
       ['Total volume', usd(p.vol), 'Last 12 months'],
       ['Unique counterparties', num(p.cp), `${p.cps.filter((c) => c.risk >= CFG.thr[1]).length} flagged`, 'high'],

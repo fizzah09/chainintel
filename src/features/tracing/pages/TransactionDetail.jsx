@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { pathOf } from '../../../app/config/paths';
 import { LiveTxCard } from '../../../components/domain/OnChain';
-import { Addr, Btn, Card, Chip, DataTable, Dl, Gauge, Hash, Head, Icon, Row, Status, Tier, useToast } from '../../../components/ui';
+import { Addr, Btn, Card, Chip, DataTable, Dl, Empty, Gauge, Hash, Head, Icon, Row, Status, Tier, useToast } from '../../../components/ui';
 import { AddToCase, DESC, METH } from '../shared';
 import { fdt, isTx, num, sh } from '../../../lib/format';
 import { attribute, txDetail } from '../../../lib/risk';
@@ -11,7 +11,9 @@ import { act, can, useStore } from '../../../mocks/store';
 export function TxDetail() {
   const s = useStore(); const nav = useNavigate(); const toast = useToast(); const [m, setM] = useState('prop'); const [add, setAdd] = useState(false);
   const hash = isTx(s.ctx.tx) ? s.ctx.tx : s.ctx.tx;
-  const tx = txDetail(hash); const attr = attribute(tx.ins, tx.amount, m); const sum = attr.reduce((a, b) => a + b.v, 0);
+  const tx = txDetail(hash);
+  if (!tx) return <><Head title="Transaction detail" /><Card><Empty icon="inbox" title="No transaction data" desc="Transaction details appear once the backend has data for this hash." /></Card></>;
+  const attr = attribute(tx.ins, tx.amount, m); const sum = attr.reduce((a, b) => a + b.v, 0);
   return <><Head title="Transaction detail" acts={<><Btn icon="copy" onClick={() => { navigator.clipboard?.writeText(tx.hash); toast('Hash copied'); }}>Copy hash</Btn><Btn icon="case" disabled={!can(s, 'create_case')} onClick={() => setAdd(true)}>Add to case</Btn><a className="btn" href={`https://etherscan.io/tx/${tx.hash}`} target="_blank" rel="noreferrer"><Icon n="link" s={16} />View on explorer</a></>} /><LiveTxCard hash={tx.hash} />
     <Card><div style={{ display: 'flex', flexWrap: 'wrap', gap: 24, alignItems: 'center', justifyContent: 'space-between' }}><div><div className="mono" style={{ fontSize: 14, fontWeight: 600, wordBreak: 'break-all', whiteSpace: 'normal' }}>{tx.hash}</div><div className="mu" style={{ marginTop: 6, display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}><Status s="Success" /><Chip k="blue">ERC-20 · USDT</Chip><Tier score={tx.risk} /><span>Block {num(tx.block)} · {fdt(tx.time)} UTC</span></div></div><div style={{ textAlign: 'right' }}><div className="mu sm">Value</div><div style={{ fontSize: 28, fontWeight: 700 }}>{num(tx.amount)} USDT</div></div></div></Card>
     <Row><Card title="Details" style={{ flex: '1 1 380px' }}><Dl items={[['From', <Addr a={tx.from} key="f" />], ['To', <Addr a={tx.to} key="t" />], ['Gas used', `${num(tx.gas)} · ${tx.gwei} gwei`], ['Fee', `${tx.fee} ETH`], ['Confirmations', num(tx.conf)], ['Nonce', tx.nonce]]} /></Card>

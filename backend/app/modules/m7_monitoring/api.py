@@ -14,6 +14,9 @@ from app.core.security import Principal, require_principal
 from app.modules.m7_monitoring.models import Alert, Watchlist, WatchlistEntry
 
 router = APIRouter(prefix="/api/v1", tags=["M7 monitoring"], dependencies=[Depends(require_principal)])
+
+# A watchlist holds at most this many addresses (matches the frontend limit).
+WATCHLIST_MAX_ADDRESSES = 3
 DB = Annotated[Session, Depends(get_db)]
 Me = Annotated[Principal, Depends(require_principal)]
 
@@ -164,6 +167,8 @@ def delete_watchlist(watchlist_id: str, db: DB, me: Me):
 @router.post("/watchlists/{watchlist_id}/entries", response_model=EntryOut, status_code=201)
 def add_entry(watchlist_id: str, body: WatchlistEntryIn, db: DB, me: Me):
     w = _get_wl(db, watchlist_id, me.tenant_id)
+    if len(w.entries) >= WATCHLIST_MAX_ADDRESSES:
+        raise HTTPException(409, f"A watchlist holds up to {WATCHLIST_MAX_ADDRESSES} addresses.")
     e = WatchlistEntry(
         watchlist_id=w.id, chain_id=body.chain_id, address=body.address.lower(),
         label=body.label, risk_score=body.risk_score, added_at=_now(), added_by=me.user_id,

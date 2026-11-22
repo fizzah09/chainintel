@@ -59,7 +59,7 @@ export function LiveTransactions({ address }) {
 export function AnchorCard() {
   const s = useStore(); const toast = useToast(); const { isConnected } = useAccount(); const chainId = useChainId();
   const { switchChainAsync } = useSwitchChain(); const { writeContractAsync } = useWriteContract(); const { connectors, connectAsync } = useConnect();
-  const tenant = tenantId(s.settings.orgName || 'Example Bank'); const [busy, setBusy] = useState(false); const [n, setN] = useState(0);
+  const tenant = tenantId(s.settings.orgName || 'My organisation'); const [busy, setBusy] = useState(false); const [n, setN] = useState(0);
   const st = useAsync(() => readLatest(tenant), `${tenant}-${n}`, !!ANCHOR_ADDRESS);
   const head = s.audit[s.audit.length - 1]; const cmp = compareAnchor(st.data, s.audit);
   const anchor = async () => {

@@ -6,7 +6,6 @@ import { Alerts } from '../../features/alerts/pages/AlertsDashboard';
 import { AudDash } from '../../features/audit/pages/AuditDashboard';
 import { AuditTrail } from '../../features/audit/pages/AuditTrail';
 import { AudCases } from '../../features/audit/pages/CaseRecords';
-import { AudActivity } from '../../features/audit/pages/ComplianceActivity';
 import { AudEvidence } from '../../features/audit/pages/EvidenceRecords';
 import { AudReview } from '../../features/audit/pages/ReviewHistory';
 import { BaAudit } from '../../features/bank-admin/pages/BankAuditLogs';
@@ -17,7 +16,6 @@ import { PlatformProviders } from '../../features/platform-ops/pages/PlatformPro
 import { PlatformTenants } from '../../features/platform-ops/pages/PlatformTenants';
 import { BaInvite } from '../../features/bank-admin/pages/InviteUser';
 import { BaPerms } from '../../features/bank-admin/pages/PermissionMatrix';
-import { BaTeams } from '../../features/bank-admin/pages/Teams';
 import { BaUsers } from '../../features/bank-admin/pages/UsersRoles';
 import { CComms } from '../../features/cases/pages/CaseCommunication';
 import { Wizard } from '../../features/cases/pages/CaseCreateWizard';
@@ -33,7 +31,6 @@ import { CSubjects } from '../../features/cases/pages/CaseSubjects';
 import { CTasks } from '../../features/cases/pages/CaseTasks';
 import { CTimeline } from '../../features/cases/pages/CaseTimeline';
 import { CmAssign } from '../../features/compliance/pages/CaseAssignment';
-import { CmOversight } from '../../features/compliance/pages/CaseOversight';
 import { CmConfig } from '../../features/compliance/pages/ComplianceConfig';
 import { CmDash } from '../../features/compliance/pages/ComplianceDashboard';
 import { CmReviewQueue } from '../../features/compliance/pages/ReviewQueue';
@@ -46,11 +43,6 @@ import { StateStale } from '../../features/errors/pages/StateStale';
 import { StateToast } from '../../features/errors/pages/StateToast';
 import { EvDetail } from '../../features/evidence/pages/EvidenceDetail';
 import { EvUpload } from '../../features/evidence/pages/EvidenceUpload';
-import { ErSources } from '../../features/examiner/pages/DataSources';
-import { ErDash } from '../../features/examiner/pages/EvaluationDashboard';
-import { ErValidation } from '../../features/examiner/pages/EvidenceValidation';
-import { ErMethod } from '../../features/examiner/pages/RiskMethodology';
-import { ErSystem } from '../../features/examiner/pages/SystemInformation';
 import { InvDash } from '../../features/investigator/pages/InvestigatorDashboard';
 import { InvCases } from '../../features/investigator/pages/MyCases';
 import { InvReports } from '../../features/investigator/pages/MyReports';
@@ -67,7 +59,6 @@ import { RevEvidence } from '../../features/reviewer/pages/EvidenceReview';
 import { RevDash } from '../../features/reviewer/pages/ReviewDashboard';
 import { RevHistory } from '../../features/reviewer/pages/ReviewHistory';
 import { RevQueue } from '../../features/reviewer/pages/ReviewQueue';
-import { Search } from '../../features/search/pages/GlobalSearch';
 import { Prefs } from '../../features/settings/pages/PersonalPrefs';
 import { Profile } from '../../features/settings/pages/ProfilePage';
 import { SuperSettings } from '../../features/super-admin/pages/SuperSettings';
@@ -107,7 +98,6 @@ const SCREENS = {
   Complaints: <Complaints />,
   ComplaintDetail: <ComplaintDetail />,
   ProfileMenu: <Profile />,
-  GlobalSearch: <Search />,
   PersonalPrefs: <Prefs />,
   WalletMonitoring: <Monitoring />,
   WalletOverview: <Overview />,
@@ -165,24 +155,16 @@ const SCREENS = {
   CM_Dashboard: <CmDash />,
   CM_Assignment: <CmAssign />,
   CM_ReviewQueue: <CmReviewQueue />,
-  CM_Oversight: <CmOversight />,
   CM_Config: <CmConfig />,
   BA_Dashboard: <BaDash />,
   BA_Users: <BaUsers />,
   BA_Invite: <BaInvite />,
   BA_Permissions: <BaPerms />,
-  BA_Teams: <BaTeams />,
   BA_Audit: <BaAudit />,
   AUD_Dashboard: <AudDash />,
   AUD_Cases: <AudCases />,
   AUD_Evidence: <AudEvidence />,
   AUD_Review: <AudReview />,
-  AUD_Activity: <AudActivity />,
-  ER_Dashboard: <ErDash />,
-  ER_Method: <ErMethod />,
-  ER_Sources: <ErSources />,
-  ER_Validation: <ErValidation />,
-  ER_System: <ErSystem />,
   SA_Dashboard: <SaDash />,
   SA_Tenants: <SaTenants />,
   SA_TenantCreate: <SaTenantCreate />,

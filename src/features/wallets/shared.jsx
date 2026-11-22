@@ -76,12 +76,19 @@ export const useWallet = () => {
 
 export const TABS = [['Overview', 'WalletOverview'], ['Transactions', 'WalletTransactions'], ['Counterparties', 'WalletCounterparties'], ['Risk Assessment', 'RiskAssessment'], ['Graph', 'WalletGraph'], ['Evidence', 'WalletEvidence'], ['Cases', 'WalletCases'], ['Watchlists', 'WalletWatchlists'], ['History', 'WalletHistory']];
 
+// Icon tile colours per tier, as in the design (wallet header card).
+const TILE = { crit: ['#FEE2E2', '#991B1B'], high: ['#FFEDD5', '#9A3412'], mod: ['#FEF3C7', '#92400E'], low: ['#DCFCE7', '#166534'], unk: ['#E2E8F0', '#475569'] };
+
 export function WalletHead({ active }) {
   const [p, s] = useWallet(); const nav = useNavigate(); const toast = useToast(); const [wl, setWl] = useState(false); const [sel, setSel] = useState(s.watchlists[0]?.id);
   const on = s.watchlists.some((w) => w.wallets.some((x) => x.a.toLowerCase() === p.address.toLowerCase()));
   const mk = () => { act.setWizard({ title: `Review of wallet ${sh(p.address)}`, subjects: [{ kind: 'wallet', ref: p.address, role: 'Primary' }], source: 'Wallet profile', desc: `Wallet scores ${p.score} (${TN[p.tier]}).`, priority: p.tier === 'crit' ? 'Critical' : p.tier === 'high' ? 'High' : 'Medium' }); nav(pathOf('CaseCreate')); };
   return <>
-    <div className="ph" style={{ marginBottom: 4 }}>
+    <div className="card" style={{ padding: 22 }}><div style={{ display: 'flex', flexWrap: 'wrap', gap: 24, alignItems: 'center', justifyContent: 'space-between' }}>
+      <div style={{ display: 'flex', gap: 18, alignItems: 'center', flexWrap: 'wrap' }}>
+        <div style={{ width: 56, height: 56, borderRadius: 14, background: (TILE[p.tier] || TILE.unk)[0], color: (TILE[p.tier] || TILE.unk)[1], display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5H18v3"/><path d="M4 7.5V17a2 2 0 0 0 2 2h13a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1H6.5A2.5 2.5 0 0 1 4 7.5z"/><circle cx="16" cy="13.5" r="1.2"/></svg>
+        </div>
       <div>
         <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
           <h1 className="mono" style={{ fontSize: 20 }}>{p.address}</h1>
@@ -91,14 +98,14 @@ export function WalletHead({ active }) {
           {p.label !== 'Unknown' && <Chip k="gray">{p.label}</Chip>}
         </div>
         <p>Externally owned · First seen {fd(p.first)} · Last active {fd(p.last)}</p>
-      </div>
+      </div></div>
       <div className="acts">
         <Btn icon="copy" onClick={() => { navigator.clipboard?.writeText(p.address); toast('Address copied'); }}>Copy address</Btn>
         <Btn icon="tag" onClick={() => setWl(true)}>Add to watchlist</Btn>
         <Btn icon="case" onClick={mk} disabled={!can(s, 'create_case')}>Create case</Btn>
         <Btn kind="pri" icon="graph" disabled={!can(s, 'run_trace')} onClick={() => { act.setCtx({ trace: { start: p.address } }); nav(pathOf('TransactionTracing')); }}>Trace transactions</Btn>
       </div>
-    </div>
+    </div></div>
     <Tabs items={TABS.map(([l, k]) => [l, pathOf(k)])} active={active} />
     <Modal open={wl} title="Add to watchlist" onClose={() => setWl(false)} footer={<><Btn onClick={() => setWl(false)}>Cancel</Btn><Btn kind="pri" onClick={() => { const r = act.addToWatchlist(sel, p.address); if (r.ok) { toast(`Added to watchlist (score ${r.score})`); setWl(false); } else toast(r.error, 'bad'); }}>Add</Btn></>}>
       <SelectIn label="Watchlist" value={sel} onChange={setSel} options={s.watchlists.map((w) => [w.id, `${w.name} (${w.scope})`])} hint="An alert is raised if the wallet meets the list rule." /></Modal></>;

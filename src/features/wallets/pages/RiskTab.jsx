@@ -4,6 +4,7 @@ import { ForecastChart } from '../../../components/charts/ForecastChart';
 import { W, useWallet } from '../shared';
 import { useRiskReport } from '../useRiskReport';
 import { ENGINE, MODEL_INFO } from '../../../engine';
+import { CFG } from '../../../lib/risk';
 import { csv, download, fd, sh } from '../../../lib/format';
 import { act } from '../../../mocks/store';
 import { pathOf } from '../../../app/config/paths';
@@ -17,7 +18,7 @@ export function Risk() {
   const [p] = useWallet();
   const nav = useNavigate();
   const { status, report: r, error } = useRiskReport(p.address);
-  if (!r) return <W active="Risk Assessment"><Card><div className="mu">{status === 'loading' ? 'Fetching transactions and scoring this wallet…' : 'No assessment available.'}</div></Card></W>;
+  if (!r) return <W active="Risk Assessment"><Card><div className="mu">{status === 'loading' ? 'Fetching transactions and scoring this wallet…' : status === 'error' ? `Risk engine unavailable: ${error}` : 'No risk assessment exists for this wallet yet. The backend has no on-chain data for it.'}</div></Card></W>;
 
   const openTx = (h) => { act.setCtx({ tx: h, wallet: p.address }); nav(pathOf('TransactionDetail')); };
   const evidenceRows = r.factors.flatMap((f) => f.evidence.map((e, i) => ({ ...e, factor: f.name, key: f.id + i })));
@@ -27,8 +28,6 @@ export function Risk() {
 
   return (
     <W active="Risk Assessment">
-      {error && <Note k="warn" icon="alert">Live data failed ({error}). Showing simulated history.</Note>}
-      {r.mode === 'simulated' && <Note k="gray" icon="help">Simulated transaction history (no Etherscan or Alchemy key set). The engine, rules and model are real; add <span className="mono">VITE_ETHERSCAN_KEY</span> to score live data. As of {r.asOf.slice(0, 10)}.</Note>}
 
       <Kpis items={[
         ['Risk score (rules)', `${r.score} / 100`, r.tierName, r.tier],
@@ -58,7 +57,7 @@ export function Risk() {
           </Card>
         </Col>
         <Col flex="1 1 320px">
-          <Card title="Overall risk"><div style={{ display: 'flex', justifyContent: 'center' }}><Gauge score={r.score} size={210} /></div><div style={{ textAlign: 'center' }}><Tier score={r.score} /></div></Card>
+          <Card title="Overall risk"><div style={{ display: 'flex', justifyContent: 'center' }}><Gauge score={r.score} size={210} /></div><div style={{ textAlign: 'center' }}><Tier score={r.score} /></div><div className="mu sm" style={{ textAlign: 'center', marginTop: 10 }}>Methodology v{ENGINE.version} · {r.factors.length} factor{r.factors.length === 1 ? '' : 's'} · Computed {fd(r.asOf)}</div></Card><Card title="Tier thresholds"><div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}><span><i style={{ display: 'inline-block', width: 10, height: 10, borderRadius: 3, background: '#16A34A', marginRight: 8 }} />Low: 0–{CFG.thr[0] - 1}</span><span><i style={{ display: 'inline-block', width: 10, height: 10, borderRadius: 3, background: '#F59E0B', marginRight: 8 }} />Moderate: {CFG.thr[0]}–{CFG.thr[1] - 1}</span><span><i style={{ display: 'inline-block', width: 10, height: 10, borderRadius: 3, background: '#EA580C', marginRight: 8 }} />High: {CFG.thr[1]}–{CFG.thr[2] - 1}</span><span><i style={{ display: 'inline-block', width: 10, height: 10, borderRadius: 3, background: '#DC2626', marginRight: 8 }} />Critical: {CFG.thr[2]}–100</span></div><div className="hint" style={{ marginTop: 10 }}>Thresholds are set by Super Admin in the risk engine.</div></Card>
           <Card title="Entity" sub="What the wallet is, kept separate from how risky it is">
             <Dl w={110} items={[['Type', r.entity.label], ['Category', r.entity.type], ['Confidence', r.entity.confidence ? pct(r.entity.confidence) : 'Not attributed'], ['Source', r.entity.source]]} />
           </Card>

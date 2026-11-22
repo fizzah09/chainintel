@@ -17,4 +17,4 @@ export const ROLE_LABELS = {"inv": "Investigator", "rev": "Reviewer", "cm": "Com
 export const ROLE_SCOPES = { inv: 'tenant', rev: 'tenant', cm: 'tenant', ba: 'tenant', aud: 'tenant', ex: 'tenant', pa: 'platform', sa: 'platform' };
 
 // Screen key each role lands on after sign-in (see app/config/paths.js).
-export const ROLE_LANDING = {"inv": "INV_Dashboard", "rev": "REV_Dashboard", "cm": "CM_Dashboard", "ba": "BA_Dashboard", "aud": "AUD_Dashboard", "ex": "ER_Dashboard", "pa": "PA_Dashboard", "sa": "SA_Dashboard"};
+export const ROLE_LANDING = {"inv": "INV_Dashboard", "rev": "REV_Dashboard", "cm": "CM_Dashboard", "ba": "BA_Dashboard", "aud": "AUD_Dashboard", "ex": "WalletMonitoring", "pa": "PA_Dashboard", "sa": "SA_Dashboard"};
