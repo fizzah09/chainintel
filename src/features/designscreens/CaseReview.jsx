@@ -1,3 +1,4 @@
+import { fmtDate } from '../design/dashParts';
 import { useStore } from '../../mocks/store';
 import { DLink } from '../design/DLink';
 
@@ -188,21 +189,21 @@ export default function Screen() {
                 <div>
                   <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap" }}>
                     <span className="mono mu">
-                      CASE-2026-00128
+                      {c.id || '—'}
                     </span>
                     <span className="chip pur">
-                      Under Review
+                      {c.status || '—'}
                     </span>
-                    <span className="chip bad">
-                      Critical
+                    <span className={`chip ${c.priority === 'Critical' ? 'bad' : ''}`}>
+                      {c.priority || '—'}
                     </span>
                   </div>
                   <h1 style={{ fontSize: "22px", marginTop: "6px" }}>
-                    Suspected layering via mixer
+                    {c.title || 'No case selected'}
                   </h1>
                   <div className="mu" style={{ marginTop: "6px", display: "flex", gap: "18px", flexWrap: "wrap" }}>
                     <span>
-                      Assignee: Sara Ali
+                      {`Assignee: ${c.assignee || 'Unassigned'}`}
                     </span>
                     <span>
                       Opened 02 Nov 2026
@@ -470,25 +471,25 @@ export default function Screen() {
                       Submitted by
                     </span>
                     <span>
-                      Sara Ali
+                      {c.createdBy || '—'}
                     </span>
                     <span className="t">
                       Submitted
                     </span>
                     <span>
-                      02 Nov 14:20
+                      {fmtDate(c.opened)}
                     </span>
                     <span className="t">
                       Reviewer
                     </span>
                     <span>
-                      Nadia Hussain
+                      {c.reviewer || 'Unassigned'}
                     </span>
                     <span className="t">
                       Due
                     </span>
                     <span>
-                      04 Nov
+                      {fmtDate(c.due)}
                     </span>
                   </div>
                 </div>
@@ -512,7 +513,7 @@ export default function Screen() {
                         </b>
                       </div>
                       <div className="mu sm">
-                        Sara Ali · 02 Nov 14:20
+                        {`${c.createdBy || '—'} · ${fmtDate(c.opened)}`}
                       </div>
                     </div>
                   </div>

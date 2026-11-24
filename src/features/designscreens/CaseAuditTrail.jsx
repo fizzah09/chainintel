@@ -212,7 +212,7 @@ export default function Screen() {
                   </h1>
                 </div>
                 <p>
-                  Immutable record of every action on CASE-2026-00128.
+                  {`Immutable record of every action on ${c.id || 'this case'}.`}
                 </p>
               </div>
               <div className="acts">
