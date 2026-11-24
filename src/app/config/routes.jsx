@@ -1,3 +1,5 @@
+import { DesignPage } from '../../features/design/DesignPage';
+import { DESIGN_NAMES } from '../../features/design/designNames';
 import Login from '../../features/auth/pages/Login';
 import ForgotPassword from '../../features/auth/pages/ForgotPassword';
 import Mfa from '../../features/auth/pages/Mfa';
@@ -198,6 +200,6 @@ export const PUBLIC_ROUTES = [
 
 // ---------- Signed in (inside the app shell) ----------
 export const SCREEN_ROUTES = [
-  ...Object.entries(PAGES).filter(([, p]) => p.layout !== 'auth').map(([key, p]) => ({ key, path: p.path, element: SCREENS[key] })),
-  ...ALIASES.map((a) => ({ key: a.key, path: a.path, roles: a.roles, element: SCREENS[a.key] })),
+  ...Object.entries(PAGES).filter(([, p]) => p.layout !== 'auth').map(([key, p]) => ({ key, path: p.path, element: DESIGN_NAMES.has(key) ? <DesignPage name={key} /> : SCREENS[key] })),
+  ...ALIASES.map((a) => ({ key: a.key, path: a.path, roles: a.roles, element: DESIGN_NAMES.has(a.key) ? <DesignPage name={a.key} /> : SCREENS[a.key] })),
 ];
