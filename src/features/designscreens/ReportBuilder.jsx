@@ -1,6 +1,12 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { act, useStore } from '../../mocks/store';
+import { useToast } from '../../context/ToastContext';
+import { isAddr } from '../../lib/format';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
+  const s = useStore(); const toast = useToast(); const nav = useNavigate(); const [rb, setRb] = useState({ type: 'Wallet', w1: s.ctx.wallet || '', w2: '', w3: '', period: 'Last 30 days', format: 'PDF' }); const [err, setErr] = useState('');
   return (
     <>
       <div className="app">
@@ -251,14 +257,7 @@ export default function Screen() {
                         *
                       </i>
                     </label>
-                    <div className="in">
-                      <span>
-                        Wallet Risk Assessment
-                      </span>
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                        <path d="M6 9l6 6 6-6" />
-                      </svg>
-                    </div>
+                    <div className="in"><select value={rb.type} onChange={(e) => setRb({ ...rb, type: e.target.value })} aria-label="Template">{[["Wallet", "Wallet risk assessment"], ["Case", "Case summary"], ["Compliance", "Compliance summary"]].map(([v, x]) => <option key={v} value={v}>{x}</option>)}</select></div>
                   </div>
                   <div className="fld" style={{ flex: "1 1 100%" }}>
                     <span style={{ fontWeight: "600", fontSize: "13px" }}>
@@ -271,19 +270,20 @@ export default function Screen() {
                       <label style={{ position: "absolute", left: "-9999px" }} htmlFor="rb-w1">
                         Wallet address 1
                       </label>
-                      <input id="rb-w1" className="in mono" type="text" defaultValue="0x7a3f1c5e8b2d4096a1f7c3e5d8b2a49e0c619B21" />
+                      <input id="rb-w1" className="in mono" type="text" value={rb.w1} onChange={(e) => setRb({ ...rb, w1: e.target.value })} />
                       <label style={{ position: "absolute", left: "-9999px" }} htmlFor="rb-w2">
                         Wallet address 2
                       </label>
-                      <input id="rb-w2" className="in mono" type="text" placeholder="0x… (optional)" />
+                      <input id="rb-w2" className="in mono" type="text" value={rb.w2} onChange={(e) => setRb({ ...rb, w2: e.target.value })} placeholder="0x… (optional)" />
                       <label style={{ position: "absolute", left: "-9999px" }} htmlFor="rb-w3">
                         Wallet address 3
                       </label>
-                      <input id="rb-w3" className="in mono" type="text" placeholder="0x… (optional)" />
+                      <input id="rb-w3" className="in mono" type="text" value={rb.w3} onChange={(e) => setRb({ ...rb, w3: e.target.value })} placeholder="0x… (optional)" />
                     </div>
                     <div className="hint">
                       One report can cover at most 3 wallets.
                     </div>
+{err && <div className="hint err" role="alert">{err}</div>}
                   </div>
                 </div>
                 <div style={{ height: "14px" }} />
@@ -392,7 +392,7 @@ export default function Screen() {
                   <a href="#" className="btn ">
                     Cancel
                   </a>
-                  <DLink href="/design/ReportPreview" className="btn pri">
+                  <DLink href="/reports" className="btn pri" onClick={(e) => { e.preventDefault(); const wallets = [rb.w1, rb.w2, rb.w3].map((x) => x.trim()).filter(Boolean); if (rb.type === "Wallet" && (!wallets.length || !wallets.every(isAddr))) return setErr("Enter a valid wallet address (up to 3)."); setErr(""); const title = rb.type === "Wallet" ? "Wallet risk assessment" : rb.type === "Case" ? "Case summary" : "Compliance summary"; act.createReport({ title, type: rb.type, subject: rb.type === "Wallet" ? wallets.join(", ") : s.settings.orgName, sections: ["Summary"], period: rb.period, format: rb.format }); toast("Report generated. Its content is produced by the backend when it is connected."); nav("/reports"); }}>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                       <path d="M6 3h8l5 5v13H6z" />
                       <path d="M14 3v5h5M9 13h7M9 17h7" />
