@@ -230,11 +230,11 @@ const me = s.session.name; const isOpen = (c) => c.status !== 'Closed';
               </div>
             </div>
             <div className="row" style={{ gap: "16px", alignItems: "flex-start" }}>
-              <div className="card">
+              <div className="card" style={{ flex: "1 1 440px" }}>
                 <div className="ct-h"><div><h3>Activity by week</h3><p>Audit events per day, last 7 days</p></div></div>
                 <Bars items={weekBars} empty="No audit events yet." />
               </div>
-              <div className="card">
+              <div className="card" style={{ flex: "1 1 360px" }}>
                 <div className="ct-h"><div><h3>Integrity</h3></div></div>
                 <div>{integrity.ok ? `Audit chain verified (${integrity.n} entries).` : `Chain broken at ${integrity.at}.`}</div>
               </div>

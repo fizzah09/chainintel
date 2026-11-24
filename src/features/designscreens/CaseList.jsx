@@ -3,7 +3,7 @@ import { useStore } from '../../mocks/store';
 const fmtDate = (x) => new Date(x).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
 
 export default function Screen() {
-  const s = useStore();
+  const s = useStore(); const N = (xs, f) => (xs || []).filter(f).length;
   return (
     <>
       <div className="app">
@@ -246,58 +246,38 @@ export default function Screen() {
                 <div className="l">
                   Open
                 </div>
-                <div className="v">
-                  14
-                </div>
-                <div className="s">
-                  Awaiting assignment or work
-                </div>
+                <div className="v">{N(s.cases, c => c.status === 'Open')}</div>
+                <div className="s">{'Pending assignment or start'}</div>
               </div>
               <div className="kpi">
                 <div className="l">
                   Assigned
                 </div>
-                <div className="v">
-                  10
-                </div>
-                <div className="s">
-                  In progress
-                </div>
+                <div className="v">{N(s.cases, c => c.status === 'Assigned')}</div>
+                <div className="s">{'In progress'}</div>
               </div>
               <div className="kpi">
                 <div className="l">
                   <i style={{ background: "#F59E0B" }} />
                   Under review
                 </div>
-                <div className="v">
-                  8
-                </div>
-                <div className="s">
-                  Pending reviewer decision
-                </div>
+                <div className="v">{N(s.cases, c => c.status === 'Under Review')}</div>
+                <div className="s">Pending reviewer decision</div>
               </div>
               <div className="kpi">
                 <div className="l">
                   Closed
                 </div>
-                <div className="v">
-                  42
-                </div>
-                <div className="s">
-                  Last 90 days
-                </div>
+                <div className="v">{N(s.cases, c => c.status === 'Closed')}</div>
+                <div className="s">{'All time'}</div>
               </div>
               <div className="kpi">
                 <div className="l">
                   <i style={{ background: "#DC2626" }} />
                   Overdue
                 </div>
-                <div className="v">
-                  3
-                </div>
-                <div className="s">
-                  Past due date
-                </div>
+                <div className="v">{N(s.cases, c => c.status !== 'Closed' && c.due && new Date(c.due) < Date.now())}</div>
+                <div className="s">{'Past due date'}</div>
               </div>
             </div>
             <div className="card " style={{  }}>
@@ -406,8 +386,7 @@ export default function Screen() {
               </div>
               <div className="pager">
                 <span>
-                  Showing 1–7 of 94
-                </span>
+                  {`Showing ${Math.min(7, s.cases.length)} of ${s.cases.length}`}</span>
                 <div>
                   <b>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

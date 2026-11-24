@@ -266,13 +266,15 @@ const me = s.session.name; const isOpen = (c) => c.status !== 'Closed';
                   Provider errors
                 </div><div className="v">{s.providers.length ? ((N(s.providers, p => /error|down|degraded/i.test(p.status || ''))) / s.providers.length * 100).toFixed(1) + '%' : '—'}</div><div className="s">{`${N(s.providers, p => /error|down|degraded/i.test(p.status || ''))} of ${s.providers.length} providers`}</div>
               </div>
+              <div className="kpi"><div className="l">Wallets analysed</div><div className="v">{s.recent.length}</div><div className="s">{'in your recent list'}</div>
+              </div>
             </div>
             <div className="row" style={{ gap: "16px", alignItems: "flex-start" }}>
-              <div className="card">
+              <div className="card" style={{ flex: "2 1 520px" }}>
                 <div className="ct-h"><div><h3>Analyses per day</h3></div></div>
                 <Empty>Daily analysis counts appear once the monitoring backend reports them.</Empty>
               </div>
-              <div className="card">
+              <div className="card" style={{ flex: "1 1 320px" }}>
                 <div className="ct-h"><div><h3>Provider status</h3></div></div>
                 {s.providers.length === 0 && <Empty>No data providers configured.</Empty>}
                 {s.providers.map((p) => (<div key={p.id || p.name} style={{ display: 'flex', gap: 10, padding: '9px 0', borderBottom: '1px solid #EDF1F6', alignItems: 'center' }}><span style={{ flex: 1 }}>{p.name}</span>{chip_status(p.status)}</div>))}

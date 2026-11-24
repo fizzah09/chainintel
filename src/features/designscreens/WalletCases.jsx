@@ -1,10 +1,15 @@
 import { DLink } from '../design/DLink';
+import { Gauge } from '../../components/ui';
+import { CFG, TN } from '../../lib/risk';
+import { fdt, ago, num, usd } from '../../lib/format';
+import { useWallet } from '../wallets/shared';
 import { shortAddr } from '../design/dashParts';
 import { useStore } from '../../mocks/store';
 import { useParams } from 'react-router-dom';
 
 export default function Screen() {
   const { address } = useParams(); const sel = useStore(); const wallet = address || sel.ctx.wallet || '—';
+  const [p] = useWallet(); const onWatch = sel.watchlists.some((w) => w.wallets.some((x) => x.a.toLowerCase() === (wallet || '').toLowerCase()));
   return (
     <>
       <div className="app">
@@ -247,18 +252,14 @@ export default function Screen() {
                       <h1 style={{ fontSize: "20px" }} className="mono">
                         {wallet}
                       </h1>
-                      <span className="tier crit">
-                        Critical
-                      </span>
+                      <span className={`tier ${p.tier}`}>{TN[p.tier] || "Unknown"}</span>
                       <span className="chip blue">
                         Ethereum
                       </span>
-                      <span className="chip warn">
-                        On watchlist
-                      </span>
+                      {onWatch && <span className="chip warn">On watchlist</span>}
                     </div>
                     <div className="mu" style={{ marginTop: "6px" }}>
-                      Type: Externally owned · First seen 14 Mar 2025 · Last active 02 Nov 2026 · Data fresh 4 min ago
+                      {p.first ? `First seen ${fdt(p.first)} · Last active ${fdt(p.last)}` : 'No on-chain activity loaded. The backend analyses a wallet when it is opened.'}
                     </div>
                   </div>
                 </div>

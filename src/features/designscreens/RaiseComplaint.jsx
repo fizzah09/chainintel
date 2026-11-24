@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { act, PRIORITY } from '../../mocks/store';
+import { act, PRIORITY, useStore } from '../../mocks/store';
 import { DLink } from '../design/DLink';
+import { fmtDate } from '../design/dashParts';
 
 export default function Screen() {
-  const nav = useNavigate(); const [v, setV] = useState({ problem: 'Something is not working', where: 'Cases', subject: '', details: '' }); const [err, setErr] = useState({});
+  const s = useStore(); const nav = useNavigate(); const mine = (s.complaints || []).slice(0, 5); const [v, setV] = useState({ problem: 'Something is not working', where: 'Cases', subject: '', details: '' }); const [err, setErr] = useState({});
   return (
     <>
       <div className="app">
@@ -305,39 +306,9 @@ export default function Screen() {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td className="mono">
-                          CMP-1042
-                        </td>
-                        <td>
-                          Etherscan data not loading for one wallet
-                        </td>
-                        <td>
-                          <span className="chip blue">
-                            Open
-                          </span>
-                        </td>
-                        <td>
-                          Today 10:05
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="mono">
-                          CMP-1028
-                        </td>
-                        <td>
-                          Graph export cut off at 50 nodes
-                        </td>
-                        <td>
-                          <span className="chip ok">
-                            Resolved
-                          </span>
-                        </td>
-                        <td>
-                          02 Nov
-                        </td>
-                      </tr>
-                    </tbody>
+{mine.length === 0 && <tr><td colSpan={4} className="mu">No complaints yet.</td></tr>}
+{mine.map((c) => (<tr key={c.id}><td className="mono">{c.id}</td><td>{c.subject}</td><td><span className={`chip${c.status === 'Open' ? ' warn' : ''}`}>{c.status}</span></td><td>{fmtDate(c.updated || c.raisedAt)}</td></tr>))}
+</tbody>
                   </table>
                 </div>
               </div>

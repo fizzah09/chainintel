@@ -1,10 +1,16 @@
 import { DLink } from '../design/DLink';
+import { Empty } from '../design/dashParts';
+import { Gauge } from '../../components/ui';
+import { CFG, TN } from '../../lib/risk';
+import { fdt, ago, num, usd } from '../../lib/format';
+import { useWallet } from '../wallets/shared';
 import { shortAddr } from '../design/dashParts';
 import { useStore } from '../../mocks/store';
 import { useParams } from 'react-router-dom';
 
 export default function Screen() {
   const { address } = useParams(); const sel = useStore(); const wallet = address || sel.ctx.wallet || '—';
+  const [p] = useWallet(); const onWatch = sel.watchlists.some((w) => w.wallets.some((x) => x.a.toLowerCase() === (wallet || '').toLowerCase()));
   return (
     <>
       <div className="app">
@@ -247,18 +253,14 @@ export default function Screen() {
                       <h1 style={{ fontSize: "20px" }} className="mono">
                         {wallet}
                       </h1>
-                      <span className="tier crit">
-                        Critical
-                      </span>
+                      <span className={`tier ${p.tier}`}>{TN[p.tier] || "Unknown"}</span>
                       <span className="chip blue">
                         Ethereum
                       </span>
-                      <span className="chip warn">
-                        On watchlist
-                      </span>
+                      {onWatch && <span className="chip warn">On watchlist</span>}
                     </div>
                     <div className="mu" style={{ marginTop: "6px" }}>
-                      Type: Externally owned · First seen 14 Mar 2025 · Last active 02 Nov 2026 · Data fresh 4 min ago
+                      {p.first ? `First seen ${fdt(p.first)} · Last active ${fdt(p.last)}` : 'No on-chain activity loaded. The backend analyses a wallet when it is opened.'}
                     </div>
                   </div>
                 </div>
@@ -326,61 +328,16 @@ export default function Screen() {
               </DLink>
             </div>
             <div className="kpis">
-              <div className="kpi">
-                <div className="l">
-                  Current balance
-                </div>
-                <div className="v">
-                  48.20 ETH
-                </div>
-                <div className="s">
-                  ≈ $91,540
-                </div>
+              <div className="kpi"><div className="l">Current balance</div><div className="v">{p.bal == null ? '—' : `${num(p.bal, 2)} ETH`}</div><div className="s">{'On-chain balance'}</div>
               </div>
-              <div className="kpi">
-                <div className="l">
-                  Total transactions
-                </div>
-                <div className="v">
-                  1,284
-                </div>
-                <div className="s">
-                  812 in · 472 out
-                </div>
+              <div className="kpi"><div className="l">Total transactions</div><div className="v">{num(p.tx)}</div><div className="s">{`${num(p.counts.in)} in · ${num(p.counts.out)} out`}</div>
               </div>
-              <div className="kpi">
-                <div className="l">
-                  Total volume
-                </div>
-                <div className="v">
-                  $2.41M
-                </div>
-                <div className="s">
-                  Last 12 months
-                </div>
+              <div className="kpi"><div className="l">Total volume</div><div className="v">{usd(p.vol)}</div><div className="s">{'Loaded transfers'}</div>
               </div>
-              <div className="kpi">
-                <div className="l">
-                  <i style={{ background: "#EA580C" }} />
-                  Unique counterparties
-                </div>
-                <div className="v">
-                  137
-                </div>
-                <div className="s">
-                  9 flagged
-                </div>
+              <div className="kpi"><div className="l"><i style={{ background: "#EA580C" }} />
+                  Unique counterparties</div><div className="v">{num(p.cp)}</div><div className="s">{`${p.cps.filter((c) => c.risk >= CFG.thr[1]).length} flagged`}</div>
               </div>
-              <div className="kpi">
-                <div className="l">
-                  Last activity
-                </div>
-                <div className="v">
-                  4 min ago
-                </div>
-                <div className="s">
-                  02 Nov 2026 09:41 UTC
-                </div>
+              <div className="kpi"><div className="l">Last activity</div><div className="v">{p.last ? ago(p.last) : '—'}</div><div className="s">{p.last ? fdt(p.last) + ' UTC' : '—'}</div>
               </div>
             </div>
             <div className="row" style={{ gap: "16px", alignItems: "flex-start" }}>
@@ -395,21 +352,7 @@ export default function Screen() {
                     <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }} />
                   </div>
                   <div style={{ display: "flex", justifyContent: "center" }}>
-                    <svg viewBox="0 0 230 230" width="230" height="230" role="img" aria-label="Risk score 78 out of 100, Critical" style={{ display: "block", maxWidth: "100%", height: "auto" }}>
-                      <path d="M39.47 187.43A104.65 104.65 0 0 1 17.50 76.99" stroke="#16A34A" strokeWidth="4.1" fill="none" strokeLinecap="round" opacity=".7" />
-                      <path d="M19.18 72.94A104.65 104.65 0 0 1 112.81 10.37" stroke="#F59E0B" strokeWidth="4.1" fill="none" strokeLinecap="round" opacity=".7" />
-                      <path d="M117.19 10.37A104.65 104.65 0 0 1 210.82 72.94" stroke="#EA580C" strokeWidth="4.1" fill="none" strokeLinecap="round" opacity=".7" />
-                      <path d="M212.50 76.99A104.65 104.65 0 0 1 190.53 187.43" stroke="#DC2626" strokeWidth="4.1" fill="none" strokeLinecap="round" opacity=".7" />
-                      <path d="M56.45 173.55A82.8 82.8 0 1 1 173.55 173.55" stroke="#E8EDF4" strokeWidth="17.2" fill="none" strokeLinecap="round" />
-                      <path d="M56.45 173.55A82.8 82.8 0 1 1 195.20 94.41" stroke="#DC2626" strokeWidth="17.2" fill="none" strokeLinecap="round" />
-                      <circle cx="195.2" cy="94.4" r="6.0" fill="#fff" stroke="#DC2626" strokeWidth="3" />
-                      <text x="115.0" y="124.2" textAnchor="middle" fontFamily="Inter,sans-serif" fontWeight="700" fontSize="60" fill="#0F172A" letterSpacing="-2">
-                        78
-                      </text>
-                      <text x="115.0" y="152" textAnchor="middle" fontSize="14" fill="#5B6B82" fontFamily="Inter,sans-serif">
-                        out of 100
-                      </text>
-                    </svg>
+                    {p.score == null ? <Empty>Risk score appears once the backend analyses this wallet.</Empty> : <Gauge score={p.score} size={230} />}
                   </div>
                   <div style={{ textAlign: "center", margin: "-6px 0 12px" }}>
                     <span className="tier crit">
@@ -417,7 +360,7 @@ export default function Screen() {
                     </span>
                   </div>
                   <div className="mu sm" style={{ textAlign: "center", marginBottom: "14px" }}>
-                    Methodology v3 · Computed 02 Nov 2026 09:44 · Based on 7 evidence items
+                    {`Methodology v${CFG.version} · Based on ${p.evidence.length} evidence items`}
                   </div>
                   <div style={{ display: "flex", justifyContent: "center" }}>
                     <DLink href="/design/RiskAssessment" className="btn ">
