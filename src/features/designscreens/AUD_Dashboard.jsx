@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { DLink } from '../design/DLink';
 import { Bars, Empty, fmtDate, shortAddr } from '../design/dashParts';
 import { verifyChain } from '../../mocks/store';
@@ -5,7 +6,7 @@ import { ROLE_NAMES } from '../../mocks/seed';
 import { useStore } from '../../mocks/store';
 
 export default function Screen() {
-  const s = useStore(); const N = (xs, f) => (xs || []).filter(f).length;
+  const s = useStore(); const [vr, setVr] = useState(null); const N = (xs, f) => (xs || []).filter(f).length;
 const me = s.session.name; const isOpen = (c) => c.status !== 'Closed';
   const days = Array.from({ length: 7 }, (_, i) => { const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - (6 - i)); return d; });
   const weekBars = days.map((d) => ({ label: d.toLocaleDateString('en-GB', { weekday: 'short', day: '2-digit', month: 'short' }), value: N(s.audit, a => { const t = new Date(a.at); return t.toDateString() === d.toDateString(); }) }));
@@ -241,7 +242,8 @@ const me = s.session.name; const isOpen = (c) => c.status !== 'Closed';
               </div>
               <div className="card" style={{ flex: "1 1 360px" }}>
                 <div className="ct-h"><div><h3>Integrity</h3></div></div>
-                <div>{integrity.ok ? `Audit chain verified (${integrity.n} entries).` : `Chain broken at ${integrity.at}.`}</div>
+                <div>{vr ? (vr.ok ? `Audit chain verified (${vr.n} entries).` : `Chain broken at ${vr.at}.`) : (integrity.ok ? `Audit chain verified (${integrity.n} entries).` : `Chain broken at ${integrity.at}.`)}</div>
+                <div style={{ marginTop: 12 }}><button className="btn pri" onClick={() => setVr(verifyChain(s.audit))}>Run verification</button></div>
               </div>
             </div>
           </main>

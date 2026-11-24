@@ -257,7 +257,7 @@ const me = s.session.name; const isOpen = (c) => c.status !== 'Closed';
               </div>
             </div>
             <div className="row" style={{ gap: "16px", alignItems: "flex-start" }}>
-              <div style={{ flex: "2 1 560", display: "flex", flexDirection: "column", gap: "16px", minWidth: "0" }}>
+              <div style={{ flex: "1 1 100%", display: "flex", flexDirection: "column", gap: "16px", minWidth: "0" }}>
                 <div className="card">
                   <div className="ct-h"><div><h3>Active cases</h3><p>Not closed</p></div></div>
                   <div className="tbl"><table><thead><tr><th className="">Case ID</th><th className="">Title</th><th className="">Status</th><th className="">Priority</th><th className="">Assigned By</th><th className="">Opened</th><th className="">Due</th></tr></thead><tbody>
