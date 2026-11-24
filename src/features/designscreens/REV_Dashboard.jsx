@@ -1,8 +1,13 @@
 import { DLink } from '../design/DLink';
+import { Bars, Empty, fmtDate, shortAddr } from '../design/dashParts';
+import { verifyChain } from '../../mocks/store';
+import { ROLE_NAMES } from '../../mocks/seed';
 import { useStore } from '../../mocks/store';
 
 export default function Screen() {
   const s = useStore(); const N = (xs, f) => (xs || []).filter(f).length;
+const me = s.session.name; const isOpen = (c) => c.status !== 'Closed';
+  const queue = s.cases.filter((c) => c.status === 'Under Review');
   return (
     <>
       <div className="app">
@@ -200,95 +205,12 @@ export default function Screen() {
               </div>
             </div>
             <div className="row" style={{ gap: "16px", alignItems: "flex-start" }}>
-              <div className="card " style={{ flex: "2 1 560px", position: "relative" }}>
-                <div className="ct-h" style={{ position: "relative" }}>
-                  <div>
-                    <h3>
-                      Review queue
-                    </h3>
-                  </div>
-                  <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-                    <DLink href="/review/queue" className="btn sm">
-                      Open queue
-                    </DLink>
-                  </div>
-                </div>
-                <div className="tbl">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th className="">
-                          Case
-                        </th>
-                        <th className="" style={{ width: "194px" }}>
-                          Title
-                        </th>
-                        <th className="">
-                          Due date
-                        </th>
-                        <th className="">
-                          Priority
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className="">
-                          <b>
-                            CASE-2026-00128
-                          </b>
-                        </td>
-                        <td className="">
-                          Suspected layering via mixer
-                        </td>
-                        <td className="">
-                          02 Nov 14:20
-                        </td>
-                        <td className="">
-                          <span className="chip bad">
-                            Critical
-                          </span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="">
-                          <b>
-                            CASE-2026-00121
-                          </b>
-                        </td>
-                        <td className="">
-                          Unexplained inbound volume spike
-                        </td>
-                        <td className="">
-                          02 Nov 09:10
-                        </td>
-                        <td className="">
-                          <span className="chip blue">
-                            Medium
-                          </span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="">
-                          <b>
-                            CASE-2026-00110
-                          </b>
-                        </td>
-                        <td className="">
-                          Bridge hopping across chains
-                        </td>
-                        <td className="">
-                          01 Nov 16:45
-                        </td>
-                        <td className="">
-                          <span className="chip warn">
-                            High
-                          </span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+              <div className="card">
+                <div className="ct-h"><div><h3>Review queue</h3></div></div>
+                <div className="tbl"><table><thead><tr><th className="">Case</th><th className="">Title</th><th className="">Due date</th><th className="">Priority</th></tr></thead><tbody>
+                {queue.length === 0 && <tr><td colSpan={4} className="mu">Nothing waiting for review.</td></tr>}
+                {queue.map((x) => (<tr key={x.id}><td><DLink href={`/cases/${x.id}`} className="mono" style={{ color: "var(--pri)", fontWeight: 600 }}>{x.id}</DLink></td><td>{x.title}</td><td>{fmtDate(x.due)}</td><td><span className={`chip${x.priority === 'Critical' ? ' bad' : ''}`}>{x.priority}</span></td></tr>))}
+                </tbody></table></div>
               </div>
             </div>
           </main>

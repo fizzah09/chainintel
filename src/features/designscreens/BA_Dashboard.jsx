@@ -1,4 +1,7 @@
 import { DLink } from '../design/DLink';
+import { Bars, Empty, fmtDate, shortAddr } from '../design/dashParts';
+import { verifyChain } from '../../mocks/store';
+import { ROLE_NAMES } from '../../mocks/seed';
 import { useStore } from '../../mocks/store';
 
 const ROLES = [['inv', 'Investigator'], ['rev', 'Reviewer'], ['cm', 'Compliance Manager'], ['ba', 'Bank Admin'], ['aud', 'Auditor']];
@@ -6,6 +9,8 @@ const ROLES = [['inv', 'Investigator'], ['rev', 'Reviewer'], ['cm', 'Compliance 
 
 export default function Screen() {
   const s = useStore(); const N = (xs, f) => (xs || []).filter(f).length;
+const me = s.session.name; const isOpen = (c) => c.status !== 'Closed';
+  const openFor = (name) => N(s.cases, c => c.assignee === name && isOpen(c));
   return (
     <>
       <div className="app">
@@ -254,166 +259,11 @@ export default function Screen() {
             <div className="row" style={{ gap: "16px", alignItems: "flex-start" }}>
               <div style={{ flex: "2 1 560px", display: "flex", flexDirection: "column", gap: "16px", minWidth: "0" }}>
                 <div className="card">
-                  <div className="ct-h">
-                    <div>
-                      <h3>
-                        Members
-                      </h3>
-                      <p>
-                        Who is active and how many open cases each person holds.
-                      </p>
-                    </div>
-                    <DLink href="/admin/users" className="btn sm">
-                      All users
-                    </DLink>
-                  </div>
-                  <div className="tbl">
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>
-                            Member
-                          </th>
-                          <th>
-                            Role
-                          </th>
-                          <th>
-                            Status
-                          </th>
-                          <th className="r">
-                            Open cases
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>
-                            <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
-                              <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
-                                SA
-                              </span>
-                              <span style={{ fontWeight: "550" }}>
-                                Sara Ali
-                              </span>
-                            </div>
-                          </td>
-                          <td>
-                            Investigator
-                          </td>
-                          <td>
-                            <span className="chip ok">
-                              Active
-                            </span>
-                          </td>
-                          <td className="r">
-                            <b>
-                              7
-                            </b>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
-                              <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
-                                AK
-                              </span>
-                              <span style={{ fontWeight: "550" }}>
-                                Ahmed Khan
-                              </span>
-                            </div>
-                          </td>
-                          <td>
-                            Compliance Manager
-                          </td>
-                          <td>
-                            <span className="chip ok">
-                              Active
-                            </span>
-                          </td>
-                          <td className="r">
-                            <b>
-                              3
-                            </b>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
-                              <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
-                                NH
-                              </span>
-                              <span style={{ fontWeight: "550" }}>
-                                Nadia Hussain
-                              </span>
-                            </div>
-                          </td>
-                          <td>
-                            Reviewer
-                          </td>
-                          <td>
-                            <span className="chip ok">
-                              Active
-                            </span>
-                          </td>
-                          <td className="r">
-                            <b>
-                              5
-                            </b>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
-                              <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
-                                IS
-                              </span>
-                              <span style={{ fontWeight: "550" }}>
-                                Imran Sheikh
-                              </span>
-                            </div>
-                          </td>
-                          <td>
-                            Auditor
-                          </td>
-                          <td>
-                            <span className="chip gray">
-                              Away
-                            </span>
-                          </td>
-                          <td className="r">
-                            <b>
-                              0
-                            </b>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
-                              <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
-                                HB
-                              </span>
-                              <span style={{ fontWeight: "550" }}>
-                                Hira Baig
-                              </span>
-                            </div>
-                          </td>
-                          <td>
-                            Investigator
-                          </td>
-                          <td>
-                            <span className="chip warn">
-                              Invited
-                            </span>
-                          </td>
-                          <td className="r">
-                            <b>
-                              0
-                            </b>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+                  <div className="ct-h"><div><h3>Members</h3><p>Who is active and how many open cases each person holds</p></div><DLink href="/admin/users" className="btn sm">All users</DLink></div>
+                  <div className="tbl"><table><thead><tr><th className="">Member</th><th className="">Role</th><th className="">Status</th><th className="">Open cases</th></tr></thead><tbody>
+                  {s.users.length === 0 && <tr><td colSpan={4} className="mu">No accounts yet.</td></tr>}
+                  {s.users.map((x) => (<tr key={x.id}><td>{x.name}</td><td>{ROLE_NAMES[x.role] || x.role}</td><td><span className={`chip`}>{x.status}</span></td><td>{openFor(x.name)}</td></tr>))}
+                  </tbody></table></div>
                 </div>
               </div>
             </div>

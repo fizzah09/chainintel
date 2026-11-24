@@ -1,8 +1,15 @@
 import { DLink } from '../design/DLink';
+import { Bars, Empty, fmtDate, shortAddr } from '../design/dashParts';
+import { verifyChain } from '../../mocks/store';
+import { ROLE_NAMES } from '../../mocks/seed';
 import { useStore } from '../../mocks/store';
 
 export default function Screen() {
   const s = useStore(); const N = (xs, f) => (xs || []).filter(f).length;
+const me = s.session.name; const isOpen = (c) => c.status !== 'Closed';
+  const days = Array.from({ length: 7 }, (_, i) => { const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - (6 - i)); return d; });
+  const weekBars = days.map((d) => ({ label: d.toLocaleDateString('en-GB', { weekday: 'short', day: '2-digit', month: 'short' }), value: N(s.audit, a => { const t = new Date(a.at); return t.toDateString() === d.toDateString(); }) }));
+  const integrity = verifyChain(s.audit);
   return (
     <>
       <div className="app">
@@ -223,96 +230,13 @@ export default function Screen() {
               </div>
             </div>
             <div className="row" style={{ gap: "16px", alignItems: "flex-start" }}>
-              <div className="card " style={{ flex: "1 1 440px" }}>
-                <div className="ct-h">
-                  <div>
-                    <h3>
-                      Activity by week
-                    </h3>
-                  </div>
-                  <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }} />
-                </div>
-                <svg viewBox="0 0 560 220" width="100%" role="img" aria-label="Bar chart" style={{ display: "block" }}>
-                  <line x1="40" x2="550" y1="192.0" y2="192.0" stroke="#E2E8F0" />
-                  <text x="32" y="196.0" textAnchor="end" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
-                    0
-                  </text>
-                  <line x1="40" x2="550" y1="147.0" y2="147.0" stroke="#E2E8F0" />
-                  <text x="32" y="151.0" textAnchor="end" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
-                    152
-                  </text>
-                  <line x1="40" x2="550" y1="102.0" y2="102.0" stroke="#E2E8F0" />
-                  <text x="32" y="106.0" textAnchor="end" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
-                    305
-                  </text>
-                  <line x1="40" x2="550" y1="57.0" y2="57.0" stroke="#E2E8F0" />
-                  <text x="32" y="61.0" textAnchor="end" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
-                    457
-                  </text>
-                  <line x1="40" x2="550" y1="12.0" y2="12.0" stroke="#E2E8F0" />
-                  <text x="32" y="16.0" textAnchor="end" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
-                    610
-                  </text>
-                  <rect x="56.0" y="100.4" width="40.8" height="91.6" rx="4" fill="#1769E0" />
-                  <text x="76.4" y="211" textAnchor="middle" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
-                    W40
-                  </text>
-                  <rect x="128.9" y="68.0" width="40.8" height="124.0" rx="4" fill="#1769E0" />
-                  <text x="149.3" y="211" textAnchor="middle" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
-                    W41
-                  </text>
-                  <rect x="201.7" y="79.8" width="40.8" height="112.2" rx="4" fill="#1769E0" />
-                  <text x="222.1" y="211" textAnchor="middle" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
-                    W42
-                  </text>
-                  <rect x="274.6" y="41.4" width="40.8" height="150.6" rx="4" fill="#1769E0" />
-                  <text x="295.0" y="211" textAnchor="middle" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
-                    W43
-                  </text>
-                  <rect x="347.5" y="56.2" width="40.8" height="135.8" rx="4" fill="#1769E0" />
-                  <text x="367.9" y="211" textAnchor="middle" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
-                    W44
-                  </text>
-                  <rect x="420.3" y="35.5" width="40.8" height="156.5" rx="4" fill="#1769E0" />
-                  <text x="440.7" y="211" textAnchor="middle" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
-                    W45
-                  </text>
-                  <rect x="493.2" y="47.3" width="40.8" height="144.7" rx="4" fill="#1769E0" />
-                  <text x="513.6" y="211" textAnchor="middle" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
-                    W46
-                  </text>
-                </svg>
+              <div className="card">
+                <div className="ct-h"><div><h3>Activity by week</h3><p>Audit events per day, last 7 days</p></div></div>
+                <Bars items={weekBars} empty="No audit events yet." />
               </div>
-              <div className="card " style={{ flex: "1 1 360px" }}>
-                <div className="ct-h">
-                  <div>
-                    <h3>
-                      Integrity
-                    </h3>
-                  </div>
-                  <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }} />
-                </div>
-                <div className="note ok">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6z" />
-                  </svg>
-                  <div>
-                    <b>
-                      Audit log integrity verified
-                    </b>
-                    <div>
-                      Last check 02 Nov 2026 15:00 UTC · 48,210 entries · no gaps
-                    </div>
-                  </div>
-                </div>
-                <div style={{ marginTop: "14px" }}>
-                  <a href="#" className="btn pri">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6z" />
-                    </svg>
-                    Run verification
-                  </a>
-                </div>
+              <div className="card">
+                <div className="ct-h"><div><h3>Integrity</h3></div></div>
+                <div>{integrity.ok ? `Audit chain verified (${integrity.n} entries).` : `Chain broken at ${integrity.at}.`}</div>
               </div>
             </div>
             <svg width="140" height="126" viewBox="0 0 140 126" preserveAspectRatio="none" style={{ position: "absolute", left: "897px", top: "88px", width: "140px", height: "126px", overflow: "visible", fill: "none", stroke: "#8a8378", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }}>
