@@ -1,6 +1,11 @@
+import { act, useStore } from '../../mocks/store';
+import { useToast } from '../../context/ToastContext';
+import { fmtDate, shortAddr } from '../design/dashParts';
+import { tierOf, TN } from '../../lib/risk';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
+  const s = useStore(); const toast = useToast(); const a = s.alerts.find((x) => x.id === (s.ctx.alert || '')) || { id: '', trigger: '', wallet: '', at: '', status: '', score: 0 }; const tier = tierOf(a.score);
   return (
     <>
       <div className="app">
@@ -168,7 +173,7 @@ export default function Screen() {
               </span>
               {" "}
               <b>
-                ALR-2026-0912
+                {a.id}
               </b>
             </div>
             <label className="search">
@@ -226,21 +231,18 @@ export default function Screen() {
                   <h1>
                     ALR-2026-0912
                   </h1>
-                  <span className="tier crit">
-                    Critical
-                  </span>
+                  <span className={`tier ${tier}`}>{TN[tier] || "Unknown"}</span>
                 </div>
                 <p>
-                  Score crossed the critical threshold
+                  {a.trigger}
                 </p>
               </div>
               <div className="acts">
-                <a href="#" className="btn ">
+                <button className="btn " disabled={a.status !== "Unacknowledged"} onClick={() => { act.alertStatus(a.id, "Acknowledged"); toast("Alert acknowledged."); }}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M5 12.5l4.5 4.5L19 7.5" />
                   </svg>
-                  Acknowledge
-                </a>
+                  Acknowledge</button>
                 <DLink href="/cases/new" className="btn pri">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <rect x="3" y="7" width="18" height="13" rx="2" />
@@ -267,7 +269,7 @@ export default function Screen() {
                   <span>
                     <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
                       <DLink href="/design/WalletOverview" className="mono" style={{ color: "var(--pri)", fontWeight: "550" }}>
-                        0x7a3f…9B21
+                        {shortAddr(a.wallet)}
                       </DLink>
                       <span style={{ color: "#8A99AE" }}>
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -281,20 +283,20 @@ export default function Screen() {
                     Rule
                   </span>
                   <span>
-                    Score at least 75 (High-risk counterparties)
+                    {`Score at least ${s.cfg.thr[2]}`}
                   </span>
                   <span className="t">
                     Raised
                   </span>
                   <span>
-                    02 Nov 2026 09:44 UTC
+                    {fmtDate(a.at)}
                   </span>
                   <span className="t">
                     Status
                   </span>
                   <span>
                     <span className="chip bad">
-                      Unacknowledged
+                      {a.status}
                     </span>
                   </span>
                 </div>
@@ -310,50 +312,7 @@ export default function Screen() {
                 </div>
                 <div className="dl">
                   <span className="t">
-                    Hash
-                  </span>
-                  <span>
-                    <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
-                      <DLink href="/design/TransactionDetail" className="mono" style={{ color: "var(--pri)", fontWeight: "550" }}>
-                        0x709b55…9a201b
-                      </DLink>
-                      <span style={{ color: "#8A99AE" }}>
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                          <rect x="8" y="8" width="12" height="12" rx="2" />
-                          <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
-                        </svg>
-                      </span>
-                    </span>
-                  </span>
-                  <span className="t">
-                    Amount
-                  </span>
-                  <span>
-                    1,000 USDT
-                  </span>
-                  <span className="t">
-                    From
-                  </span>
-                  <span>
-                    <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
-                      <DLink href="/design/WalletOverview" className="mono" style={{ color: "var(--pri)", fontWeight: "550" }}>
-                        0xB7c4…0e21
-                      </DLink>
-                      <span style={{ color: "#8A99AE" }}>
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                          <rect x="8" y="8" width="12" height="12" rx="2" />
-                          <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
-                        </svg>
-                      </span>
-                    </span>
-                  </span>
-                  <span className="t">
-                    Risk
-                  </span>
-                  <span>
-                    <span className="tier high">
-                      High
-                    </span>
+                    <div className="mu">Transaction details come from the backend, which is not connected in this build.</div>
                   </span>
                 </div>
               </div>
