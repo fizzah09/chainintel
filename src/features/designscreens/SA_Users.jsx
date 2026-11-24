@@ -6,6 +6,8 @@ import { useToast } from '../../context/ToastContext';
 import { ago } from '../../lib/format';
 
 export default function Screen() {
+  const [invite, setInvite] = useState({ name: '', email: '', role: 'pa' }); const [inviteErr, setInviteErr] = useState('');
+  const sendInvite = () => { if (!invite.name.trim()) return setInviteErr('Enter a name.'); const r = act.invite({ name: invite.name.trim(), email: invite.email.trim(), role: invite.role, tenant: 'Platform' }); if (!r.ok) return setInviteErr(r.error); setInvite({ name: '', email: '', role: 'pa' }); setInviteErr(''); toast('Invite sent to the sub-admin.'); };
   const s = useStore(); const toast = useToast(); const [editId, setEditId] = useState(null); const [draft, setDraft] = useState({ role: '', status: '' });
   return (
     <>
@@ -278,6 +280,16 @@ export default function Screen() {
                     Export
                   </span>
                 </span>
+              </div>
+              <div className="card" style={{ marginBottom: 16 }}>
+                <div className="ct-h"><div><h3>Create a sub-admin</h3><p>Invite a Platform Admin or another Super Admin</p></div></div>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "flex-end" }}>
+                  <div style={{ flex: "1 1 200px" }}><label className="mu sm">Name</label><input className="in" value={invite.name} onChange={(e) => setInvite({ ...invite, name: e.target.value })} aria-label="Sub-admin name" /></div>
+                  <div style={{ flex: "1 1 240px" }}><label className="mu sm">Work email</label><input className="in" value={invite.email} onChange={(e) => setInvite({ ...invite, email: e.target.value })} aria-label="Sub-admin email" /></div>
+                  <div style={{ flex: "1 1 180px" }}><label className="mu sm">Role</label><select className="in" value={invite.role} onChange={(e) => setInvite({ ...invite, role: e.target.value })} aria-label="Sub-admin role"><option value="pa">Platform Admin</option><option value="sa">Super Admin</option></select></div>
+                  <button className="btn pri" onClick={sendInvite}>Send invite</button>
+                </div>
+                {inviteErr && <div className="hint err" role="alert" style={{ marginTop: 8 }}>{inviteErr}</div>}
               </div>
               <div className="tbl">
                 <table>
