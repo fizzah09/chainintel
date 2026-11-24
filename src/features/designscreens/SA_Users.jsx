@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { DLink } from '../design/DLink';
 import { act, useStore } from '../../mocks/store';
 import { ROLE_NAMES } from '../../mocks/seed';
@@ -5,7 +6,7 @@ import { useToast } from '../../context/ToastContext';
 import { ago } from '../../lib/format';
 
 export default function Screen() {
-  const s = useStore(); const toast = useToast();
+  const s = useStore(); const toast = useToast(); const [editId, setEditId] = useState(null); const [draft, setDraft] = useState({ role: '', status: '' });
   return (
     <>
       <div className="app">
@@ -304,19 +305,23 @@ export default function Screen() {
                   </thead>
                   <tbody>
                     {s.users.length === 0 && <tr><td colSpan={6} className="mu">No platform users yet.</td></tr>}
-                    {s.users.map((u) => (
+                    {s.users.map((u) => { const editing = editId === u.id; return (
                       <tr key={u.id}>
                         <td><div style={{ display: "flex", alignItems: "center", gap: "9px" }}><div style={{ lineHeight: "1.25" }}><div style={{ fontWeight: "550" }}>{u.name}</div><div className="mu" style={{ fontSize: "11.5px" }}>{u.email}</div></div></div></td>
-                        <td>{ROLE_NAMES[u.role] || u.role}</td>
+                        <td>{editing ? <select className="in" value={draft.role} onChange={(e) => setDraft({ ...draft, role: e.target.value })} aria-label="Role">{Object.entries(ROLE_NAMES).map(([k, v]) => <option key={k} value={k}>{v}</option>)}</select> : (ROLE_NAMES[u.role] || u.role)}</td>
                         <td>{u.tenant || (u.role === "sa" || u.role === "pa" ? "Platform" : "Example Bank")}</td>
-                        <td><span className={`chip ${u.status === "Active" ? "ok" : u.status === "Removed" ? "gray" : "warn"}`}>{u.status}</span></td>
+                        <td>{editing ? <select className="in" value={draft.status} onChange={(e) => setDraft({ ...draft, status: e.target.value })} aria-label="Status">{["Active", "Suspended", "Removed"].map((x) => <option key={x} value={x}>{x}</option>)}</select> : <span className={`chip ${u.status === "Active" ? "ok" : u.status === "Removed" ? "gray" : "warn"}`}>{u.status}</span>}</td>
                         <td>{u.last ? ago(u.last) : "—"}</td>
                         <td className="r">
-                          <a href="#" className="link" style={{ marginRight: 12 }}>Edit</a>
-                          <button className="link" style={{ color: "var(--crit)" }} disabled={u.status === "Removed"} onClick={() => { act.userPatch(u.id, { status: "Removed" }, "Removed user"); toast("User removed."); }}>Delete</button>
+                          {editing ? (<>
+                            <button className="link" style={{ marginRight: 12 }} onClick={() => { act.userPatch(u.id, { role: draft.role, status: draft.status }, "Updated user"); toast("User updated."); setEditId(null); }}>Save</button>
+                            <button className="link" style={{ marginRight: 12 }} onClick={() => setEditId(null)}>Cancel</button>
+                          </>) : (<>
+                            <button className="link" style={{ marginRight: 12 }} onClick={() => { setEditId(u.id); setDraft({ role: u.role, status: u.status }); }}>Edit</button>
+                            <button className="link" style={{ color: "var(--crit)" }} disabled={u.status === "Removed"} onClick={() => { act.userPatch(u.id, { status: "Removed" }, "Removed user"); toast("User removed."); }}>Delete</button>
+                          </>)}
                         </td>
-                      </tr>
-                    ))}
+                      </tr>); })}
                   </tbody>
                 </table>
               </div>
