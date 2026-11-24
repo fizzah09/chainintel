@@ -1,6 +1,8 @@
+import { useStore } from '../../mocks/store';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
+  const s = useStore(); const c = s.cases.find((x) => x.id === (s.ctx.caseId || '')) || {};
   return (
     <>
       <div className="app">

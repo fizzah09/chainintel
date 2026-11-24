@@ -3,8 +3,8 @@ import { act, useStore } from '../../mocks/store';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
-  const c = s.cases.find((x) => x.id === (s.ctx.caseId || '')) || {};
   const s = useStore(); const cid = s.ctx.caseId || '';
+  const c = s.cases.find((x) => x.id === (s.ctx.caseId || '')) || {};
   return (
     <>
       <div className="app">

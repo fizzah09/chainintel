@@ -5,8 +5,8 @@ import { fmtDate } from '../design/dashParts';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
-  const c = s.cases.find((x) => x.id === (s.ctx.caseId || '')) || {};
   const s = useStore(); const toast = useToast(); const cid = s.ctx.caseId;
+  const c = s.cases.find((x) => x.id === (s.ctx.caseId || '')) || {};
   const rows = (s.tasks || []).filter((k) => k.caseId === cid);
   const reviewers = s.users.filter((u) => u.role === 'rev' && u.status === 'Active').map((u) => u.name);
   const [draft, setDraft] = useState({ title: '', assignee: '', due: '' }); const [err, setErr] = useState('');
