@@ -29,15 +29,10 @@ export default function Screen() {
             </b>
           </div>
           <div className="nav">
-            <DLink href="/compliance">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <rect x="3" y="3" width="7" height="9" rx="1.5" />
-                <rect x="14" y="3" width="7" height="5" rx="1.5" />
-                <rect x="14" y="12" width="7" height="9" rx="1.5" />
-                <rect x="3" y="16" width="7" height="5" rx="1.5" />
-              </svg>
+            <DLink href="/review">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
               <span>
-                Compliance Dashboard
+                Review Dashboard
               </span>
             </DLink>
             <DLink href="/wallets">
@@ -58,78 +53,34 @@ export default function Screen() {
                 Transaction Tracing
               </span>
             </DLink>
+            <DLink href="/reports/new">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg>
+              <span>
+                Generate report
+              </span>
+            </DLink>
+            <DLink href="/review/queue">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 13l3-8h12l3 8v6H3zM3 13h5l1 2h6l1-2h5"/></svg>
+              <span>
+                Review Queue
+              </span>
+            </DLink>
+            <DLink href="/design/CaseReview">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 4v16M6 20h12M5 7h14M5 7l-3 7a3.5 3.5 0 0 0 6 0zM19 7l-3 7a3.5 3.5 0 0 0 6 0z"/></svg>
+              <span>
+                Case Review
+              </span>
+            </DLink>
           </div>
           <div className="nh">
             Oversight
           </div>
           <div className="nav">
-            <DLink href="/cases">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <rect x="3" y="7" width="18" height="13" rx="2" />
-                <path d="M9 7V5a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 5v2M3 13h18" />
-              </svg>
-              <span>
-                Cases
-              </span>
-            </DLink>
-            <DLink href="/compliance/assignment">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <circle cx="9" cy="8" r="3.5" />
-                <path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6" />
-                <path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.3c2.2.7 3.5 2.6 3.5 5.7" />
-              </svg>
-              <span>
-                Case Assignment
-              </span>
-            </DLink>
-            <DLink href="/compliance/review-queue" className="on">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M3 13l3-8h12l3 8v6H3zM3 13h5l1 2h6l1-2h5" />
-              </svg>
-              <span>
-                Review Queue
-              </span>
-            </DLink>
-            <DLink href="/watchlists">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M3 12V4h8l10 10-8 8z" />
-                <circle cx="7.5" cy="8.5" r="1.3" />
-              </svg>
-              <span>
-                Watchlists
-              </span>
-            </DLink>
-            <DLink href="/alerts">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M12 3.5l9.5 16.5h-19z" />
-                <path d="M12 10v4.5M12 17.2v.1" />
-              </svg>
-              <span>
-                Alerts
-              </span>
-            </DLink>
-            <DLink href="/reports">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M6 3h8l5 5v13H6z" />
-                <path d="M14 3v5h5M9 13h7M9 17h7" />
-              </svg>
-              <span>
-                Reports
-              </span>
-            </DLink>
           </div>
           <div className="nh">
             Manage
           </div>
           <div className="nav">
-            <DLink href="/compliance/team">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M3 12h4l3-8 4 16 3-8h4" />
-              </svg>
-              <span>
-                Team Performance
-              </span>
-            </DLink>
           </div>
           <div className="sfoot">
             <div className="nav">

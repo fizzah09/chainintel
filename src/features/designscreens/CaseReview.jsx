@@ -58,6 +58,12 @@ export default function Screen() {
                 Transaction Tracing
               </span>
             </DLink>
+            <DLink href="/reports/new">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg>
+              <span>
+                Generate report
+              </span>
+            </DLink>
           </div>
           <div className="nh">
             Review
@@ -77,23 +83,6 @@ export default function Screen() {
               </svg>
               <span>
                 Case Review
-              </span>
-            </DLink>
-            <DLink href="/review/evidence">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M3 6.5A1.5 1.5 0 0 1 4.5 5H10l2 2.5h7.5A1.5 1.5 0 0 1 21 9v9.5a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18.5z" />
-              </svg>
-              <span>
-                Evidence Review
-              </span>
-            </DLink>
-            <DLink href="/review/history">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="8.5" />
-                <path d="M12 7.5V12l3 2" />
-              </svg>
-              <span>
-                Review History
               </span>
             </DLink>
           </div>

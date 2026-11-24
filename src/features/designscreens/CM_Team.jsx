@@ -82,14 +82,6 @@ export default function Screen() {
                 Case Assignment
               </span>
             </DLink>
-            <DLink href="/compliance/review-queue">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M3 13l3-8h12l3 8v6H3zM3 13h5l1 2h6l1-2h5" />
-              </svg>
-              <span>
-                Review Queue
-              </span>
-            </DLink>
             <DLink href="/watchlists">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M3 12V4h8l10 10-8 8z" />
@@ -117,19 +109,17 @@ export default function Screen() {
                 Reports
               </span>
             </DLink>
+            <DLink href="/reports/new">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg>
+              <span>
+                Generate report
+              </span>
+            </DLink>
           </div>
           <div className="nh">
             Manage
           </div>
           <div className="nav">
-            <DLink href="/compliance/team" className="on">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M3 12h4l3-8 4 16 3-8h4" />
-              </svg>
-              <span>
-                Team Performance
-              </span>
-            </DLink>
           </div>
           <div className="sfoot">
             <div className="nav">

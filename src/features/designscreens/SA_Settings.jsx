@@ -58,6 +58,12 @@ export default function Screen() {
                 Transaction Tracing
               </span>
             </DLink>
+            <DLink href="/reports/new">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg>
+              <span>
+                Generate report
+              </span>
+            </DLink>
           </div>
           <div className="nh">
             Platform
@@ -132,15 +138,6 @@ export default function Screen() {
                 Operations Audit Logs
               </span>
             </DLink>
-            <DLink href="/complaints">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M4 8a2 2 0 0 0 2-2h12a2 2 0 0 0 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 0-2 2H6a2 2 0 0 0-2-2v-2a2 2 0 0 0 0-4z" />
-                <path d="M10 9v6" />
-              </svg>
-              <span>
-                Complaints
-              </span>
-            </DLink>
             <DLink href="/platform/settings" className="on">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <circle cx="12" cy="12" r="3" />
@@ -148,6 +145,12 @@ export default function Screen() {
               </svg>
               <span>
                 Platform Settings
+              </span>
+            </DLink>
+            <DLink href="/complaints/new">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 2h-15z"/><path d="M10 21h4"/></svg>
+              <span>
+                Raise a complaint
               </span>
             </DLink>
           </div>
