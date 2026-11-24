@@ -1,6 +1,9 @@
 import { DLink } from '../design/DLink';
+import { useStore } from '../../mocks/store';
+const fmtDate = (x) => new Date(x).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
 
 export default function Screen() {
+  const s = useStore();
   return (
     <>
       <div className="app">
@@ -385,275 +388,19 @@ export default function Screen() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="">
-                        <DLink href="/design/CaseDetails" className="mono" style={{ color: "var(--pri)", fontWeight: "600" }}>
-                          CASE-2026-00128
-                        </DLink>
-                      </td>
-                      <td className="">
-                        Suspected layering via mixer
-                      </td>
-                      <td className="">
-                        <span className="chip pur">
-                          Under Review
-                        </span>
-                      </td>
-                      <td className="">
-                        <span className="chip bad">
-                          Critical
-                        </span>
-                      </td>
-                      <td className="">
-                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
-                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
-                            SA
-                          </span>
-                          <div style={{ lineHeight: "1.25" }}>
-                            <div style={{ fontWeight: "550" }}>
-                              Sara Ali
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="">
-                        02 Nov 2026
-                      </td>
-                      <td className="">
-                        09 Nov 2026
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        <DLink href="/design/CaseDetails" className="mono" style={{ color: "var(--pri)", fontWeight: "600" }}>
-                          CASE-2026-00127
-                        </DLink>
-                      </td>
-                      <td className="">
-                        Sanctioned counterparty exposure
-                      </td>
-                      <td className="">
-                        <span className="chip blue">
-                          Analysis
-                        </span>
-                      </td>
-                      <td className="">
-                        <span className="chip warn">
-                          High
-                        </span>
-                      </td>
-                      <td className="">
-                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
-                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
-                            SA
-                          </span>
-                          <div style={{ lineHeight: "1.25" }}>
-                            <div style={{ fontWeight: "550" }}>
-                              Sara Ali
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="">
-                        01 Nov 2026
-                      </td>
-                      <td className="">
-                        08 Nov 2026
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        <DLink href="/design/CaseDetails" className="mono" style={{ color: "var(--pri)", fontWeight: "600" }}>
-                          CASE-2026-00124
-                        </DLink>
-                      </td>
-                      <td className="">
-                        Rapid pass-through of customer funds
-                      </td>
-                      <td className="">
-                        <span className="chip blue">
-                          Evidence Collection
-                        </span>
-                      </td>
-                      <td className="">
-                        <span className="chip warn">
-                          High
-                        </span>
-                      </td>
-                      <td className="">
-                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
-                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
-                            OS
-                          </span>
-                          <div style={{ lineHeight: "1.25" }}>
-                            <div style={{ fontWeight: "550" }}>
-                              Omar Siddiq
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="">
-                        30 Oct 2026
-                      </td>
-                      <td className="">
-                        07 Nov 2026
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        <DLink href="/design/CaseDetails" className="mono" style={{ color: "var(--pri)", fontWeight: "600" }}>
-                          CASE-2026-00121
-                        </DLink>
-                      </td>
-                      <td className="">
-                        Unexplained inbound volume spike
-                      </td>
-                      <td className="">
-                        <span className="chip blue">
-                          Assigned
-                        </span>
-                      </td>
-                      <td className="">
-                        <span className="chip blue">
-                          Medium
-                        </span>
-                      </td>
-                      <td className="">
-                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
-                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
-                            MC
-                          </span>
-                          <div style={{ lineHeight: "1.25" }}>
-                            <div style={{ fontWeight: "550" }}>
-                              Maria Chen
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="">
-                        29 Oct 2026
-                      </td>
-                      <td className="">
-                        12 Nov 2026
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        <DLink href="/design/CaseDetails" className="mono" style={{ color: "var(--pri)", fontWeight: "600" }}>
-                          CASE-2026-00119
-                        </DLink>
-                      </td>
-                      <td className="">
-                        Phishing-linked deposit
-                      </td>
-                      <td className="">
-                        <span className="chip blue">
-                          Open
-                        </span>
-                      </td>
-                      <td className="">
-                        <span className="chip blue">
-                          Medium
-                        </span>
-                      </td>
-                      <td className="">
-                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
-                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
-                            <span>
-                              <div style={{ lineHeight: "1.25" }}>
-                                <div style={{ fontWeight: "550" }}>
-                                  <span className="mu">
-                                    Unassigned
-                                  </span>
-                                </div>
-                              </div>
-                            </span>
-                          </span>
-                        </div>
-                      </td>
-                      <td className="">
-                        28 Oct 2026
-                      </td>
-                      <td className="">
-                        —
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        <DLink href="/design/CaseDetails" className="mono" style={{ color: "var(--pri)", fontWeight: "600" }}>
-                          CASE-2026-00110
-                        </DLink>
-                      </td>
-                      <td className="">
-                        Bridge hopping across chains
-                      </td>
-                      <td className="">
-                        <span className="chip pur">
-                          Decision
-                        </span>
-                      </td>
-                      <td className="">
-                        <span className="chip warn">
-                          High
-                        </span>
-                      </td>
-                      <td className="">
-                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
-                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
-                            SA
-                          </span>
-                          <div style={{ lineHeight: "1.25" }}>
-                            <div style={{ fontWeight: "550" }}>
-                              Sara Ali
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="">
-                        22 Oct 2026
-                      </td>
-                      <td className="">
-                        05 Nov 2026
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        <DLink href="/design/CaseDetails" className="mono" style={{ color: "var(--pri)", fontWeight: "600" }}>
-                          CASE-2026-00102
-                        </DLink>
-                      </td>
-                      <td className="">
-                        Exchange deposit review
-                      </td>
-                      <td className="">
-                        <span className="chip gray">
-                          Closed
-                        </span>
-                      </td>
-                      <td className="">
-                        <span className="chip gray">
-                          Low
-                        </span>
-                      </td>
-                      <td className="">
-                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
-                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
-                            AK
-                          </span>
-                          <div style={{ lineHeight: "1.25" }}>
-                            <div style={{ fontWeight: "550" }}>
-                              Ahmed Khan
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="">
-                        14 Oct 2026
-                      </td>
-                      <td className="">
-                        —
-                      </td>
-                    </tr>
+                    {s.cases.length === 0 && <tr><td colSpan={8} className="mu">No cases yet. Create one from New case.</td></tr>}
+                    {s.cases.map((c) => (
+                      <tr key={c.id}>
+                        <td><DLink href={`/cases/${c.id}`} className="mono" style={{ color: "var(--pri)", fontWeight: "600" }}>{c.id}</DLink></td>
+                        <td>{c.title}</td>
+                        <td><span className="chip">{c.status}</span></td>
+                        <td><span className={`chip${c.priority === "Critical" ? " bad" : ""}`}>{c.priority}</span></td>
+                        <td>{c.assignee || "Unassigned"}</td>
+                        <td>{fmtDate(c.opened)}</td>
+                        <td>{c.due ? fmtDate(c.due) : "—"}</td>
+                        <td>{c.team || "—"}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>

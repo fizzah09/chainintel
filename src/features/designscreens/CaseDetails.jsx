@@ -1,6 +1,10 @@
 import { DLink } from '../design/DLink';
+import { useParams } from 'react-router-dom';
+import { useStore } from '../../mocks/store';
 
 export default function Screen() {
+  const s = useStore(); const { id: routeId } = useParams();
+  const c = s.cases.find((x) => x.id === (routeId || s.ctx.caseId)) || {};
   return (
     <>
       <div className="app">
@@ -168,7 +172,7 @@ export default function Screen() {
               </span>
               {" "}
               <span>
-                CASE-2026-00128
+                {c.id || '—'}
               </span>
               {" "}
               <span style={{ color: "#A3B0C2" }}>
@@ -233,7 +237,7 @@ export default function Screen() {
                 <div>
                   <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap" }}>
                     <span className="mono mu">
-                      CASE-2026-00128
+                      {c.id || '—'}
                     </span>
                     <span className="chip pur">
                       Under Review
@@ -243,7 +247,7 @@ export default function Screen() {
                     </span>
                   </div>
                   <h1 style={{ fontSize: "22px", marginTop: "6px" }}>
-                    Suspected layering via mixer
+                    {c.title || 'No case selected'}
                   </h1>
                   <div className="mu" style={{ marginTop: "6px", display: "flex", gap: "18px", flexWrap: "wrap" }}>
                     <span>

@@ -1,6 +1,10 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { act, PRIORITY } from '../../mocks/store';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
+  const nav = useNavigate(); const [v, setV] = useState({ problem: 'Something is not working', where: 'Cases', subject: '', details: '' }); const [err, setErr] = useState({});
   return (
     <>
       <div className="app">
@@ -236,55 +240,28 @@ export default function Screen() {
                     <label htmlFor="c-type">
                       What is the problem?
                     </label>
-                    <select id="c-type" className="in">
-                      <option>
-                        A page or button is not working
-                      </option>
-                      <option>
-                        Data looks wrong or is missing
-                      </option>
-                      <option>
-                        Cannot sign in or access something
-                      </option>
-                      <option>
-                        Other
-                      </option>
-                    </select>
+                    <select id="c-type" className="in" value={v.problem} onChange={(e) => setV({ ...v, problem: e.target.value })}>{Object.keys(PRIORITY).map((k) => <option key={k} value={k}>{k}</option>)}</select>
                   </div>
                   <div className="fld" style={{ flex: "1 1 240px" }}>
                     <label htmlFor="c-page">
                       Where did it happen?
                     </label>
-                    <select id="c-page" className="in">
-                      <option>
-                        Wallet risk assessment
-                      </option>
-                      <option>
-                        Transaction tracing
-                      </option>
-                      <option>
-                        Cases
-                      </option>
-                      <option>
-                        Reports
-                      </option>
-                      <option>
-                        Other
-                      </option>
-                    </select>
+                    <select id="c-page" className="in" value={v.where} onChange={(e) => setV({ ...v, where: e.target.value })}>{["Wallet risk assessment", "Transaction tracing", "Cases", "Reports", "Other"].map((k) => <option key={k} value={k}>{k}</option>)}</select>
                   </div>
                 </div>
                 <div className="fld" style={{ marginTop: "14px" }}>
                   <label htmlFor="c-subj">
                     Subject
                   </label>
-                  <input id="c-subj" className="in" type="text" placeholder="Short summary" />
+                  <input id="c-subj" className="in" type="text" placeholder="Short summary" value={v.subject} onChange={(e) => setV({ ...v, subject: e.target.value })} />
+                  {err.subject && <div className="hint err" role="alert">{err.subject}</div>}
                 </div>
                 <div className="fld" style={{ marginTop: "14px" }}>
                   <label htmlFor="c-desc">
                     Details
                   </label>
-                  <textarea id="c-desc" className="in ta" placeholder="What did you do, and what happened?" />
+                  <textarea id="c-desc" className="in ta" placeholder="What did you do, and what happened?" value={v.details} onChange={(e) => setV({ ...v, details: e.target.value })} />
+                  {err.details && <div className="hint err" role="alert">{err.details}</div>}
                 </div>
                 <div className="fld" style={{ marginTop: "14px" }}>
                   <label htmlFor="c-file">
@@ -296,7 +273,7 @@ export default function Screen() {
                   <DLink href="/complaints/new" className="btn">
                     Cancel
                   </DLink>
-                  <DLink href="/complaints/new" className="btn pri">
+                  <DLink href="/complaints/new" className="btn pri" onClick={(e) => { e.preventDefault(); const m = {}; if (!v.subject.trim()) m.subject = "Add a short summary."; if (v.details.trim().length < 10) m.details = "Describe the problem in at least 10 characters."; setErr(m); if (Object.keys(m).length) return; const id = act.raiseComplaint({ problem: v.problem, where: v.where, subject: v.subject.trim(), details: v.details.trim(), caseId: "", shot: "" }); nav(`/complaints/${id}`); }}>
                     Submit complaint
                   </DLink>
                 </div>
