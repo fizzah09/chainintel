@@ -1,6 +1,9 @@
+import { useStore } from '../../mocks/store';
+import { Bars } from '../design/dashParts';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
+  const s = useStore(); const N = (xs, f) => (xs || []).filter(f).length; const memberRows = s.users.filter((u) => ['inv', 'rev', 'cm', 'aud'].includes(u.role) && u.status !== 'Removed').map((u) => ({ name: u.name, open: s.cases.filter((c) => c.assignee === u.name && c.status !== 'Closed').length, activity: s.audit.filter((a) => a.actor === u.name).length }));
   return (
     <>
       <div className="app">
@@ -227,218 +230,40 @@ export default function Screen() {
                   <i style={{ background: "#1769E0" }} />
                   Open cases
                 </div>
-                <div className="v">
-                  18
-                </div>
-                <div className="s">
-                  Across 4 people
-                </div>
+                <div className="v">{N(s.cases, c => c.status !== 'Closed')}</div>
+                <div className="s">{`Across ${new Set(s.cases.filter((c) => c.status !== 'Closed' && c.assignee).map((c) => c.assignee)).size} people`}</div>
               </div>
               <div className="kpi">
                 <div className="l">
                   <i style={{ background: "#93B4E8" }} />
                   Closed cases (90 d)
                 </div>
-                <div className="v">
-                  63
-                </div>
-                <div className="s" />
+                <div className="v">{N(s.cases, c => c.status === 'Closed')}</div>
+                <div className="s">{'All time'}</div>
               </div>
               <div className="kpi">
                 <div className="l">
                   Evidence added
                 </div>
-                <div className="v">
-                  67
-                </div>
-                <div className="s">
-                  Last 90 days
-                </div>
+                <div className="v">{s.evidence.length}</div>
+                <div className="s">{'All time'}</div>
               </div>
               <div className="kpi">
                 <div className="l">
                   Notes written
                 </div>
-                <div className="v">
-                  83
-                </div>
-                <div className="s">
-                  Last 90 days
-                </div>
+                <div className="v">{s.notes.length}</div>
+                <div className="s">{'All time'}</div>
               </div>
             </div>
             <div className="row" style={{ gap: "16px", alignItems: "stretch" }}>
               <div className="card" style={{ flex: "1 1 460px" }}>
-                <div className="ct-h">
-                  <div>
-                    <h3>
-                      Open vs closed cases
-                    </h3>
-                    <p>
-                      Per team member, last 90 days
-                    </p>
-                  </div>
-                </div>
-                <div className="legend" style={{ marginBottom: "12px" }}>
-                  <span>
-                    <i style={{ background: "#1769E0" }} />
-                    Open
-                  </span>
-                  <span>
-                    <i style={{ background: "#93B4E8" }} />
-                    Closed
-                  </span>
-                </div>
-                <div role="img" aria-label="Open and closed cases per team member" style={{ display: "flex", gap: "12px", alignItems: "flex-end", borderBottom: "1px solid var(--ln)", paddingBottom: "4px" }}>
-                  <div style={{ flex: "1", display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", minWidth: "0" }}>
-                    <div style={{ display: "flex", alignItems: "flex-end", gap: "6px", height: "170px" }}>
-                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
-                        <b style={{ fontSize: "12px" }}>
-                          6
-                        </b>
-                        <i style={{ display: "block", width: "22px", height: "42px", background: "#1769E0", borderRadius: "4px 4px 0 0" }} />
-                      </div>
-                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
-                        <b style={{ fontSize: "12px" }}>
-                          17
-                        </b>
-                        <i style={{ display: "block", width: "22px", height: "119px", background: "#93B4E8", borderRadius: "4px 4px 0 0" }} />
-                      </div>
-                    </div>
-                    <span className="sm" style={{ textAlign: "center" }}>
-                      Sara Ali
-                    </span>
-                  </div>
-                  <div style={{ flex: "1", display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", minWidth: "0" }}>
-                    <div style={{ display: "flex", alignItems: "flex-end", gap: "6px", height: "170px" }}>
-                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
-                        <b style={{ fontSize: "12px" }}>
-                          5
-                        </b>
-                        <i style={{ display: "block", width: "22px", height: "35px", background: "#1769E0", borderRadius: "4px 4px 0 0" }} />
-                      </div>
-                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
-                        <b style={{ fontSize: "12px" }}>
-                          12
-                        </b>
-                        <i style={{ display: "block", width: "22px", height: "84px", background: "#93B4E8", borderRadius: "4px 4px 0 0" }} />
-                      </div>
-                    </div>
-                    <span className="sm" style={{ textAlign: "center" }}>
-                      Omar Siddiq
-                    </span>
-                  </div>
-                  <div style={{ flex: "1", display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", minWidth: "0" }}>
-                    <div style={{ display: "flex", alignItems: "flex-end", gap: "6px", height: "170px" }}>
-                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
-                        <b style={{ fontSize: "12px" }}>
-                          4
-                        </b>
-                        <i style={{ display: "block", width: "22px", height: "28px", background: "#1769E0", borderRadius: "4px 4px 0 0" }} />
-                      </div>
-                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
-                        <b style={{ fontSize: "12px" }}>
-                          13
-                        </b>
-                        <i style={{ display: "block", width: "22px", height: "91px", background: "#93B4E8", borderRadius: "4px 4px 0 0" }} />
-                      </div>
-                    </div>
-                    <span className="sm" style={{ textAlign: "center" }}>
-                      Maria Chen
-                    </span>
-                  </div>
-                  <div style={{ flex: "1", display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", minWidth: "0" }}>
-                    <div style={{ display: "flex", alignItems: "flex-end", gap: "6px", height: "170px" }}>
-                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
-                        <b style={{ fontSize: "12px" }}>
-                          3
-                        </b>
-                        <i style={{ display: "block", width: "22px", height: "21px", background: "#1769E0", borderRadius: "4px 4px 0 0" }} />
-                      </div>
-                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
-                        <b style={{ fontSize: "12px" }}>
-                          21
-                        </b>
-                        <i style={{ display: "block", width: "22px", height: "148px", background: "#93B4E8", borderRadius: "4px 4px 0 0" }} />
-                      </div>
-                    </div>
-                    <span className="sm" style={{ textAlign: "center" }}>
-                      Nadia Hussain
-                    </span>
-                  </div>
-                </div>
+                <div className="ct-h"><div><h3>Open vs closed cases</h3><p>Per team member</p></div></div>
+                <Bars items={memberRows.map((m) => ({ label: m.name, value: m.open }))} empty="No cases assigned yet." />
               </div>
               <div className="card" style={{ flex: "1 1 380px" }}>
-                <div className="ct-h">
-                  <div>
-                    <h3>
-                      Activity by user
-                    </h3>
-                    <p>
-                      Evidence added and notes written, last 90 days
-                    </p>
-                  </div>
-                </div>
-                <div className="legend">
-                  <span>
-                    <i style={{ background: "#0F766E" }} />
-                    Evidence
-                  </span>
-                  <span>
-                    <i style={{ background: "#5EB8AE" }} />
-                    Notes
-                  </span>
-                </div>
-                <div role="img" aria-label="Evidence and notes per team member">
-                  <div style={{ display: "grid", gridTemplateColumns: "110px 1fr 40px", gap: "12px", alignItems: "center", margin: "12px 0" }}>
-                    <span className="sm">
-                      Sara Ali
-                    </span>
-                    <div style={{ display: "flex", height: "14px", borderRadius: "5px", overflow: "hidden", background: "#E8EDF4" }}>
-                      <i style={{ display: "block", width: "43.6%", background: "#0F766E" }} />
-                      <i style={{ display: "block", width: "56.4%", background: "#5EB8AE" }} />
-                    </div>
-                    <b style={{ textAlign: "right" }}>
-                      55
-                    </b>
-                  </div>
-                  <div style={{ display: "grid", gridTemplateColumns: "110px 1fr 40px", gap: "12px", alignItems: "center", margin: "12px 0" }}>
-                    <span className="sm">
-                      Omar Siddiq
-                    </span>
-                    <div style={{ display: "flex", height: "14px", borderRadius: "5px", overflow: "hidden", background: "#E8EDF4" }}>
-                      <i style={{ display: "block", width: "27.3%", background: "#0F766E" }} />
-                      <i style={{ display: "block", width: "40.0%", background: "#5EB8AE" }} />
-                    </div>
-                    <b style={{ textAlign: "right" }}>
-                      37
-                    </b>
-                  </div>
-                  <div style={{ display: "grid", gridTemplateColumns: "110px 1fr 40px", gap: "12px", alignItems: "center", margin: "12px 0" }}>
-                    <span className="sm">
-                      Maria Chen
-                    </span>
-                    <div style={{ display: "flex", height: "14px", borderRadius: "5px", overflow: "hidden", background: "#E8EDF4" }}>
-                      <i style={{ display: "block", width: "34.5%", background: "#0F766E" }} />
-                      <i style={{ display: "block", width: "32.7%", background: "#5EB8AE" }} />
-                    </div>
-                    <b style={{ textAlign: "right" }}>
-                      37
-                    </b>
-                  </div>
-                  <div style={{ display: "grid", gridTemplateColumns: "110px 1fr 40px", gap: "12px", alignItems: "center", margin: "12px 0" }}>
-                    <span className="sm">
-                      Nadia Hussain
-                    </span>
-                    <div style={{ display: "flex", height: "14px", borderRadius: "5px", overflow: "hidden", background: "#E8EDF4" }}>
-                      <i style={{ display: "block", width: "16.4%", background: "#0F766E" }} />
-                      <i style={{ display: "block", width: "21.8%", background: "#5EB8AE" }} />
-                    </div>
-                    <b style={{ textAlign: "right" }}>
-                      21
-                    </b>
-                  </div>
-                </div>
+                <div className="ct-h"><div><h3>Activity by user</h3><p>Audit entries per team member</p></div></div>
+                <Bars items={memberRows.map((m) => ({ label: m.name, value: m.activity }))} empty="No activity yet." />
               </div>
             </div>
           </main>
