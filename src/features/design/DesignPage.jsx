@@ -17,6 +17,9 @@ function deadLinkAction(label, { nav, toast, el }) {
       act.addNote(ctx.caseId, text); box.value = ''; toast('Note posted.');
     };
   }
+  if (l === 'close case') return () => { if (!ctx.caseId) return toast('Open a case first.'); act.close(ctx.caseId, 'Suspicious activity confirmed', 'Closed from the case page'); toast('Case closed.'); nav(`/cases/${ctx.caseId}`); };
+  if (l === 'escalate') return () => { if (!ctx.caseId) return toast('Open a case first.'); act.escalate(ctx.caseId, 'Compliance Manager', 'Escalated from the case page'); toast('Case escalated to the Compliance Manager.'); nav(`/cases/${ctx.caseId}`); };
+  if (l === 'put on hold' || l === 'hold case') return () => { if (!ctx.caseId) return toast('Open a case first.'); act.hold(ctx.caseId); toast('Case hold changed.'); };
   if (l === 'reopen case') return () => ctx.caseId ? (act.reopen(ctx.caseId, 'Reopened from the case page'), toast('Case reopened.')) : toast('Open a case first.');
   if (l === 'resolve escalation') return () => ctx.caseId ? (act.resolveEscalation(ctx.caseId), toast('Escalation resolved.')) : toast('Open a case first.');
   if (l === 'resolve' && ctx.alert) return () => { act.alertStatus(ctx.alert, 'Resolved'); toast('Alert resolved.'); };
