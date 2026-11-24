@@ -1,3 +1,4 @@
+import { fmtDate } from '../design/dashParts';
 import { DLink } from '../design/DLink';
 import { Gauge } from '../../components/ui';
 import { CFG, TN } from '../../lib/risk';
@@ -8,6 +9,7 @@ import { useStore } from '../../mocks/store';
 import { useParams } from 'react-router-dom';
 
 export default function Screen() {
+  const s = useStore(); const c = s.cases.find((x) => x.id === (s.ctx.caseId || '')) || {};
   const { address } = useParams(); const sel = useStore(); const wallet = address || sel.ctx.wallet || '—';
   const [p] = useWallet(); const onWatch = sel.watchlists.some((w) => w.wallets.some((x) => x.a.toLowerCase() === (wallet || '').toLowerCase()));
   return (
@@ -367,59 +369,9 @@ export default function Screen() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="">
-                        <DLink href="/design/CaseDetails" className="mono" style={{ color: "var(--pri)", fontWeight: "600" }}>
-                          CASE-2026-00128
-                        </DLink>
-                      </td>
-                      <td className="">
-                        Suspected layering via mixer
-                      </td>
-                      <td className="">
-                        <span className="chip pur">
-                          Under Review
-                        </span>
-                      </td>
-                      <td className="">
-                        <span className="chip bad">
-                          Critical
-                        </span>
-                      </td>
-                      <td className="">
-                        Sara Ali
-                      </td>
-                      <td className="">
-                        02 Nov 2026
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        <DLink href="/design/CaseDetails" className="mono" style={{ color: "var(--pri)", fontWeight: "600" }}>
-                          CASE-2025-00871
-                        </DLink>
-                      </td>
-                      <td className="">
-                        Unusual inbound volume spike
-                      </td>
-                      <td className="">
-                        <span className="chip gray">
-                          Closed
-                        </span>
-                      </td>
-                      <td className="">
-                        <span className="chip blue">
-                          Medium
-                        </span>
-                      </td>
-                      <td className="">
-                        Ahmed Khan
-                      </td>
-                      <td className="">
-                        14 Aug 2025
-                      </td>
-                    </tr>
-                  </tbody>
+{(s.cases.filter((c) => (c.subjects || []).some((x) => x.ref === wallet))).length === 0 && <tr><td colSpan={6} className="mu">No cases linked to this wallet yet.</td></tr>}
+{(s.cases.filter((c) => (c.subjects || []).some((x) => x.ref === wallet))).map((x) => (<tr key={x.id}><td><DLink href={`/cases/${x.id}`} className="mono" style={{ color: "var(--pri)", fontWeight: 600 }}>{x.id}</DLink></td><td>{x.title}</td><td><span className="chip">{x.status}</span></td><td><span className={`chip${x.priority === 'Critical' ? ' bad' : ''}`}>{x.priority || '—'}</span></td><td>{x.assignee || 'Unassigned'}</td><td>{fmtDate(x.opened)}</td></tr>))}
+</tbody>
                 </table>
               </div>
             </div>

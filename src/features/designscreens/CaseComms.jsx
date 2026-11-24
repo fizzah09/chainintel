@@ -1,6 +1,9 @@
+import { fmtDate } from '../design/dashParts';
+import { act, useStore } from '../../mocks/store';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
+  const s = useStore(); const cid = s.ctx.caseId || '';
   return (
     <>
       <div className="app">
@@ -445,83 +448,9 @@ export default function Screen() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="">
-                        Customer relations
-                      </td>
-                      <td className="">
-                        Request for source of funds
-                      </td>
-                      <td className="">
-                        Outbound
-                      </td>
-                      <td className="">
-                        31 Oct
-                      </td>
-                      <td className="">
-                        <span className="chip warn">
-                          Awaiting Response
-                        </span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        Customer relations
-                      </td>
-                      <td className="">
-                        Re: Request for source of funds
-                      </td>
-                      <td className="">
-                        Inbound
-                      </td>
-                      <td className="">
-                        02 Nov
-                      </td>
-                      <td className="">
-                        <span className="chip ok">
-                          Response Received
-                        </span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        Exchange compliance
-                      </td>
-                      <td className="">
-                        Account ownership enquiry
-                      </td>
-                      <td className="">
-                        Outbound
-                      </td>
-                      <td className="">
-                        02 Nov
-                      </td>
-                      <td className="">
-                        <span className="chip blue">
-                          Sent
-                        </span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        Law enforcement liaison
-                      </td>
-                      <td className="">
-                        Referral draft
-                      </td>
-                      <td className="">
-                        Outbound
-                      </td>
-                      <td className="">
-                        —
-                      </td>
-                      <td className="">
-                        <span className="chip gray">
-                          Draft
-                        </span>
-                      </td>
-                    </tr>
-                  </tbody>
+{(s.comms.filter((m) => m.caseId === cid)).length === 0 && <tr><td colSpan={5} className="mu">No messages on this case yet.</td></tr>}
+{(s.comms.filter((m) => m.caseId === cid)).map((x) => (<tr key={x.id}><td>{x.to || '—'}</td><td>{x.subject || '—'}</td><td>{x.dir}</td><td>{fmtDate(x.date)}</td><td><span className="chip">{x.status}</span></td></tr>))}
+</tbody>
                 </table>
               </div>
             </div>

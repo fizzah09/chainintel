@@ -416,64 +416,8 @@ export default function Screen() {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td className="">
-                          v3
-                        </td>
-                        <td className="">
-                          02 Nov 2026
-                        </td>
-                        <td className="">
-                          Methodology v3
-                        </td>
-                        <td className="">
-                          78
-                        </td>
-                        <td className="">
-                          <span className="tier crit">
-                            Critical
-                          </span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="">
-                          v2
-                        </td>
-                        <td className="">
-                          28 Oct 2026
-                        </td>
-                        <td className="">
-                          Methodology v3
-                        </td>
-                        <td className="">
-                          61
-                        </td>
-                        <td className="">
-                          <span className="tier high">
-                            High
-                          </span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="">
-                          v1
-                        </td>
-                        <td className="">
-                          20 Oct 2026
-                        </td>
-                        <td className="">
-                          Methodology v2
-                        </td>
-                        <td className="">
-                          44
-                        </td>
-                        <td className="">
-                          <span className="tier mod">
-                            Moderate
-                          </span>
-                        </td>
-                      </tr>
-                    </tbody>
+<tr><td colSpan={5} className="mu">Risk history comes from the backend, which is not connected in this build.</td></tr>
+</tbody>
                   </table>
                 </div>
               </div>

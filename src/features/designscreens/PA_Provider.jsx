@@ -236,64 +236,8 @@ export default function Screen() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="">
-                        Etherscan API V2
-                      </td>
-                      <td className="">
-                        62,410
-                      </td>
-                      <td className="">
-                        0.2%
-                      </td>
-                      <td className="">
-                        210 ms
-                      </td>
-                      <td className="">
-                        <span className="chip ok">
-                          Healthy
-                        </span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        Ethereum RPC
-                      </td>
-                      <td className="">
-                        181,220
-                      </td>
-                      <td className="">
-                        0.1%
-                      </td>
-                      <td className="">
-                        90 ms
-                      </td>
-                      <td className="">
-                        <span className="chip ok">
-                          Healthy
-                        </span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        Forta labels
-                      </td>
-                      <td className="">
-                        1,204
-                      </td>
-                      <td className="">
-                        4.8%
-                      </td>
-                      <td className="">
-                        1.4 s
-                      </td>
-                      <td className="">
-                        <span className="chip warn">
-                          Degraded
-                        </span>
-                      </td>
-                    </tr>
-                  </tbody>
+<tr><td colSpan={5} className="mu">Provider health needs the backend, which is not connected in this build.</td></tr>
+</tbody>
                 </table>
               </div>
             </div>

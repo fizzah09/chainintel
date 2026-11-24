@@ -1,3 +1,4 @@
+import { fmtDate } from '../design/dashParts';
 import { DLink } from '../design/DLink';
 import { Gauge } from '../../components/ui';
 import { CFG, TN } from '../../lib/risk';
@@ -8,6 +9,7 @@ import { useStore } from '../../mocks/store';
 import { useParams } from 'react-router-dom';
 
 export default function Screen() {
+  const s = useStore();
   const { address } = useParams(); const sel = useStore(); const wallet = address || sel.ctx.wallet || '—';
   const [p] = useWallet(); const onWatch = sel.watchlists.some((w) => w.wallets.some((x) => x.a.toLowerCase() === (wallet || '').toLowerCase()));
   return (
@@ -364,49 +366,9 @@ export default function Screen() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="">
-                        <b>
-                          High-risk counterparties
-                        </b>
-                      </td>
-                      <td className="">
-                        <span className="chip blue">
-                          Tenant
-                        </span>
-                      </td>
-                      <td className="">
-                        Ahmed Khan
-                      </td>
-                      <td className="">
-                        02 Nov 2026
-                      </td>
-                      <td className="">
-                        Score ≥ 75
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        <b>
-                          Case 00128 subjects
-                        </b>
-                      </td>
-                      <td className="">
-                        <span className="chip gray">
-                          Personal
-                        </span>
-                      </td>
-                      <td className="">
-                        Sara Ali
-                      </td>
-                      <td className="">
-                        02 Nov 2026
-                      </td>
-                      <td className="">
-                        Any new transaction
-                      </td>
-                    </tr>
-                  </tbody>
+{(s.watchlists.filter((w) => w.wallets.some((x) => x.a.toLowerCase() === wallet.toLowerCase()))).length === 0 && <tr><td colSpan={5} className="mu">This wallet is not on any watchlist.</td></tr>}
+{(s.watchlists.filter((w) => w.wallets.some((x) => x.a.toLowerCase() === wallet.toLowerCase()))).map((x) => (<tr key={x.id}><td>{x.name}</td><td>{x.scope || 'Personal'}</td><td>{x.owner || '—'}</td><td>{fmtDate(x.updated)}</td><td>{x.rule === 'any' ? 'Any activity' : `Score at or above ${x.thr}`}</td></tr>))}
+</tbody>
                 </table>
               </div>
             </div>

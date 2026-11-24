@@ -320,73 +320,8 @@ export default function Screen() {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td className="">
-                          EVD-000184
-                        </td>
-                        <td className="">
-                          Direct transfer to a mixing service
-                        </td>
-                        <td className="">
-                          +18.0
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="">
-                          EVD-000185
-                        </td>
-                        <td className="">
-                          Exposure to 9 flagged counterparties
-                        </td>
-                        <td className="">
-                          +13.5
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="">
-                          EVD-000186
-                        </td>
-                        <td className="">
-                          Velocity 3.1× 30-day baseline
-                        </td>
-                        <td className="">
-                          +20.0
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="">
-                          EVD-000187
-                        </td>
-                        <td className="">
-                          Rapid pass-through of inbound funds
-                        </td>
-                        <td className="">
-                          +16.0
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="">
-                          EVD-000188
-                        </td>
-                        <td className="">
-                          Attribute: no ENS, fresh funding source
-                        </td>
-                        <td className="">
-                          +6.0
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="">
-                          EVD-000189
-                        </td>
-                        <td className="">
-                          Other: repeated micro-transfers
-                        </td>
-                        <td className="">
-                          +4.5
-                        </td>
-                      </tr>
-                    </tbody>
+<tr><td colSpan={6} className="mu">Report findings come from the backend, which is not connected in this build.</td></tr>
+</tbody>
                   </table>
                 </div>
                 <h4>

@@ -1,6 +1,8 @@
+import { act, useStore } from '../../mocks/store';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
+  const s = useStore(); const wallet = s.ctx.wallet || '';
   return (
     <>
       <div className="app">
@@ -262,103 +264,9 @@ export default function Screen() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="">
-                        <b>
-                          Example Bank
-                        </b>
-                      </td>
-                      <td className="">
-                        TEN-0007
-                      </td>
-                      <td className="">
-                        Enterprise
-                      </td>
-                      <td className="">
-                        38
-                      </td>
-                      <td className="">
-                        1,284
-                      </td>
-                      <td className="">
-                        <span className="chip ok">
-                          Active
-                        </span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        <b>
-                          Northern Savings
-                        </b>
-                      </td>
-                      <td className="">
-                        TEN-0011
-                      </td>
-                      <td className="">
-                        Professional
-                      </td>
-                      <td className="">
-                        21
-                      </td>
-                      <td className="">
-                        640
-                      </td>
-                      <td className="">
-                        <span className="chip ok">
-                          Active
-                        </span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        <b>
-                          Harbour Credit
-                        </b>
-                      </td>
-                      <td className="">
-                        TEN-0014
-                      </td>
-                      <td className="">
-                        Professional
-                      </td>
-                      <td className="">
-                        12
-                      </td>
-                      <td className="">
-                        302
-                      </td>
-                      <td className="">
-                        <span className="chip ok">
-                          Active
-                        </span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        <b>
-                          Test Sandbox
-                        </b>
-                      </td>
-                      <td className="">
-                        TEN-0002
-                      </td>
-                      <td className="">
-                        Evaluation
-                      </td>
-                      <td className="">
-                        4
-                      </td>
-                      <td className="">
-                        58
-                      </td>
-                      <td className="">
-                        <span className="chip bad">
-                          Suspended
-                        </span>
-                      </td>
-                    </tr>
-                  </tbody>
+{(s.tenants).length === 0 && <tr><td colSpan={6} className="mu">No tenants yet.</td></tr>}
+{(s.tenants).map((x) => (<tr key={x.id}><td>{x.name}</td><td><span className="mono">{x.id}</span></td><td>{x.plan || '—'}</td><td>{x.users ?? 0}</td><td>{x.wallets ?? 0}</td><td><span className="chip">{x.status}</span></td></tr>))}
+</tbody>
                 </table>
               </div>
             </div>

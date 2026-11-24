@@ -1,6 +1,9 @@
+import { fmtDate } from '../design/dashParts';
+import { act, useStore } from '../../mocks/store';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
+  const s = useStore();
   return (
     <>
       <div className="app">
@@ -232,64 +235,9 @@ export default function Screen() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="">
-                        CASE-2026-00102
-                      </td>
-                      <td className="">
-                        <span className="chip ok">
-                          Approved
-                        </span>
-                      </td>
-                      <td className="">
-                        Nadia Hussain
-                      </td>
-                      <td className="">
-                        14 Oct
-                      </td>
-                      <td className="">
-                        Complete evidence set
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        CASE-2026-00098
-                      </td>
-                      <td className="">
-                        <span className="chip warn">
-                          Returned
-                        </span>
-                      </td>
-                      <td className="">
-                        Nadia Hussain
-                      </td>
-                      <td className="">
-                        12 Oct
-                      </td>
-                      <td className="">
-                        Missing source of funds
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        CASE-2026-00091
-                      </td>
-                      <td className="">
-                        <span className="chip ok">
-                          Approved
-                        </span>
-                      </td>
-                      <td className="">
-                        Nadia Hussain
-                      </td>
-                      <td className="">
-                        08 Oct
-                      </td>
-                      <td className="">
-                        Good analysis
-                      </td>
-                    </tr>
-                  </tbody>
+{(s.reviews.filter((r) => r.by === s.session.name)).length === 0 && <tr><td colSpan={5} className="mu">You have not reviewed any case yet.</td></tr>}
+{(s.reviews.filter((r) => r.by === s.session.name)).map((x) => (<tr key={x.id}><td><DLink href={`/cases/${x.id}`} className="mono" style={{ color: "var(--pri)", fontWeight: 600 }}>{x.caseId}</DLink></td><td>{x.decision}</td><td>{x.by}</td><td>{fmtDate(x.date)}</td><td>{x.comment || '—'}</td></tr>))}
+</tbody>
                 </table>
               </div>
             </div>

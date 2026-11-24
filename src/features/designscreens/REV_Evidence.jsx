@@ -1,6 +1,8 @@
+import { act, useStore } from '../../mocks/store';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
+  const s = useStore();
   return (
     <>
       <div className="app">
@@ -232,121 +234,9 @@ export default function Screen() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="">
-                        <b>
-                          EVD-000184
-                        </b>
-                      </td>
-                      <td className="">
-                        Counterparty exposure snapshot
-                      </td>
-                      <td className="">
-                        Risk snapshot
-                      </td>
-                      <td className="">
-                        Chain Intel
-                      </td>
-                      <td className="">
-                        Sara Ali
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        <b>
-                          EVD-000185
-                        </b>
-                      </td>
-                      <td className="">
-                        Mixer interaction transaction set
-                      </td>
-                      <td className="">
-                        Transaction set
-                      </td>
-                      <td className="">
-                        Etherscan
-                      </td>
-                      <td className="">
-                        Sara Ali
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        <b>
-                          EVD-000186
-                        </b>
-                      </td>
-                      <td className="">
-                        Graph export (3 hops)
-                      </td>
-                      <td className="">
-                        Graph image
-                      </td>
-                      <td className="">
-                        Chain Intel
-                      </td>
-                      <td className="">
-                        Sara Ali
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        <b>
-                          EVD-000187
-                        </b>
-                      </td>
-                      <td className="">
-                        Label reference: mixing service
-                      </td>
-                      <td className="">
-                        External source
-                      </td>
-                      <td className="">
-                        Forta labels
-                      </td>
-                      <td className="">
-                        System
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        <b>
-                          EVD-000188
-                        </b>
-                      </td>
-                      <td className="">
-                        Customer statement PDF
-                      </td>
-                      <td className="">
-                        Document
-                      </td>
-                      <td className="">
-                        Customer
-                      </td>
-                      <td className="">
-                        Ahmed Khan
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        <b>
-                          EVD-000189
-                        </b>
-                      </td>
-                      <td className="">
-                        Sanctions screening result
-                      </td>
-                      <td className="">
-                        External source
-                      </td>
-                      <td className="">
-                        OFAC list
-                      </td>
-                      <td className="">
-                        System
-                      </td>
-                    </tr>
-                  </tbody>
+{(s.evidence.filter((e) => e.by === s.session.name)).length === 0 && <tr><td colSpan={5} className="mu">You have not added any evidence yet.</td></tr>}
+{(s.evidence.filter((e) => e.by === s.session.name)).map((x) => (<tr key={x.id}><td><span className="mono">{x.id}</span></td><td>{x.title}</td><td>{x.type || '—'}</td><td>{x.source || '—'}</td><td>{x.by || '—'}</td></tr>))}
+</tbody>
                 </table>
               </div>
             </div>

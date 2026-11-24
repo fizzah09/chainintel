@@ -1,6 +1,9 @@
+import { fmtDate } from '../design/dashParts';
+import { act, useStore } from '../../mocks/store';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
+  const s = useStore();
   return (
     <>
       <div className="app">
@@ -244,147 +247,9 @@ export default function Screen() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="">
-                        <b>
-                          CASE-2026-00128
-                        </b>
-                      </td>
-                      <td className="">
-                        Suspected layering via mixer
-                      </td>
-                      <td className="">
-                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
-                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
-                            SA
-                          </span>
-                          <div style={{ lineHeight: "1.25" }}>
-                            <div style={{ fontWeight: "550" }}>
-                              Sara Ali
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="">
-                        02 Nov 14:20
-                      </td>
-                      <td className="">
-                        <span className="chip bad">
-                          Critical
-                        </span>
-                      </td>
-                      <td className="">
-                        <span className="chip warn">
-                          Pending
-                        </span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        <b>
-                          CASE-2026-00121
-                        </b>
-                      </td>
-                      <td className="">
-                        Unexplained inbound volume spike
-                      </td>
-                      <td className="">
-                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
-                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
-                            MC
-                          </span>
-                          <div style={{ lineHeight: "1.25" }}>
-                            <div style={{ fontWeight: "550" }}>
-                              Maria Chen
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="">
-                        02 Nov 09:10
-                      </td>
-                      <td className="">
-                        <span className="chip blue">
-                          Medium
-                        </span>
-                      </td>
-                      <td className="">
-                        <span className="chip warn">
-                          Pending
-                        </span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        <b>
-                          CASE-2026-00110
-                        </b>
-                      </td>
-                      <td className="">
-                        Bridge hopping across chains
-                      </td>
-                      <td className="">
-                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
-                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
-                            SA
-                          </span>
-                          <div style={{ lineHeight: "1.25" }}>
-                            <div style={{ fontWeight: "550" }}>
-                              Sara Ali
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="">
-                        01 Nov 16:45
-                      </td>
-                      <td className="">
-                        <span className="chip warn">
-                          High
-                        </span>
-                      </td>
-                      <td className="">
-                        <span className="chip warn">
-                          Pending
-                        </span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        <b>
-                          CASE-2026-00105
-                        </b>
-                      </td>
-                      <td className="">
-                        Phishing-linked deposit
-                      </td>
-                      <td className="">
-                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
-                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
-                            OS
-                          </span>
-                          <div style={{ lineHeight: "1.25" }}>
-                            <div style={{ fontWeight: "550" }}>
-                              Omar Siddiq
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="">
-                        31 Oct
-                      </td>
-                      <td className="">
-                        <span className="chip blue">
-                          Medium
-                        </span>
-                      </td>
-                      <td className="">
-                        <span className="chip warn">
-                          Pending
-                        </span>
-                      </td>
-                    </tr>
-                  </tbody>
+{(s.cases.filter((c) => c.status === 'Under Review')).length === 0 && <tr><td colSpan={6} className="mu">No cases waiting for review.</td></tr>}
+{(s.cases.filter((c) => c.status === 'Under Review')).map((x) => (<tr key={x.id}><td><DLink href={`/cases/${x.id}`} className="mono" style={{ color: "var(--pri)", fontWeight: 600 }}>{x.id}</DLink></td><td>{x.title}</td><td>{x.createdBy || '—'}</td><td>{fmtDate(x.opened)}</td><td><span className={`chip${x.priority === 'Critical' ? ' bad' : ''}`}>{x.priority || '—'}</span></td><td><span className="chip">{x.status}</span></td></tr>))}
+</tbody>
                 </table>
               </div>
             </div>

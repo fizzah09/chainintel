@@ -301,77 +301,8 @@ export default function Screen() {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td className="">
-                          Source reputation
-                        </td>
-                        <td className="">
-                          Wallet B linked to 2 flagged counterparties
-                        </td>
-                        <td className="">
-                          35%
-                        </td>
-                        <td className="">
-                          +26.0
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="">
-                          Amount anomaly
-                        </td>
-                        <td className="">
-                          4.8× wallet median
-                        </td>
-                        <td className="">
-                          25%
-                        </td>
-                        <td className="">
-                          +16.0
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="">
-                          Timing
-                        </td>
-                        <td className="">
-                          Part of rapid pass-through
-                        </td>
-                        <td className="">
-                          20%
-                        </td>
-                        <td className="">
-                          +12.0
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="">
-                          Token
-                        </td>
-                        <td className="">
-                          Stablecoin, low volatility
-                        </td>
-                        <td className="">
-                          10%
-                        </td>
-                        <td className="">
-                          +4.0
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="">
-                          Other
-                        </td>
-                        <td className="">
-                          No additional signals
-                        </td>
-                        <td className="">
-                          10%
-                        </td>
-                        <td className="">
-                          +6.0
-                        </td>
-                      </tr>
-                    </tbody>
+<tr><td colSpan={4} className="mu">Risk factors come from the backend, which is not connected in this build.</td></tr>
+</tbody>
                   </table>
                 </div>
                 <div className="mu sm" style={{ paddingTop: "12px" }}>
