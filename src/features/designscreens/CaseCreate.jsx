@@ -1,6 +1,10 @@
 import { DLink } from '../design/DLink';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { act, useStore } from '../../mocks/store';
 
 export default function Screen() {
+  const s = useStore(); const w = s.wizard; const nav = useNavigate(); const [err, setErr] = useState({});
   return (
     <>
       <div className="app">
@@ -317,10 +321,9 @@ export default function Screen() {
                     </i>
                   </label>
                   <div className="in">
-                    <span>
-                      Suspected layering via mixer
-                    </span>
+                    <input type="text" value={w.title} onChange={(e) => act.setWizard({ title: e.target.value })} placeholder="Case title" aria-label="Case title" />
                   </div>
+                  {err.title && <div className="hint err" role="alert" style={{ marginTop: 6 }}>{err.title}</div>}
                 </div>
                 <div className="fld" style={{ flex: "1 1 220px" }}>
                   <label>
@@ -330,12 +333,9 @@ export default function Screen() {
                     </i>
                   </label>
                   <div className="in">
-                    <span>
-                      Transaction monitoring
-                    </span>
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <path d="M6 9l6 6 6-6" />
-                    </svg>
+                    <select value={w.type} onChange={(e) => act.setWizard({ type: e.target.value })} aria-label="Case type">
+                      {[['Transaction monitoring', 'Transaction monitoring'], ['Sanctions exposure', 'Sanctions exposure'], ['Source of funds', 'Source of funds'], ['Fraud / scam', 'Fraud / scam'], ['Other', 'Other']].map(([v, t]) => <option key={v} value={v}>{t}</option>)}
+                    </select>
                   </div>
                 </div>
               </div>
@@ -347,11 +347,10 @@ export default function Screen() {
                     *
                   </i>
                 </label>
-                <div className="in ta">
-                  <span>
-                    Wallet received funds from two flagged counterparties and forwarded most of the balance to a mixing service within 90 minutes.
-                  </span>
-                </div>
+                  <div className="in ta">
+                    <textarea rows={4} value={w.desc} onChange={(e) => act.setWizard({ desc: e.target.value })} placeholder="Description" aria-label="Description" />
+                  </div>
+                  {err.desc && <div className="hint err" role="alert" style={{ marginTop: 6 }}>{err.desc}</div>}
                 <div className="hint">
                   Visible to everyone with access to this case.
                 </div>
@@ -363,22 +362,17 @@ export default function Screen() {
                     Source
                   </label>
                   <div className="in">
-                    <span>
-                      Wallet alert ALR-2026-0912
-                    </span>
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <path d="M6 9l6 6 6-6" />
-                    </svg>
+                    <select value={w.source} onChange={(e) => act.setWizard({ source: e.target.value })} aria-label="Source">
+                      {[['Manual', 'Manual'], ['Wallet profile', 'Wallet profile']].map(([v, t]) => <option key={v} value={v}>{t}</option>)}
+                    </select>
                   </div>
                 </div>
                 <div className="fld" style={{ flex: "1 1 240px" }}>
                   <label>
                     Reference
                   </label>
-                  <div className="in ph">
-                    <span>
-                      Optional external reference
-                    </span>
+                  <div className="in">
+                    <input type="text" value={w.ref} onChange={(e) => act.setWizard({ ref: e.target.value })} placeholder="Optional external reference" aria-label="Optional external reference" />
                   </div>
                 </div>
               </div>
@@ -390,7 +384,7 @@ export default function Screen() {
                   <a href="#" className="btn ">
                     Save draft
                   </a>
-                  <DLink href="/cases/new/subjects" className="btn pri">
+                  <DLink href="/cases/new/subjects" className="btn pri" onClick={(e) => { const m = { title: !w.title.trim() ? "Enter a case title to continue." : "", desc: !w.desc.trim() ? "Add a description to continue." : "" }; setErr(m); if (m.title || m.desc) e.preventDefault(); }}>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                       <path d="M5 12h14M13 6l6 6-6 6" />
                     </svg>
