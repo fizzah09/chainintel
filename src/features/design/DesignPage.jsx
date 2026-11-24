@@ -1,11 +1,25 @@
 import { useNavigate } from 'react-router-dom';
 import { SCREENS } from '../designscreens';
 import { useToast } from '../../context/ToastContext';
-import { getState } from '../../mocks/store';
+import { act, getState } from '../../mocks/store';
 
 // Dead design links (href="#") get a real action where one exists; the rest say plainly that they are not wired yet.
-function deadLinkAction(label, { nav, toast }) {
+function deadLinkAction(label, { nav, toast, el }) {
   const l = label.trim().toLowerCase();
+  const ctx = getState().ctx;
+  // Actions that act on the current case or alert (ids come from the store selection).
+  if (l === 'post note') {
+    return () => {
+      const box = el?.closest('.card, section, div')?.querySelector('textarea') || el?.closest('div')?.parentElement?.querySelector('textarea');
+      const text = (box?.value || '').trim();
+      if (!ctx.caseId) return toast('Open a case first.');
+      if (!text) return toast('Write a note first.');
+      act.addNote(ctx.caseId, text); box.value = ''; toast('Note posted.');
+    };
+  }
+  if (l === 'reopen case') return () => ctx.caseId ? (act.reopen(ctx.caseId, 'Reopened from the case page'), toast('Case reopened.')) : toast('Open a case first.');
+  if (l === 'resolve escalation') return () => ctx.caseId ? (act.resolveEscalation(ctx.caseId), toast('Escalation resolved.')) : toast('Open a case first.');
+  if (l === 'resolve' && ctx.alert) return () => { act.alertStatus(ctx.alert, 'Resolved'); toast('Alert resolved.'); };
   if (['cancel', 'back', 'close', 'dismiss'].includes(l)) return () => nav(-1);
   if (l === 'copy address' || l === 'copy') {
     return () => { const a = getState().ctx.wallet || ''; navigator.clipboard?.writeText(a); toast(a ? 'Address copied' : 'No address selected'); };
@@ -32,7 +46,7 @@ export function DesignPage({ name }) {
           if (!a) return;
           e.preventDefault();
           const label = a.textContent || '';
-          deadLinkAction(label, { nav, toast })();
+          deadLinkAction(label, { nav, toast, el: a })();
         }}
       >
         <Screen />

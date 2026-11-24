@@ -397,10 +397,8 @@ export default function Screen() {
                   <label>
                     Note
                   </label>
-                  <div className="in ta ph">
-                    <span>
-                      Add context for other investigators…
-                    </span>
+                  <div className="in ta">
+                    <textarea rows={3} placeholder="Add context for other investigators…" aria-label="Note" />
                   </div>
                 </div>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "12px" }}>
