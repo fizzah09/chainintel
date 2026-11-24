@@ -1,6 +1,9 @@
+import { act, useStore } from '../../mocks/store';
+import { useToast } from '../../context/ToastContext';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
+  const s = useStore(); const toast = useToast();
   return (
     <>
       <div className="app">
@@ -316,105 +319,26 @@ export default function Screen() {
                       <th className="">
                         Status
                       </th>
+                      <th className="r">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="">
-                        <b>
-                          Example Bank
-                        </b>
-                      </td>
-                      <td className="">
-                        TEN-0007
-                      </td>
-                      <td className="">
-                        Enterprise
-                      </td>
-                      <td className="">
-                        38
-                      </td>
-                      <td className="">
-                        1,284
-                      </td>
-                      <td className="">
-                        <span className="chip ok">
-                          Active
-                        </span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        <b>
-                          Northern Savings
-                        </b>
-                      </td>
-                      <td className="">
-                        TEN-0011
-                      </td>
-                      <td className="">
-                        Professional
-                      </td>
-                      <td className="">
-                        21
-                      </td>
-                      <td className="">
-                        640
-                      </td>
-                      <td className="">
-                        <span className="chip ok">
-                          Active
-                        </span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        <b>
-                          Harbour Credit
-                        </b>
-                      </td>
-                      <td className="">
-                        TEN-0014
-                      </td>
-                      <td className="">
-                        Professional
-                      </td>
-                      <td className="">
-                        12
-                      </td>
-                      <td className="">
-                        302
-                      </td>
-                      <td className="">
-                        <span className="chip ok">
-                          Active
-                        </span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        <b>
-                          Test Sandbox
-                        </b>
-                      </td>
-                      <td className="">
-                        TEN-0002
-                      </td>
-                      <td className="">
-                        Evaluation
-                      </td>
-                      <td className="">
-                        4
-                      </td>
-                      <td className="">
-                        58
-                      </td>
-                      <td className="">
-                        <span className="chip bad">
-                          Suspended
-                        </span>
-                      </td>
-                    </tr>
+                    {s.tenants.length === 0 && <tr><td colSpan={7} className="mu">No tenants yet. Invite one from Create tenant.</td></tr>}
+                    {s.tenants.map((x) => (
+                      <tr key={x.id}>
+                        <td>{x.name}</td>
+                        <td className="mono">{x.id}</td>
+                        <td>{x.plan || "—"}</td>
+                        <td>{x.users ?? 0}</td>
+                        <td>{x.wallets ?? 0}</td>
+                        <td><span className={`chip ${x.status === "Active" ? "ok" : x.status === "Suspended" ? "warn" : "blue"}`}>{x.status}</span></td>
+                        <td className="r">
+                          {x.status === "Active" && <button className="link" style={{ color: "var(--crit)" }} onClick={() => { act.tenantStatus(x.id, "Suspended"); toast("Tenant suspended."); }}>Suspend</button>}
+                          {x.status === "Suspended" && <button className="link" onClick={() => { act.tenantStatus(x.id, "Active"); toast("Tenant reactivated."); }}>Activate</button>}
+                          {x.status === "Invited" && <button className="link" onClick={() => { act.tenantStatus(x.id, "Active"); toast("Tenant activated."); }}>Activate</button>}
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
