@@ -106,6 +106,17 @@ export const act = {
     mutate((d) => { d.auth.reset[e] = { token, exp: Date.now() + 5 * 60 * 1000, verified: true }; log(d, 'Password reset OTP verified', e); });
     return { ok: true, resetToken: token };
   },
+  changePassword(current, next) {
+    const e = (state.session?.email || '').toLowerCase();
+    const custom = (state.auth?.passwords || {})[e];
+    const currentOk = custom ? current === custom : (current || '').length >= 6;
+    if (!currentOk) return { ok: false, error: 'The current password is not correct.' };
+    if (!next || next.length < 8) return { ok: false, error: 'Use at least 8 characters.' };
+    if (next === current) return { ok: false, error: 'Choose a password you have not used before.' };
+    mutate((d) => { d.auth = d.auth || { fails: {}, locks: {}, passwords: {}, reset: {} }; d.auth.passwords[e] = next; log(d, 'Changed password', d.session.email); });
+    return { ok: true };
+  },
+  setMfa(on) { mutate((d) => { d.prefs = { ...(d.prefs || {}), mfa: !!on }; log(d, on ? 'Turned on two-step sign-in' : 'Turned off two-step sign-in', d.session.email); }); },
   resetPassword(email, token, password) {
     const e = (email || '').trim().toLowerCase(); const r = (state.auth?.reset || {})[e];
     if (!r || !r.verified || r.token !== token || r.exp < Date.now()) return { ok: false, error: 'This reset session expired. Start again.' };
