@@ -129,7 +129,7 @@ export default function Screen() {
               </span>
               {" "}
               <b>
-                CASE-2026-00128
+                {c.id || '—'}
               </b>
             </div>
             <label className="search">

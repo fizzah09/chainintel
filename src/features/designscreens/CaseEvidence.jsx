@@ -1,7 +1,9 @@
+import { fmtDate } from '../design/dashParts';
 import { act, useStore } from '../../mocks/store';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
+  const c = s.cases.find((x) => x.id === (s.ctx.caseId || '')) || {};
   const s = useStore(); const cid = s.ctx.caseId || '';
   return (
     <>
@@ -170,7 +172,7 @@ export default function Screen() {
               </span>
               {" "}
               <span>
-                CASE-2026-00128
+                {c.id || '—'}
               </span>
               {" "}
               <span style={{ color: "#A3B0C2" }}>
@@ -235,7 +237,7 @@ export default function Screen() {
                 <div>
                   <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap" }}>
                     <span className="mono mu">
-                      CASE-2026-00128
+                      {c.id || '—'}
                     </span>
                     <span className="chip pur">
                       Under Review
@@ -245,20 +247,20 @@ export default function Screen() {
                     </span>
                   </div>
                   <h1 style={{ fontSize: "22px", marginTop: "6px" }}>
-                    Suspected layering via mixer
+                    {c.title || 'No case selected'}
                   </h1>
                   <div className="mu" style={{ marginTop: "6px", display: "flex", gap: "18px", flexWrap: "wrap" }}>
                     <span>
-                      Assignee: Sara Ali
+                      Assignee: {c.assignee || 'Unassigned'}
                     </span>
                     <span>
-                      Opened 02 Nov 2026
+                      Opened {fmtDate(c.opened)}
                     </span>
                     <span>
-                      Due 09 Nov 2026
+                      Due {fmtDate(c.due)}
                     </span>
                     <span>
-                      Subjects: 3
+                      Subjects: {(c.subjects || []).length}
                     </span>
                   </div>
                 </div>
