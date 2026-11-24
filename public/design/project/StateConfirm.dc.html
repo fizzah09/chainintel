@@ -118,10 +118,38 @@ td.r,th.r{text-align:right}
 .tl{display:flex;gap:14px}.tl .dot{display:flex;flex-direction:column;align-items:center}.tl .dot i{width:10px;height:10px;border-radius:50%;background:var(--pri);margin-top:6px;flex:none}.tl .dot s{width:2px;flex:1;background:var(--ln);min-height:24px}
 .ev{border:1px solid var(--ln);border-radius:10px;padding:14px 16px;background:#fff}
 </style>
-</helmet>
+<style id="ci-responsive">
+/* Responsive additions (phone and tablet). Desktop is unchanged. */
+.ci-menu{display:none}
+.ci-scrim{display:none}
+@media (max-width:860px){
+  .ci-menu{display:inline-flex!important;flex:none}
+  .ci-scrim{display:block;position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:65}
+  .app{display:block!important;min-height:100vh}
+  .side{position:fixed!important;top:0;left:0;bottom:0;width:272px!important;max-width:85vw!important;flex:none!important;z-index:70;transform:translateX(-100%);transition:transform .2s ease;overflow-y:auto}
+  .side.ci-open{transform:none;box-shadow:0 0 40px rgba(0,0,0,.35)}
+  .main{width:100%!important;min-width:0!important}
+  .top{padding:10px 16px!important;flex-wrap:nowrap!important;overflow-x:auto;gap:10px!important}
+  .top .pill{display:none!important}
+  .top .user div{display:none!important}
+  .search{flex:1 1 auto!important;min-width:140px;max-width:none!important}
+  .content{padding:16px 16px 40px!important;gap:16px!important}
+  .ph{flex-direction:column;align-items:flex-start!important}
+  .acts{width:100%}
+  .row{flex-direction:column!important}
+  .row>*{flex:1 1 auto!important;width:100%!important;min-width:0!important}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .card{padding:16px!important}
+  .tools{gap:8px!important}
+  .tools .s{flex:1 1 100%!important}
+  .modal{max-width:none!important;padding:18px!important}
+  [style*="flex:1 1 420px"],[style*="flex: 1 1 420px"]{min-height:0!important}
+}
+@media (max-width:480px){.kpis{grid-template-columns:1fr!important}}
+</style></helmet>
 <div class="app">
 <nav class="side" aria-label="Main">
-<div class="brand"><svg width="34" height="34" viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="11" fill="#1769E0"></rect><circle cx="12" cy="20" r="3.2" fill="#fff"></circle><circle cx="27" cy="11.5" r="3.2" fill="#fff"></circle><circle cx="27" cy="28.5" r="3.2" fill="#fff"></circle><path d="M14.7 18.5l9.6-5.5M14.7 21.5l9.6 5.5" stroke="#fff" stroke-width="2" stroke-linecap="round"></path></svg><b>ChainSight</b></div>
+<div class="brand"><svg width="34" height="34" viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="11" fill="#1769E0"></rect><circle cx="12" cy="20" r="3.2" fill="#fff"></circle><circle cx="27" cy="11.5" r="3.2" fill="#fff"></circle><circle cx="27" cy="28.5" r="3.2" fill="#fff"></circle><path d="M14.7 18.5l9.6-5.5M14.7 21.5l9.6 5.5" stroke="#fff" stroke-width="2" stroke-linecap="round"></path></svg><b>Chain Intel</b></div>
 <div class="ws"><span>Workspace</span><b>Example Bank<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></b></div>
 <div class="nav"><a href="BA_Dashboard.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1.5"></rect><rect x="14" y="3" width="7" height="5" rx="1.5"></rect><rect x="14" y="12" width="7" height="9" rx="1.5"></rect><rect x="3" y="16" width="7" height="5" rx="1.5"></rect></svg><span>Bank Dashboard</span></a><a href="WalletMonitoring.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5H18v3"></path><path d="M4 7.5V17a2 2 0 0 0 2 2h13a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1H6.5A2.5 2.5 0 0 1 4 7.5z"></path><circle cx="16" cy="13.5" r="1.2"></circle></svg><span>Wallet Monitoring</span></a><a href="TransactionTracing.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h12l-3-3M17 17H5l3 3"></path></svg><span>Transaction Tracing</span></a></div><div class="nh">Operations</div><div class="nav"><a href="CaseList.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"></rect><path d="M9 7V5a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 5v2M3 13h18"></path></svg><span>Cases</span></a><a href="WatchlistList.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12V4h8l10 10-8 8z"></path><circle cx="7.5" cy="8.5" r="1.3"></circle></svg><span>Watchlists</span></a><a href="AlertsDashboard.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l9.5 16.5h-19z"></path><path d="M12 10v4.5M12 17.2v.1"></path></svg><span>Alerts</span></a><a href="ReportLibrary.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l5 5v13H6z"></path><path d="M14 3v5h5M9 13h7M9 17h7"></path></svg><span>Reports</span></a></div><div class="nh">Administration</div><div class="nav"><a href="BA_Users.dc.html" class="on"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"></circle><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"></path><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.3c2.2.7 3.5 2.6 3.5 5.7"></path></svg><span>Users &amp; Roles</span></a><a href="BA_Audit.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6z"></path><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg><span>Audit Logs</span></a><a href="BA_Settings.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"></path></svg><span>Bank Settings</span></a></div><div class="sfoot"><div class="nav"><a href="NotificationCenter.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 2h-15z"></path><path d="M10 21h4"></path></svg><span>Notifications</span></a><a href="PersonalPrefs.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"></circle><path d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5"></path></svg><span>My Profile</span></a><a href="Main.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 4H5v16h5M15 8l4 4-4 4M19 12H9"></path></svg><span>Sign out</span></a></div></div>
 </nav>
@@ -135,7 +163,7 @@ td.r,th.r{text-align:right}
 <a class="user" href="ProfileMenu.dc.html"><div class="av" aria-hidden="true">BQ</div><div><b>Bilal Qureshi</b><span>Bank Admin</span></div></a>
 </header>
 <main class="content">
-<div class="ph"><div><div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><h1>Users and roles</h1></div></div><div class="acts"></div></div><div class="scrim"><div class="modal"><div style="color:#B91C1C"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l9.5 16.5h-19z"></path><path d="M12 10v4.5M12 17.2v.1"></path></svg></div><h2 style="font-size:20px;margin-top:10px">Disable Old User?</h2><p class="mu" style="margin:8px 0 18px">They will be signed out and can no longer access ChainSight. Their cases will be unassigned. You can re-enable the account later.</p><div style="display:flex;justify-content:flex-end;gap:10px"><a href="#" class="btn ">Cancel</a><a href="#" class="btn dg">Disable user</a></div></div></div>
+<div class="ph"><div><div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><h1>Users and roles</h1></div></div><div class="acts"></div></div><div class="scrim"><div class="modal"><div style="color:#B91C1C"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l9.5 16.5h-19z"></path><path d="M12 10v4.5M12 17.2v.1"></path></svg></div><h2 style="font-size:20px;margin-top:10px">Disable Old User?</h2><p class="mu" style="margin:8px 0 18px">They will be signed out and can no longer access Chain Intel. Their cases will be unassigned. You can re-enable the account later.</p><div style="display:flex;justify-content:flex-end;gap:10px"><a href="#" class="btn ">Cancel</a><a href="#" class="btn dg">Disable user</a></div></div></div>
 </main>
 </div>
 </div>
@@ -147,5 +175,12 @@ return {};
 }
 }
 </script>
-</body>
+<script id="ci-responsive-js">(function(){
+function scrim(open){var s=document.querySelector('.ci-scrim');if(open&&!s){s=document.createElement('div');s.className='ci-scrim';s.onclick=function(){close();};document.body.appendChild(s);}if(!open&&s){s.remove();}}
+function close(){var side=document.querySelector('.side');if(side)side.classList.remove('ci-open');scrim(false);}
+function setup(){var top=document.querySelector('.top');var side=document.querySelector('.side');if(!top||!side)return;
+if(!top.querySelector('.ci-menu')){var b=document.createElement('button');b.type='button';b.className='ib ci-menu';b.setAttribute('aria-label','Open menu');b.style.cssText='width:40px;height:40px;align-items:center;justify-content:center;border:1px solid #E2E8F0;border-radius:10px;background:#fff;color:#5B6B82;cursor:pointer';b.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';b.onclick=function(){var open=!side.classList.contains('ci-open');side.classList.toggle('ci-open',open);scrim(open);};top.insertBefore(b,top.firstChild);}
+if(!side.dataset.ciBound){side.dataset.ciBound='1';side.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('a'))close();});}}
+var t=null;new MutationObserver(function(){clearTimeout(t);t=setTimeout(setup,50);}).observe(document.body,{childList:true,subtree:true});
+window.addEventListener('load',setup);setup();})();</script></body>
 </html>
