@@ -32,8 +32,18 @@ function deadLinkAction(label, { nav, toast, el }) {
   if (l === 'add to watchlist') return () => nav('/watchlists/new');
   if (l === 'create case') return () => nav('/cases/new');
   if (l === 'generate report') return () => nav('/reports/new');
-  if (l === 'export' || l.startsWith('export ')) return () => toast('Export is not available in this build yet.');
-  return () => toast(`"${label.trim()}" is not wired yet.`);
+  if (l === 'export' || l.startsWith('export ')) return () => {
+    // Export the table on this screen (first visible table) as a CSV file.
+    const table = el?.closest('.card, .content, main')?.querySelector('table') || document.querySelector('table');
+    if (!table) return toast('Nothing to export on this screen.');
+    const rows = [...table.querySelectorAll('tr')].map((tr) => [...tr.children].map((c) => c.textContent.replace(/\s+/g, ' ').trim()));
+    const csv = rows.map((r) => r.map((v) => `"${v.replace(/"/g, '""')}"`).join(',')).join(String.fromCharCode(10));
+    const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+    const a = document.createElement('a'); a.href = url; a.download = `${(document.title || 'export').replace(/[^a-z0-9]+/gi, '-').toLowerCase()}.csv`;
+    document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    toast(`Exported ${Math.max(0, rows.length - 1)} rows.`);
+  };
+  return null; // unknown: links say not wired yet; buttons keep their own handlers
 }
 
 // Renders one design screen as a React page (no app shell: the design has its own layout).
@@ -46,11 +56,14 @@ export function DesignPage({ name }) {
       <div
         style={{ display: 'contents' }}
         onClickCapture={(e) => {
-          const a = e.target.closest?.('a[href="#"]');
+          const a = e.target.closest?.('a[href="#"], button, .btn, .sel');
           if (!a) return;
-          e.preventDefault();
           const label = a.textContent || '';
-          deadLinkAction(label, { nav, toast, el: a })();
+          // Buttons with their own handlers (e.g. Save changes) only get Export here; links get the full set.
+          if (a.tagName !== 'A' && !label.trim().toLowerCase().startsWith('export')) return;
+          const action = deadLinkAction(label, { nav, toast, el: a });
+          if (action) { e.preventDefault(); action(); return; }
+          if (a.tagName === 'A' && a.getAttribute('href') === '#') { e.preventDefault(); toast(`"${label.trim()}" is not wired yet.`); }
         }}
       >
         <Screen />
