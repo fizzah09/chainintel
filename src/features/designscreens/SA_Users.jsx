@@ -1,6 +1,11 @@
 import { DLink } from '../design/DLink';
+import { act, useStore } from '../../mocks/store';
+import { ROLE_NAMES } from '../../mocks/seed';
+import { useToast } from '../../context/ToastContext';
+import { ago } from '../../lib/format';
 
 export default function Screen() {
+  const s = useStore(); const toast = useToast();
   return (
     <>
       <div className="app">
@@ -298,150 +303,20 @@ export default function Screen() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="">
-                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
-                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
-                            OF
-                          </span>
-                          <div style={{ lineHeight: "1.25" }}>
-                            <div style={{ fontWeight: "550" }}>
-                              Omar Farooq
-                            </div>
-                            <div className="mu" style={{ fontSize: "11.5px" }}>
-                              omar@chainsight.io
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="">
-                        Super Admin
-                      </td>
-                      <td className="">
-                        Platform
-                      </td>
-                      <td className="">
-                        <span className="chip ok">
-                          Active
-                        </span>
-                      </td>
-                      <td className="">
-                        5 min ago
-                      </td>
-                      <td className="r">
-                        <span className="mu sm">
-                          —
-                        </span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
-                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
-                            ZK
-                          </span>
-                          <div style={{ lineHeight: "1.25" }}>
-                            <div style={{ fontWeight: "550" }}>
-                              Zara Khan
-                            </div>
-                            <div className="mu" style={{ fontSize: "11.5px" }}>
-                              zara@chainintel.io
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="">
-                        Sub Admin
-                      </td>
-                      <td className="">
-                        Platform
-                      </td>
-                      <td className="">
-                        <span className="chip warn">
-                          Invited
-                        </span>
-                      </td>
-                      <td className="">
-                        —
-                      </td>
-                      <td className="r">
-                        <a href="#" className="btn sm">
-                          Edit
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
-                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
-                            HR
-                          </span>
-                          <div style={{ lineHeight: "1.25" }}>
-                            <div style={{ fontWeight: "550" }}>
-                              Hina Raza
-                            </div>
-                            <div className="mu" style={{ fontSize: "11.5px" }}>
-                              hina@chainsight.io
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="">
-                        Platform Admin
-                      </td>
-                      <td className="">
-                        Platform
-                      </td>
-                      <td className="">
-                        <span className="chip ok">
-                          Active
-                        </span>
-                      </td>
-                      <td className="">
-                        1 h ago
-                      </td>
-                      <td className="r">
-                        <a href="#" className="btn sm">
-                          Edit
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
-                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
-                            BQ
-                          </span>
-                          <div style={{ lineHeight: "1.25" }}>
-                            <div style={{ fontWeight: "550" }}>
-                              Bilal Qureshi
-                            </div>
-                            <div className="mu" style={{ fontSize: "11.5px" }}>
-                              bilal@examplebank.com
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="">
-                        Bank Admin
-                      </td>
-                      <td className="">
-                        Example Bank
-                      </td>
-                      <td className="">
-                        <span className="chip ok">
-                          Active
-                        </span>
-                      </td>
-                      <td className="">
-                        Yesterday
-                      </td>
-                      <td className="r">
-                        <a href="#" className="btn sm danger">
-                          Delete
-                        </a>
-                      </td>
-                    </tr>
+                    {s.users.length === 0 && <tr><td colSpan={6} className="mu">No platform users yet.</td></tr>}
+                    {s.users.map((u) => (
+                      <tr key={u.id}>
+                        <td><div style={{ display: "flex", alignItems: "center", gap: "9px" }}><div style={{ lineHeight: "1.25" }}><div style={{ fontWeight: "550" }}>{u.name}</div><div className="mu" style={{ fontSize: "11.5px" }}>{u.email}</div></div></div></td>
+                        <td>{ROLE_NAMES[u.role] || u.role}</td>
+                        <td>{u.tenant || (u.role === "sa" || u.role === "pa" ? "Platform" : "Example Bank")}</td>
+                        <td><span className={`chip ${u.status === "Active" ? "ok" : u.status === "Removed" ? "gray" : "warn"}`}>{u.status}</span></td>
+                        <td>{u.last ? ago(u.last) : "—"}</td>
+                        <td className="r">
+                          <a href="#" className="link" style={{ marginRight: 12 }}>Edit</a>
+                          <button className="link" style={{ color: "var(--crit)" }} disabled={u.status === "Removed"} onClick={() => { act.userPatch(u.id, { status: "Removed" }, "Removed user"); toast("User removed."); }}>Delete</button>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>

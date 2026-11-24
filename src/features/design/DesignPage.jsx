@@ -17,6 +17,7 @@ function deadLinkAction(label, { nav, toast, el }) {
       act.addNote(ctx.caseId, text); box.value = ''; toast('Note posted.');
     };
   }
+  if (['check now', 'run health check', 'test connection'].includes(l)) return () => toast('No provider backend is connected, so this check cannot run.');
   if (l === 'close case') return () => { if (!ctx.caseId) return toast('Open a case first.'); act.close(ctx.caseId, 'Suspicious activity confirmed', 'Closed from the case page'); toast('Case closed.'); nav(`/cases/${ctx.caseId}`); };
   if (l === 'escalate') return () => { if (!ctx.caseId) return toast('Open a case first.'); act.escalate(ctx.caseId, 'Compliance Manager', 'Escalated from the case page'); toast('Case escalated to the Compliance Manager.'); nav(`/cases/${ctx.caseId}`); };
   if (l === 'put on hold' || l === 'hold case') return () => { if (!ctx.caseId) return toast('Open a case first.'); act.hold(ctx.caseId); toast('Case hold changed.'); };
