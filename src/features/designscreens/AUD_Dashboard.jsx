@@ -232,7 +232,15 @@ const me = s.session.name; const isOpen = (c) => c.status !== 'Closed';
             <div className="row" style={{ gap: "16px", alignItems: "flex-start" }}>
               <div className="card" style={{ flex: "1 1 440px" }}>
                 <div className="ct-h"><div><h3>Activity by week</h3><p>Audit events per day, last 7 days</p></div></div>
-                <Bars items={weekBars} empty="No audit events yet." />
+                {weekBars.every((b) => b.value === 0) ? <Empty>No audit events in the last 7 days.</Empty> : (
+                  <div style={{ display: "flex", alignItems: "flex-end", gap: 14, height: 180, padding: "8px 4px 0", borderBottom: "1px solid #EDF1F6" }}>
+                    {weekBars.map((b) => { const max = Math.max(1, ...weekBars.map((x) => x.value)); return (
+                      <div key={b.label} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end", height: "100%" }}>
+                        <b style={{ fontSize: 12, marginBottom: 4 }}>{b.value}</b>
+                        <div style={{ width: "100%", maxWidth: 46, height: `${(b.value / max) * 130}px`, minHeight: 2, background: "#1769E0", borderRadius: "4px 4px 0 0" }} />
+                        <span className="mu" style={{ fontSize: 11, marginTop: 6, whiteSpace: "nowrap" }}>{b.label.split(" ").slice(0, 2).join(" ")}</span>
+                      </div>); })}
+                  </div>)}
               </div>
               <div className="card" style={{ flex: "1 1 360px" }}>
                 <div className="ct-h"><div><h3>Integrity</h3></div></div>
