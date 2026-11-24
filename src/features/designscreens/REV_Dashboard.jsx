@@ -205,7 +205,7 @@ const me = s.session.name; const isOpen = (c) => c.status !== 'Closed';
               </div>
             </div>
             <div className="row" style={{ gap: "16px", alignItems: "flex-start" }}>
-              <div className="card">
+              <div className="card" style={{ flex: "2 1 560px" }}>
                 <div className="ct-h"><div><h3>Review queue</h3></div></div>
                 <div className="tbl"><table><thead><tr><th className="">Case</th><th className="">Title</th><th className="">Due date</th><th className="">Priority</th></tr></thead><tbody>
                 {queue.length === 0 && <tr><td colSpan={4} className="mu">Nothing waiting for review.</td></tr>}
