@@ -1,0 +1,644 @@
+import { DLink } from '../design/DLink';
+
+export default function Screen() {
+  return (
+    <>
+      <div className="app">
+        <nav className="side" aria-label="Main">
+          <div className="brand">
+            <svg width="34" height="34" viewBox="0 0 40 40" aria-hidden="true">
+              <rect width="40" height="40" rx="11" fill="#1769E0" />
+              <circle cx="12" cy="20" r="3.2" fill="#fff" />
+              <circle cx="27" cy="11.5" r="3.2" fill="#fff" />
+              <circle cx="27" cy="28.5" r="3.2" fill="#fff" />
+              <path d="M14.7 18.5l9.6-5.5M14.7 21.5l9.6 5.5" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+            <b>
+              Chain Intel
+            </b>
+          </div>
+          <div className="ws">
+            <span>
+              Workspace
+            </span>
+            <b>
+              Example Bank
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </b>
+          </div>
+          <div className="nav">
+            <DLink href="/dashboard">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <rect x="3" y="3" width="7" height="9" rx="1.5" />
+                <rect x="14" y="3" width="7" height="5" rx="1.5" />
+                <rect x="14" y="12" width="7" height="9" rx="1.5" />
+                <rect x="3" y="16" width="7" height="5" rx="1.5" />
+              </svg>
+              <span>
+                Investigator Dashboard
+              </span>
+            </DLink>
+            <DLink href="/wallets">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M4 7.5A2.5 2.5 0 0 1 6.5 5H18v3" />
+                <path d="M4 7.5V17a2 2 0 0 0 2 2h13a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1H6.5A2.5 2.5 0 0 1 4 7.5z" />
+                <circle cx="16" cy="13.5" r="1.2" />
+              </svg>
+              <span>
+                Wallet Monitoring
+              </span>
+            </DLink>
+            <DLink href="/trace">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M7 7h12l-3-3M17 17H5l3 3" />
+              </svg>
+              <span>
+                Transaction Tracing
+              </span>
+            </DLink>
+            <DLink href="/design/CaseRelGraph">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="5.5" cy="12" r="2.5" />
+                <circle cx="18" cy="5.5" r="2.5" />
+                <circle cx="18" cy="18.5" r="2.5" />
+                <path d="M8 11l7.6-4M8 13l7.6 4" />
+              </svg>
+              <span>
+                Investigation Graph
+              </span>
+            </DLink>
+          </div>
+          <div className="nh">
+            Work
+          </div>
+          <div className="nav">
+            <DLink href="/my/cases">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <rect x="3" y="7" width="18" height="13" rx="2" />
+                <path d="M9 7V5a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 5v2M3 13h18" />
+              </svg>
+              <span>
+                My Cases
+              </span>
+            </DLink>
+            <DLink href="/my/tasks">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M8 6h12M8 12h12M8 18h12M4 6h.1M4 12h.1M4 18h.1" />
+              </svg>
+              <span>
+                My Tasks
+              </span>
+            </DLink>
+            <DLink href="/watchlists">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+              <span>
+                My Watchlists
+              </span>
+            </DLink>
+            <DLink href="/alerts" className="on">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M12 3.5l9.5 16.5h-19z" />
+                <path d="M12 10v4.5M12 17.2v.1" />
+              </svg>
+              <span>
+                Alerts
+              </span>
+            </DLink>
+            <DLink href="/my/reports">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M6 3h8l5 5v13H6z" />
+                <path d="M14 3v5h5M9 13h7M9 17h7" />
+              </svg>
+              <span>
+                Reports
+              </span>
+            </DLink>
+          </div>
+          <div className="sfoot">
+            <div className="nav">
+              <DLink href="/notifications">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 2h-15z" />
+                  <path d="M10 21h4" />
+                </svg>
+                <span>
+                  Notifications
+                </span>
+              </DLink>
+              <DLink href="/settings/preferences">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="8.5" r="3.5" />
+                  <path d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5" />
+                </svg>
+                <span>
+                  My Profile
+                </span>
+              </DLink>
+              <DLink href="/login">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M10 4H5v16h5M15 8l4 4-4 4M19 12H9" />
+                </svg>
+                <span>
+                  Sign out
+                </span>
+              </DLink>
+            </div>
+          </div>
+        </nav>
+        <div className="main">
+          <header className="top">
+            <div className="crumbs">
+              <b>
+                Alerts
+              </b>
+            </div>
+            <label className="search">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="6.5" />
+                <path d="M16 16l4.5 4.5" />
+              </svg>
+              <span style={{ position: "absolute", left: "-9999px" }}>
+                Global search
+              </span>
+              <input type="search" placeholder="Search wallet, transaction, case, evidence" />
+            </label>
+            <span className="pill">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <rect x="5" y="3" width="14" height="18" rx="1.5" />
+                <path d="M9 7.5h2M13 7.5h2M9 11.5h2M13 11.5h2M10 21v-4h4v4" />
+              </svg>
+              Example Bank
+            </span>
+            <span className="pill">
+              <i />
+              Ethereum Mainnet
+            </span>
+            <DLink href="/notifications" className="ib" aria-label="Notifications">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 2h-15z" />
+                <path d="M10 21h4" />
+              </svg>
+              <em />
+            </DLink>
+            <a className="ib" href="#" aria-label="Help">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M9.5 9.5a2.6 2.6 0 1 1 3.6 2.4c-.8.4-1.1 1-1.1 1.9M12 17v.1" />
+              </svg>
+            </a>
+            <DLink href="/settings/profile" className="user">
+              <div className="av" aria-hidden="true">
+                SA
+              </div>
+              <div>
+                <b>
+                  Sara Ali
+                </b>
+                <span>
+                  Investigator
+                </span>
+              </div>
+            </DLink>
+          </header>
+          <main className="content">
+            <div className="ph">
+              <div>
+                <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+                  <h1>
+                    Alerts
+                  </h1>
+                </div>
+                <p>
+                  Risk, watchlist and system alerts triggered in the last 7 days.
+                </p>
+              </div>
+              <div className="acts">
+                <a href="#" className="btn ">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M4 7h10M18 7h2M4 17h2M10 17h10M14 4v6M6 14v6" />
+                  </svg>
+                  Alert rules
+                </a>
+              </div>
+            </div>
+            <div className="kpis">
+              <div className="kpi">
+                <div className="l">
+                  Total alerts
+                </div>
+                <div className="v">
+                  64
+                </div>
+                <div className="s">
+                  Last 7 days
+                </div>
+              </div>
+              <div className="kpi">
+                <div className="l">
+                  <i style={{ background: "#DC2626" }} />
+                  Critical
+                </div>
+                <div className="v">
+                  9
+                </div>
+                <div className="s">
+                  Needs action
+                </div>
+              </div>
+              <div className="kpi">
+                <div className="l">
+                  <i style={{ background: "#EA580C" }} />
+                  Unacknowledged
+                </div>
+                <div className="v">
+                  6
+                </div>
+                <div className="s">
+                  Older than 1 h
+                </div>
+              </div>
+            </div>
+            <div className="row" style={{ gap: "16px", alignItems: "flex-start" }}>
+              <div className="card " style={{ flex: "1 1 420px" }}>
+                <div className="ct-h">
+                  <div>
+                    <h3>
+                      Alerts per day
+                    </h3>
+                  </div>
+                  <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }} />
+                </div>
+                <svg viewBox="0 0 520 220" width="100%" role="img" aria-label="Bar chart" style={{ display: "block" }}>
+                  <line x1="40" x2="510" y1="192.0" y2="192.0" stroke="#E2E8F0" />
+                  <text x="32" y="196.0" textAnchor="end" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    0
+                  </text>
+                  <line x1="40" x2="510" y1="147.0" y2="147.0" stroke="#E2E8F0" />
+                  <text x="32" y="151.0" textAnchor="end" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    5
+                  </text>
+                  <line x1="40" x2="510" y1="102.0" y2="102.0" stroke="#E2E8F0" />
+                  <text x="32" y="106.0" textAnchor="end" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    10
+                  </text>
+                  <line x1="40" x2="510" y1="57.0" y2="57.0" stroke="#E2E8F0" />
+                  <text x="32" y="61.0" textAnchor="end" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    15
+                  </text>
+                  <line x1="40" x2="510" y1="12.0" y2="12.0" stroke="#E2E8F0" />
+                  <text x="32" y="16.0" textAnchor="end" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    20
+                  </text>
+                  <rect x="54.8" y="136.8" width="37.6" height="55.2" rx="4" fill="#1769E0" />
+                  <text x="73.6" y="211" textAnchor="middle" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    Mon
+                  </text>
+                  <rect x="121.9" y="109.1" width="37.6" height="82.9" rx="4" fill="#1769E0" />
+                  <text x="140.7" y="211" textAnchor="middle" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    Tue
+                  </text>
+                  <rect x="189.1" y="118.3" width="37.6" height="73.7" rx="4" fill="#1769E0" />
+                  <text x="207.9" y="211" textAnchor="middle" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    Wed
+                  </text>
+                  <rect x="256.2" y="63.1" width="37.6" height="128.9" rx="4" fill="#1769E0" />
+                  <text x="275.0" y="211" textAnchor="middle" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    Thu
+                  </text>
+                  <rect x="323.3" y="90.7" width="37.6" height="101.3" rx="4" fill="#1769E0" />
+                  <text x="342.1" y="211" textAnchor="middle" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    Fri
+                  </text>
+                  <rect x="390.5" y="35.5" width="37.6" height="156.5" rx="4" fill="#1769E0" />
+                  <text x="409.3" y="211" textAnchor="middle" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    Sat
+                  </text>
+                  <rect x="457.6" y="81.5" width="37.6" height="110.5" rx="4" fill="#1769E0" />
+                  <text x="476.4" y="211" textAnchor="middle" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    Sun
+                  </text>
+                </svg>
+              </div>
+              <div className="card " style={{  }}>
+                <div className="ct-h">
+                  <div>
+                    <h3>
+                      By tier
+                    </h3>
+                  </div>
+                  <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }} />
+                </div>
+                <div style={{ display: "flex", gap: "20px", alignItems: "center", flexWrap: "wrap" }}>
+                  <svg viewBox="0 0 160 160" width="160" height="160" role="img" aria-label="Distribution chart" style={{ display: "block", maxWidth: "100%", height: "auto" }}>
+                    <circle cx="80.0" cy="80.0" r="59.2" fill="none" stroke="#DC2626" strokeWidth="21" strokeDasharray="50.31 321.66" strokeDashoffset="0.00" transform="rotate(-90 80.0 80.0)" />
+                    <circle cx="80.0" cy="80.0" r="59.2" fill="none" stroke="#EA580C" strokeWidth="21" strokeDasharray="120.05 251.91" strokeDashoffset="-52.31" transform="rotate(-90 80.0 80.0)" />
+                    <circle cx="80.0" cy="80.0" r="59.2" fill="none" stroke="#F59E0B" strokeWidth="21" strokeDasharray="137.49 234.48" strokeDashoffset="-174.36" transform="rotate(-90 80.0 80.0)" />
+                    <circle cx="80.0" cy="80.0" r="59.2" fill="none" stroke="#16A34A" strokeWidth="21" strokeDasharray="56.12 315.85" strokeDashoffset="-313.85" transform="rotate(-90 80.0 80.0)" />
+                    <text x="80.0" y="83.0" textAnchor="middle" fontWeight="700" fontSize="24" fill="#0F172A" fontFamily="Inter,sans-serif">
+                      64
+                    </text>
+                    <text x="80.0" y="96" textAnchor="middle" fontSize="10" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                      alerts
+                    </text>
+                  </svg>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "9px", flex: "1", minWidth: "150px" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                      <i style={{ width: "10px", height: "10px", borderRadius: "3px", background: "#DC2626" }} />
+                      <span style={{ flex: "1" }}>
+                        Critical
+                      </span>
+                      <b>
+                        9
+                      </b>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                      <i style={{ width: "10px", height: "10px", borderRadius: "3px", background: "#EA580C" }} />
+                      <span style={{ flex: "1" }}>
+                        High
+                      </span>
+                      <b>
+                        21
+                      </b>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                      <i style={{ width: "10px", height: "10px", borderRadius: "3px", background: "#F59E0B" }} />
+                      <span style={{ flex: "1" }}>
+                        Moderate
+                      </span>
+                      <b>
+                        24
+                      </b>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                      <i style={{ width: "10px", height: "10px", borderRadius: "3px", background: "#16A34A" }} />
+                      <span style={{ flex: "1" }}>
+                        Low
+                      </span>
+                      <b>
+                        10
+                      </b>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="card " style={{  }}>
+              <div className="ct-h">
+                <div>
+                  <h3>
+                    Alert queue
+                  </h3>
+                </div>
+                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }} />
+              </div>
+              <div className="tools">
+                <label className="s">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <circle cx="11" cy="11" r="6.5" />
+                    <path d="M16 16l4.5 4.5" />
+                  </svg>
+                  <input placeholder="Search alerts" />
+                </label>
+                <span className="sel">
+                  <span>
+                    Tier
+                  </span>
+                  All
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M6 9l6 6 6-6" />
+                  </svg>
+                </span>
+                <span className="sel">
+                  <span>
+                    Status
+                  </span>
+                  All
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M6 9l6 6 6-6" />
+                  </svg>
+                </span>
+                <span style={{ marginLeft: "auto", display: "flex", gap: "8px" }}>
+                  <span className="sel">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M4 7h10M18 7h2M4 17h2M10 17h10M14 4v6M6 14v6" />
+                    </svg>
+                    Columns
+                  </span>
+                  <span className="sel">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M12 4v11M7.5 11l4.5 4.5 4.5-4.5M5 20h14" />
+                    </svg>
+                    Export
+                  </span>
+                </span>
+              </div>
+              <div className="tbl">
+                <table>
+                  <thead>
+                    <tr>
+                      <th className="">
+                        Alert
+                      </th>
+                      <th className="">
+                        Wallet
+                      </th>
+                      <th className="">
+                        Trigger
+                      </th>
+                      <th className="">
+                        Tier
+                      </th>
+                      <th className="">
+                        Raised
+                      </th>
+                      <th className="">
+                        Status
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="">
+                        <b>
+                          ALR-2026-0912
+                        </b>
+                      </td>
+                      <td className="">
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                          <DLink href="/design/WalletOverview" className="mono" style={{ color: "var(--pri)", fontWeight: "550" }}>
+                            0x7a3f…9B21
+                          </DLink>
+                          <span style={{ color: "#8A99AE" }}>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <rect x="8" y="8" width="12" height="12" rx="2" />
+                              <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+                            </svg>
+                          </span>
+                        </span>
+                      </td>
+                      <td className="">
+                        Score crossed 75
+                      </td>
+                      <td className="">
+                        <span className="tier crit">
+                          Critical
+                        </span>
+                      </td>
+                      <td className="">
+                        12 min ago
+                      </td>
+                      <td className="">
+                        <span className="chip bad">
+                          Unacknowledged
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <b>
+                          ALR-2026-0911
+                        </b>
+                      </td>
+                      <td className="">
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                          <DLink href="/design/WalletOverview" className="mono" style={{ color: "var(--pri)", fontWeight: "550" }}>
+                            0xE5f7…90b8
+                          </DLink>
+                          <span style={{ color: "#8A99AE" }}>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <rect x="8" y="8" width="12" height="12" rx="2" />
+                              <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+                            </svg>
+                          </span>
+                        </span>
+                      </td>
+                      <td className="">
+                        New flagged counterparty
+                      </td>
+                      <td className="">
+                        <span className="tier crit">
+                          Critical
+                        </span>
+                      </td>
+                      <td className="">
+                        1 h ago
+                      </td>
+                      <td className="">
+                        <span className="chip blue">
+                          Acknowledged
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <b>
+                          ALR-2026-0908
+                        </b>
+                      </td>
+                      <td className="">
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                          <DLink href="/design/WalletOverview" className="mono" style={{ color: "var(--pri)", fontWeight: "550" }}>
+                            0x5a8e…fd02
+                          </DLink>
+                          <span style={{ color: "#8A99AE" }}>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <rect x="8" y="8" width="12" height="12" rx="2" />
+                              <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+                            </svg>
+                          </span>
+                        </span>
+                      </td>
+                      <td className="">
+                        Watchlist activity
+                      </td>
+                      <td className="">
+                        <span className="tier crit">
+                          Critical
+                        </span>
+                      </td>
+                      <td className="">
+                        3 h ago
+                      </td>
+                      <td className="">
+                        <span className="chip blue">
+                          Acknowledged
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <b>
+                          ALR-2026-0902
+                        </b>
+                      </td>
+                      <td className="">
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                          <DLink href="/design/WalletOverview" className="mono" style={{ color: "var(--pri)", fontWeight: "550" }}>
+                            0x98b1…2c70
+                          </DLink>
+                          <span style={{ color: "#8A99AE" }}>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <rect x="8" y="8" width="12" height="12" rx="2" />
+                              <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+                            </svg>
+                          </span>
+                        </span>
+                      </td>
+                      <td className="">
+                        Velocity increase
+                      </td>
+                      <td className="">
+                        <span className="tier high">
+                          High
+                        </span>
+                      </td>
+                      <td className="">
+                        Yesterday
+                      </td>
+                      <td className="">
+                        <span className="chip ok">
+                          Resolved
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div className="pager">
+                <span>
+                  Showing 1–4 of 64
+                </span>
+                <div>
+                  <b>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M15 6l-6 6 6 6" />
+                    </svg>
+                  </b>
+                  <b className="on">
+                    1
+                  </b>
+                  <b>
+                    2
+                  </b>
+                  <b>
+                    3
+                  </b>
+                  <b>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M9 6l6 6-6 6" />
+                    </svg>
+                  </b>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </>
+  );
+}

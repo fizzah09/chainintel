@@ -1,0 +1,647 @@
+import { DLink } from '../design/DLink';
+
+export default function Screen() {
+  return (
+    <>
+      <div className="app">
+        <nav className="side" aria-label="Main">
+          <div className="brand">
+            <svg width="34" height="34" viewBox="0 0 40 40" aria-hidden="true">
+              <rect width="40" height="40" rx="11" fill="#1769E0" />
+              <circle cx="12" cy="20" r="3.2" fill="#fff" />
+              <circle cx="27" cy="11.5" r="3.2" fill="#fff" />
+              <circle cx="27" cy="28.5" r="3.2" fill="#fff" />
+              <path d="M14.7 18.5l9.6-5.5M14.7 21.5l9.6 5.5" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+            <b>
+              Chain Intel
+            </b>
+          </div>
+          <div className="ws">
+            <span>
+              Workspace
+            </span>
+            <b>
+              Example Bank
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </b>
+          </div>
+          <div className="nav">
+            <DLink href="/dashboard">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <rect x="3" y="3" width="7" height="9" rx="1.5" />
+                <rect x="14" y="3" width="7" height="5" rx="1.5" />
+                <rect x="14" y="12" width="7" height="9" rx="1.5" />
+                <rect x="3" y="16" width="7" height="5" rx="1.5" />
+              </svg>
+              <span>
+                Investigator Dashboard
+              </span>
+            </DLink>
+            <DLink href="/wallets">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M4 7.5A2.5 2.5 0 0 1 6.5 5H18v3" />
+                <path d="M4 7.5V17a2 2 0 0 0 2 2h13a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1H6.5A2.5 2.5 0 0 1 4 7.5z" />
+                <circle cx="16" cy="13.5" r="1.2" />
+              </svg>
+              <span>
+                Wallet Monitoring
+              </span>
+            </DLink>
+            <DLink href="/trace">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M7 7h12l-3-3M17 17H5l3 3" />
+              </svg>
+              <span>
+                Transaction Tracing
+              </span>
+            </DLink>
+            <DLink href="/design/CaseRelGraph">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="5.5" cy="12" r="2.5" />
+                <circle cx="18" cy="5.5" r="2.5" />
+                <circle cx="18" cy="18.5" r="2.5" />
+                <path d="M8 11l7.6-4M8 13l7.6 4" />
+              </svg>
+              <span>
+                Investigation Graph
+              </span>
+            </DLink>
+          </div>
+          <div className="nh">
+            Work
+          </div>
+          <div className="nav">
+            <DLink href="/my/cases" className="on">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <rect x="3" y="7" width="18" height="13" rx="2" />
+                <path d="M9 7V5a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 5v2M3 13h18" />
+              </svg>
+              <span>
+                My Cases
+              </span>
+            </DLink>
+            <DLink href="/my/tasks">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M8 6h12M8 12h12M8 18h12M4 6h.1M4 12h.1M4 18h.1" />
+              </svg>
+              <span>
+                My Tasks
+              </span>
+            </DLink>
+            <DLink href="/watchlists">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+              <span>
+                My Watchlists
+              </span>
+            </DLink>
+            <DLink href="/alerts">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M12 3.5l9.5 16.5h-19z" />
+                <path d="M12 10v4.5M12 17.2v.1" />
+              </svg>
+              <span>
+                Alerts
+              </span>
+            </DLink>
+            <DLink href="/my/reports">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M6 3h8l5 5v13H6z" />
+                <path d="M14 3v5h5M9 13h7M9 17h7" />
+              </svg>
+              <span>
+                Reports
+              </span>
+            </DLink>
+          </div>
+          <div className="sfoot">
+            <div className="nav">
+              <DLink href="/notifications">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 2h-15z" />
+                  <path d="M10 21h4" />
+                </svg>
+                <span>
+                  Notifications
+                </span>
+              </DLink>
+              <DLink href="/settings/preferences">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="8.5" r="3.5" />
+                  <path d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5" />
+                </svg>
+                <span>
+                  My Profile
+                </span>
+              </DLink>
+              <DLink href="/login">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M10 4H5v16h5M15 8l4 4-4 4M19 12H9" />
+                </svg>
+                <span>
+                  Sign out
+                </span>
+              </DLink>
+            </div>
+          </div>
+        </nav>
+        <div className="main">
+          <header className="top">
+            <div className="crumbs">
+              <span>
+                Cases
+              </span>
+              {" "}
+              <span style={{ color: "#A3B0C2" }}>
+                /
+              </span>
+              {" "}
+              <span>
+                CASE-2026-00128
+              </span>
+              {" "}
+              <span style={{ color: "#A3B0C2" }}>
+                /
+              </span>
+              {" "}
+              <b>
+                Evidence
+              </b>
+            </div>
+            <label className="search">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="6.5" />
+                <path d="M16 16l4.5 4.5" />
+              </svg>
+              <span style={{ position: "absolute", left: "-9999px" }}>
+                Global search
+              </span>
+              <input type="search" placeholder="Search wallet, transaction, case, evidence" />
+            </label>
+            <span className="pill">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <rect x="5" y="3" width="14" height="18" rx="1.5" />
+                <path d="M9 7.5h2M13 7.5h2M9 11.5h2M13 11.5h2M10 21v-4h4v4" />
+              </svg>
+              Example Bank
+            </span>
+            <span className="pill">
+              <i />
+              Ethereum Mainnet
+            </span>
+            <DLink href="/notifications" className="ib" aria-label="Notifications">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 2h-15z" />
+                <path d="M10 21h4" />
+              </svg>
+              <em />
+            </DLink>
+            <a className="ib" href="#" aria-label="Help">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M9.5 9.5a2.6 2.6 0 1 1 3.6 2.4c-.8.4-1.1 1-1.1 1.9M12 17v.1" />
+              </svg>
+            </a>
+            <DLink href="/settings/profile" className="user">
+              <div className="av" aria-hidden="true">
+                SA
+              </div>
+              <div>
+                <b>
+                  Sara Ali
+                </b>
+                <span>
+                  Investigator
+                </span>
+              </div>
+            </DLink>
+          </header>
+          <main className="content">
+            <div className="card" style={{ padding: "22px" }}>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "20px", justifyContent: "space-between", alignItems: "flex-start" }}>
+                <div>
+                  <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap" }}>
+                    <span className="mono mu">
+                      CASE-2026-00128
+                    </span>
+                    <span className="chip pur">
+                      Under Review
+                    </span>
+                    <span className="chip bad">
+                      Critical
+                    </span>
+                  </div>
+                  <h1 style={{ fontSize: "22px", marginTop: "6px" }}>
+                    Suspected layering via mixer
+                  </h1>
+                  <div className="mu" style={{ marginTop: "6px", display: "flex", gap: "18px", flexWrap: "wrap" }}>
+                    <span>
+                      Assignee: Sara Ali
+                    </span>
+                    <span>
+                      Opened 02 Nov 2026
+                    </span>
+                    <span>
+                      Due 09 Nov 2026
+                    </span>
+                    <span>
+                      Subjects: 3
+                    </span>
+                  </div>
+                </div>
+                <div className="acts">
+                  <DLink href="/reports/new" className="btn ">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M6 3h8l5 5v13H6z" />
+                      <path d="M14 3v5h5M9 13h7M9 17h7" />
+                    </svg>
+                    Generate report
+                  </DLink>
+                  <DLink href="/design/CaseReview" className="btn pri">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M21 3L10 14M21 3l-7 18-4-7-7-4z" />
+                    </svg>
+                    Submit for review
+                  </DLink>
+                </div>
+              </div>
+              <div style={{ marginTop: "20px" }}>
+                <div className="step">
+                  <div className="s done">
+                    <em>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M5 12.5l4.5 4.5L19 7.5" />
+                      </svg>
+                    </em>
+                    <span>
+                      Open
+                    </span>
+                    <hr />
+                  </div>
+                  <div className="s done">
+                    <em>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M5 12.5l4.5 4.5L19 7.5" />
+                      </svg>
+                    </em>
+                    <span>
+                      Assigned
+                    </span>
+                    <hr />
+                  </div>
+                  <div className="s done">
+                    <em>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M5 12.5l4.5 4.5L19 7.5" />
+                      </svg>
+                    </em>
+                    <span>
+                      Evidence Collection
+                    </span>
+                    <hr />
+                  </div>
+                  <div className="s done">
+                    <em>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M5 12.5l4.5 4.5L19 7.5" />
+                      </svg>
+                    </em>
+                    <span>
+                      Analysis
+                    </span>
+                    <hr />
+                  </div>
+                  <div className="s cur">
+                    <em>
+                      5
+                    </em>
+                    <span>
+                      Under Review
+                    </span>
+                    <hr />
+                  </div>
+                  <div className="s ">
+                    <em>
+                      6
+                    </em>
+                    <span>
+                      Decision
+                    </span>
+                    <hr />
+                  </div>
+                  <div className="s ">
+                    <em>
+                      7
+                    </em>
+                    <span>
+                      Closed
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="tabs">
+              <DLink href="/design/CaseDetails">
+                Overview
+              </DLink>
+              <DLink href="/design/CaseSubjects">
+                Subjects
+              </DLink>
+              <DLink href="/design/CaseEvidence" className="on">
+                Evidence
+              </DLink>
+              <DLink href="/design/CaseFindings">
+                Findings
+              </DLink>
+              <DLink href="/design/CaseRelGraph">
+                Graph
+              </DLink>
+              <DLink href="/design/CaseTasks">
+                Tasks
+              </DLink>
+              <DLink href="/design/CaseNotes">
+                Notes
+              </DLink>
+              <DLink href="/design/CaseComms">
+                Communication
+              </DLink>
+              <DLink href="/design/CaseReview">
+                Review
+              </DLink>
+              <DLink href="/design/CaseTimeline">
+                Timeline
+              </DLink>
+            </div>
+            <div className="card " style={{  }}>
+              <div className="ct-h">
+                <div>
+                  <h3>
+                    Evidence register
+                  </h3>
+                </div>
+                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                  <DLink href="/evidence/new" className="btn sm">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M12 16V5M7.5 9L12 4.5 16.5 9M5 20h14" />
+                    </svg>
+                    Upload
+                  </DLink>
+                  <DLink href="/evidence/new" className="btn pri sm">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg>
+                    Add from system
+                  </DLink>
+                </div>
+              </div>
+              <div className="tools">
+                <label className="s">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <circle cx="11" cy="11" r="6.5" />
+                    <path d="M16 16l4.5 4.5" />
+                  </svg>
+                  <input placeholder="Search evidence" />
+                </label>
+                <span className="sel">
+                  <span>
+                    Type
+                  </span>
+                  All
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M6 9l6 6 6-6" />
+                  </svg>
+                </span>
+                <span className="sel">
+                  <span>
+                    Status
+                  </span>
+                  All
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M6 9l6 6 6-6" />
+                  </svg>
+                </span>
+                <span style={{ marginLeft: "auto", display: "flex", gap: "8px" }}>
+                  <span className="sel">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M4 7h10M18 7h2M4 17h2M10 17h10M14 4v6M6 14v6" />
+                    </svg>
+                    Columns
+                  </span>
+                  <span className="sel">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M12 4v11M7.5 11l4.5 4.5 4.5-4.5M5 20h14" />
+                    </svg>
+                    Export
+                  </span>
+                </span>
+              </div>
+              <div className="tbl">
+                <table>
+                  <thead>
+                    <tr>
+                      <th className="">
+                        Evidence ID
+                      </th>
+                      <th className="">
+                        Title
+                      </th>
+                      <th className="">
+                        Type
+                      </th>
+                      <th className="">
+                        Source
+                      </th>
+                      <th className="">
+                        Added by
+                      </th>
+                      <th className="">
+                        Status
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="">
+                        <b>
+                          EVD-000184
+                        </b>
+                      </td>
+                      <td className="">
+                        Counterparty exposure snapshot
+                      </td>
+                      <td className="">
+                        Risk snapshot
+                      </td>
+                      <td className="">
+                        Chain Intel
+                      </td>
+                      <td className="">
+                        Sara Ali
+                      </td>
+                      <td className="">
+                        <span className="chip ok">
+                          Verified
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <b>
+                          EVD-000185
+                        </b>
+                      </td>
+                      <td className="">
+                        Mixer interaction transaction set
+                      </td>
+                      <td className="">
+                        Transaction set
+                      </td>
+                      <td className="">
+                        Etherscan
+                      </td>
+                      <td className="">
+                        Sara Ali
+                      </td>
+                      <td className="">
+                        <span className="chip ok">
+                          Verified
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <b>
+                          EVD-000186
+                        </b>
+                      </td>
+                      <td className="">
+                        Graph export (3 hops)
+                      </td>
+                      <td className="">
+                        Graph image
+                      </td>
+                      <td className="">
+                        Chain Intel
+                      </td>
+                      <td className="">
+                        Sara Ali
+                      </td>
+                      <td className="">
+                        <span className="chip warn">
+                          Pending Verification
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <b>
+                          EVD-000187
+                        </b>
+                      </td>
+                      <td className="">
+                        Label reference: mixing service
+                      </td>
+                      <td className="">
+                        External source
+                      </td>
+                      <td className="">
+                        Forta labels
+                      </td>
+                      <td className="">
+                        System
+                      </td>
+                      <td className="">
+                        <span className="chip ok">
+                          Verified
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <b>
+                          EVD-000188
+                        </b>
+                      </td>
+                      <td className="">
+                        Customer statement PDF
+                      </td>
+                      <td className="">
+                        Document
+                      </td>
+                      <td className="">
+                        Customer
+                      </td>
+                      <td className="">
+                        Ahmed Khan
+                      </td>
+                      <td className="">
+                        <span className="chip gray">
+                          Unverified
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <b>
+                          EVD-000189
+                        </b>
+                      </td>
+                      <td className="">
+                        Sanctions screening result
+                      </td>
+                      <td className="">
+                        External source
+                      </td>
+                      <td className="">
+                        OFAC list
+                      </td>
+                      <td className="">
+                        System
+                      </td>
+                      <td className="">
+                        <span className="chip bad">
+                          Source Unavailable
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div className="pager">
+                <span>
+                  Showing 1–6 of 6
+                </span>
+                <div>
+                  <b>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M15 6l-6 6 6 6" />
+                    </svg>
+                  </b>
+                  <b className="on">
+                    1
+                  </b>
+                  <b>
+                    2
+                  </b>
+                  <b>
+                    3
+                  </b>
+                  <b>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M9 6l6 6-6 6" />
+                    </svg>
+                  </b>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </>
+  );
+}
