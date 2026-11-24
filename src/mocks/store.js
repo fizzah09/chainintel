@@ -208,6 +208,20 @@ export const act = {
       notify(d, 'Complaint message', `${id}: new message from ${actor(d)}.`, 'system', ['pa', 'sa'].includes(d.session.role) ? 'RaiseComplaint' : 'Complaints');
     });
   },
+  assignComplaint(id, name) {
+    mutate((d) => {
+      const c = d.complaints.find((x) => x.id === id);
+      c.handledBy = name; c.updated = nowIso();
+      log(d, `Complaint assigned to ${name || 'nobody'}`, id);
+    });
+  },
+  setComplaintStatus(id, status) {
+    mutate((d) => {
+      const c = d.complaints.find((x) => x.id === id);
+      c.status = status; c.updated = nowIso();
+      log(d, `Complaint ${status.toLowerCase()}`, id);
+    });
+  },
   answerComplaint(id, status, reply) {
     mutate((d) => {
       const c = d.complaints.find((x) => x.id === id);
