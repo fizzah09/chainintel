@@ -1,6 +1,15 @@
+import { useState } from 'react';
+import { act, useStore } from '../../mocks/store';
+import { useToast } from '../../context/ToastContext';
+import { fmtDate } from '../design/dashParts';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
+  const s = useStore(); const toast = useToast(); const cid = s.ctx.caseId;
+  const rows = (s.tasks || []).filter((k) => k.caseId === cid);
+  const reviewers = s.users.filter((u) => u.role === 'rev' && u.status === 'Active').map((u) => u.name);
+  const [draft, setDraft] = useState({ title: '', assignee: '', due: '' }); const [err, setErr] = useState('');
+  const addTask = () => { if (!draft.title.trim()) return setErr('Enter a task.'); if (!draft.assignee) return setErr('Choose a reviewer.'); if (!cid) return setErr('Open a case first.'); act.addTask({ title: draft.title.trim(), caseId: cid, assignee: draft.assignee, assignedBy: s.session.name, due: draft.due ? new Date(draft.due).toISOString() : '', priority: 'Medium' }); setDraft({ title: '', assignee: '', due: '' }); setErr(''); toast('Task added for the reviewer.'); };
   return (
     <>
       <div className="app">
@@ -422,6 +431,16 @@ export default function Screen() {
                   </span>
                 </span>
               </div>
+              <div className="card" style={{ marginBottom: 16 }}>
+                <div className="ct-h"><div><h3>Add a task</h3><p>Give a reviewer a task on this case</p></div></div>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "flex-end" }}>
+                  <div style={{ flex: "2 1 240px" }}><label className="mu sm">Task</label><input className="in" value={draft.title} onChange={(e) => setDraft({ ...draft, title: e.target.value })} placeholder="What should the reviewer do?" aria-label="Task title" /></div>
+                  <div style={{ flex: "1 1 180px" }}><label className="mu sm">Reviewer</label><select className="in" value={draft.assignee} onChange={(e) => setDraft({ ...draft, assignee: e.target.value })} aria-label="Reviewer"><option value="">Choose a reviewer</option>{reviewers.map((n) => <option key={n} value={n}>{n}</option>)}</select></div>
+                  <div style={{ flex: "1 1 160px" }}><label className="mu sm">Due date</label><input className="in" type="date" value={draft.due} onChange={(e) => setDraft({ ...draft, due: e.target.value })} aria-label="Task due date" /></div>
+                  <button className="btn pri" onClick={addTask}>Add task</button>
+                </div>
+                {err && <div className="hint err" role="alert" style={{ marginTop: 8 }}>{err}</div>}
+              </div>
               <div className="tbl">
                 <table>
                   <thead>
@@ -444,126 +463,20 @@ export default function Screen() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="">
-                        Request customer statement
-                      </td>
-                      <td className="">
-                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
-                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
-                            SA
-                          </span>
-                          <div style={{ lineHeight: "1.25" }}>
-                            <div style={{ fontWeight: "550" }}>
-                              Sara Ali
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="">
-                        04 Nov
-                      </td>
-                      <td className="">
-                        <span className="chip ok">
-                          Completed
-                        </span>
-                      </td>
-                      <td className="">
-                        <span className="chip blue">
-                          Medium
-                        </span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        Verify mixer label with second source
-                      </td>
-                      <td className="">
-                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
-                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
-                            SA
-                          </span>
-                          <div style={{ lineHeight: "1.25" }}>
-                            <div style={{ fontWeight: "550" }}>
-                              Sara Ali
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="">
-                        07 Nov
-                      </td>
-                      <td className="">
-                        <span className="chip blue">
-                          In Progress
-                        </span>
-                      </td>
-                      <td className="">
-                        <span className="chip warn">
-                          High
-                        </span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        Screen related wallets against sanctions lists
-                      </td>
-                      <td className="">
-                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
-                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
-                            OS
-                          </span>
-                          <div style={{ lineHeight: "1.25" }}>
-                            <div style={{ fontWeight: "550" }}>
-                              Omar Siddiq
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="">
-                        08 Nov
-                      </td>
-                      <td className="">
-                        <span className="chip warn">
-                          Waiting
-                        </span>
-                      </td>
-                      <td className="">
-                        <span className="chip warn">
-                          High
-                        </span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="">
-                        Draft case report
-                      </td>
-                      <td className="">
-                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
-                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
-                            SA
-                          </span>
-                          <div style={{ lineHeight: "1.25" }}>
-                            <div style={{ fontWeight: "550" }}>
-                              Sara Ali
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="">
-                        09 Nov
-                      </td>
-                      <td className="">
-                        <span className="chip bad">
-                          Overdue
-                        </span>
-                      </td>
-                      <td className="">
-                        <span className="chip bad">
-                          Critical
-                        </span>
-                      </td>
-                    </tr>
+                    {rows.length === 0 && <tr><td colSpan={5} className="mu">No tasks on this case yet.</td></tr>}
+                    {rows.map((k) => (
+                      <tr key={k.id}>
+                        <td>{k.title || k.id}</td>
+                        <td>{k.assignee || "Unassigned"}</td>
+                        <td>{fmtDate(k.due)}</td>
+                        <td>
+                          <select className="in" value={k.status} onChange={(e) => { act.taskStatus(k.id, e.target.value); toast(`Task ${e.target.value.toLowerCase()}.`); }} aria-label={`Status of ${k.id}`}>
+                            {["Open", "In Progress", "Completed", "Closed"].map((x) => <option key={x} value={x}>{x}</option>)}
+                          </select>
+                        </td>
+                        <td>{k.priority || "—"}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
