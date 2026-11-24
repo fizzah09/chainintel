@@ -1,6 +1,14 @@
+import { useState } from 'react';
+import { act, useStore } from '../../mocks/store';
+import { useToast } from '../../context/ToastContext';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
+  const s = useStore(); const pick = (x) => ({ pwPolicy: x.pwPolicy, ipAllow: x.ipAllow, mfaRequired: x.mfaRequired, timeout: x.timeout, lockFails: x.lockFails });
+  const [f, setF] = useState(() => pick(s.settings)); const dirty = Object.keys(f).filter((k) => f[k] !== s.settings[k]);
+  const save = () => { dirty.forEach((k) => act.setting(k, f[k])); toast(dirty.length ? 'Settings saved.' : 'No changes to save.'); };
+  const discard = () => setF(pick(s.settings));
+  const toast = useToast();
   return (
     <>
       <div className="app">
@@ -265,9 +273,7 @@ export default function Screen() {
                       Minimum 12 characters, rotation 180 days
                     </span>
                   </div>
-                  <span className="chip blue">
-                    Strong
-                  </span>
+                  <select className="in" value={f.pwPolicy} onChange={(e) => setF({ ...f, pwPolicy: e.target.value })} aria-label="Password policy">{[['Strong', 'Strong'], ['Standard', 'Standard'], ['Basic', 'Basic']].map(([v, x]) => <option key={v} value={v}>{x}</option>)}</select>
                 </div>
                 <div className="set">
                   <div>
@@ -278,9 +284,7 @@ export default function Screen() {
                       Restrict sign-in to bank networks
                     </span>
                   </div>
-                  <span className="tg">
-                    <i />
-                  </span>
+                  <span role="switch" aria-checked={!!f.ipAllow} aria-label="IP allow-list" className={`tg${f.ipAllow ? " on" : ""}`} onClick={() => setF({ ...f, ipAllow: !f.ipAllow })} />
                 </div>
                 <div className="set">
                   <div>
@@ -291,9 +295,7 @@ export default function Screen() {
                       Code sent to the work email on every sign-in
                     </span>
                   </div>
-                  <span className="tg on">
-                    <i />
-                  </span>
+                  <span role="switch" aria-checked={!!f.mfaRequired} aria-label="OTP at sign-in" className={`tg${f.mfaRequired ? " on" : ""}`} onClick={() => setF({ ...f, mfaRequired: !f.mfaRequired })} />
                 </div>
                 <div className="set">
                   <div>
@@ -317,9 +319,7 @@ export default function Screen() {
                       Idle minutes before sign-out
                     </span>
                   </div>
-                  <span className="chip blue">
-                    30 min
-                  </span>
+                  <select className="in" value={f.timeout} onChange={(e) => setF({ ...f, timeout: e.target.value })} aria-label="Session timeout">{[['15', '15'], ['30', '30'], ['60', '60']].map(([v, x]) => <option key={v} value={v}>{x}</option>)}</select>
                 </div>
                 <div className="set">
                   <div>
@@ -330,19 +330,13 @@ export default function Screen() {
                       Five failed sign-ins
                     </span>
                   </div>
-                  <span className="tg on">
-                    <i />
-                  </span>
+                  <span role="switch" aria-checked={!!f.lockFails} aria-label="Lock after failed attempts" className={`tg${f.lockFails ? " on" : ""}`} onClick={() => setF({ ...f, lockFails: !f.lockFails })} />
                 </div>
               </div>
             </div>
             <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px" }}>
-              <a href="#" className="btn ">
-                Discard
-              </a>
-              <a href="#" className="btn pri">
-                Save changes
-              </a>
+              <button className="btn " onClick={discard}>Discard</button>
+              <button className="btn pri" onClick={save}>Save changes</button>
             </div>
           </main>
         </div>
