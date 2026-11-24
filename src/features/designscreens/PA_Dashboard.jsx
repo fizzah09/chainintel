@@ -1,6 +1,8 @@
 import { DLink } from '../design/DLink';
+import { useStore } from '../../mocks/store';
 
 export default function Screen() {
+  const s = useStore(); const N = (xs, f) => (xs || []).filter(f).length;
   return (
     <>
       <div className="app">
@@ -214,48 +216,18 @@ export default function Screen() {
               <div className="acts" />
             </div>
             <div className="kpis">
-              <div className="kpi">
-                <div className="l">
+              <div className="kpi"><div className="l">
                   Tenants
-                </div>
-                <div className="v">
-                  14
-                </div>
-                <div className="s">
-                  12 active
-                </div>
+                </div><div className="v">{s.tenants.length}</div><div className="s">{`${N(s.tenants, t => t.status === 'Active')} active`}</div>
               </div>
-              <div className="kpi">
-                <div className="l">
+              <div className="kpi"><div className="l">
                   Platform users
-                </div>
-                <div className="v">
-                  412
-                </div>
-                <div className="s" />
+                </div><div className="v">{s.users.length}</div><div className="s">{'all accounts'}</div>
               </div>
-              <div className="kpi">
-                <div className="l">
-                  Wallets analysed (24 h)
-                </div>
-                <div className="v">
-                  9,820
-                </div>
-                <div className="s">
-                  +4%
-                </div>
-              </div>
-              <div className="kpi">
-                <div className="l">
+              <div className="kpi"><div className="l">
                   <i style={{ background: "#16A34A" }} />
                   Provider errors
-                </div>
-                <div className="v">
-                  0.3%
-                </div>
-                <div className="s">
-                  Within SLO
-                </div>
+                </div><div className="v">{s.providers.length ? ((N(s.providers, p => /error|down|degraded/i.test(p.status || ''))) / s.providers.length * 100).toFixed(1) + '%' : '—'}</div><div className="s">{`${N(s.providers, p => /error|down|degraded/i.test(p.status || ''))} of ${s.providers.length} providers`}</div>
               </div>
             </div>
             <div className="row" style={{ gap: "16px", alignItems: "flex-start" }}>

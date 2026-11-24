@@ -5,7 +5,7 @@ const ROLES = [['inv', 'Investigator'], ['rev', 'Reviewer'], ['cm', 'Compliance 
 
 
 export default function Screen() {
-  const s = useStore();
+  const s = useStore(); const N = (xs, f) => (xs || []).filter(f).length;
   return (
     <>
       <div className="app">
@@ -224,45 +224,21 @@ export default function Screen() {
               <div className="acts" />
             </div>
             <div className="kpis">
-              <div className="kpi">
-                <div className="l">
+              <div className="kpi"><div className="l">
                   Active users
-                </div>
-                <div className="v">
-                  38
-                </div>
-                <div className="s">
-                  of 50 seats
-                </div>
+                </div><div className="v">{N(s.users, u => u.status === 'Active')}</div><div className="s">{`of ${s.users.length} accounts`}</div>
               </div>
-              <div className="kpi">
-                <div className="l">
+              <div className="kpi"><div className="l">
                   Monitored wallets
-                </div>
-                <div className="v">
-                  1,284
-                </div>
-                <div className="s">
-                  Quota 2,000
-                </div>
+                </div><div className="v">{s.watchlists.reduce((n, w) => n + w.wallets.length, 0)}</div><div className="s">{'on watchlists'}</div>
               </div>
-              <div className="kpi">
-                <div className="l">
+              <div className="kpi"><div className="l">
                   Open cases
-                </div>
-                <div className="v">
-                  24
-                </div>
-                <div className="s" />
+                </div><div className="v">{N(s.cases, c => c.status !== 'Closed')}</div><div className="s">{'not closed'}</div>
               </div>
-              <div className="kpi">
-                <div className="l">
+              <div className="kpi"><div className="l">
                   Audit events (24 h)
-                </div>
-                <div className="v">
-                  1,842
-                </div>
-                <div className="s" />
+                </div><div className="v">{N(s.audit, a => Date.now() - new Date(a.at) < 864e5)}</div><div className="s">{'last 24 hours'}</div>
               </div>
             </div>
             <div className="card" style={{ marginBottom: "16px" }}>

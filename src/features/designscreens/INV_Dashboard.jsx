@@ -1,6 +1,8 @@
 import { DLink } from '../design/DLink';
+import { useStore } from '../../mocks/store';
 
 export default function Screen() {
+  const s = useStore(); const N = (xs, f) => (xs || []).filter(f).length;
   return (
     <>
       <div className="app">
@@ -233,40 +235,19 @@ export default function Screen() {
               </div>
             </div>
             <div className="kpis" style={{ position: "relative" }}>
-              <div className="kpi">
-                <div className="l">
+              <div className="kpi"><div className="l">
                   My open cases
-                </div>
-                <div className="v">
-                  6
-                </div>
-                <div className="s">
-                  2 due this week
-                </div>
+                </div><div className="v">{N(s.cases, c => c.assignee === s.session.name && c.status !== 'Closed')}</div><div className="s">{'assigned to you'}</div>
               </div>
-              <div className="kpi">
-                <div className="l">
+              <div className="kpi"><div className="l">
                   <i style={{ background: "#DC2626" }} />
                   Open tasks
-                </div>
-                <div className="v">
-                  9
-                </div>
-                <div className="s">
-                  1 overdue
-                </div>
+                </div><div className="v">{N(s.tasks, t => t.assignee === s.session.name && t.status !== 'Done')}</div><div className="s">{'assigned to you'}</div>
               </div>
-              <div className="kpi">
-                <div className="l">
+              <div className="kpi"><div className="l">
                   <i style={{ background: "#EA580C" }} />
                   Watchlist alerts
-                </div>
-                <div className="v">
-                  5
-                </div>
-                <div className="s">
-                  2 critical
-                </div>
+                </div><div className="v">{N(s.alerts, a => a.status !== 'Resolved')}</div><div className="s">{`${N(s.alerts, a => a.status !== 'Resolved' && a.score >= s.cfg.thr[2])} critical`}</div>
               </div>
             </div>
             <div className="row" style={{ gap: "16px", alignItems: "flex-start" }}>

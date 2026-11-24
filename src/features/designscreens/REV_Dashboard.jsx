@@ -1,6 +1,8 @@
 import { DLink } from '../design/DLink';
+import { useStore } from '../../mocks/store';
 
 export default function Screen() {
+  const s = useStore(); const N = (xs, f) => (xs || []).filter(f).length;
   return (
     <>
       <div className="app">
@@ -187,28 +189,14 @@ export default function Screen() {
               <div className="acts" />
             </div>
             <div className="kpis">
-              <div className="kpi">
-                <div className="l">
+              <div className="kpi"><div className="l">
                   <i style={{ background: "#DC2626" }} />
                   Pending reviews
-                </div>
-                <div className="v">
-                  8
-                </div>
-                <div className="s">
-                  2 critical
-                </div>
+                </div><div className="v">{N(s.cases, c => c.status === 'Under Review')}</div><div className="s">{`${N(s.cases, c => c.status === 'Under Review' && c.priority === 'Critical')} critical`}</div>
               </div>
-              <div className="kpi">
-                <div className="l">
+              <div className="kpi"><div className="l">
                   Reviewed this week
-                </div>
-                <div className="v">
-                  14
-                </div>
-                <div className="s">
-                  +3 vs last week
-                </div>
+                </div><div className="v">{N(s.reviews, r => Date.now() - new Date(r.date) < 7 * 864e5)}</div><div className="s">{'last 7 days'}</div>
               </div>
             </div>
             <div className="row" style={{ gap: "16px", alignItems: "flex-start" }}>

@@ -1,6 +1,8 @@
 import { DLink } from '../design/DLink';
+import { useStore } from '../../mocks/store';
 
 export default function Screen() {
+  const s = useStore(); const N = (xs, f) => (xs || []).filter(f).length;
   return (
     <>
       <div className="app">
@@ -230,50 +232,22 @@ export default function Screen() {
               </div>
             </div>
             <div className="kpis" style={{ position: "relative" }}>
-              <div className="kpi">
-                <div className="l">
+              <div className="kpi"><div className="l">
                   Total wallets
-                </div>
-                <div className="v">
-                  1,284
-                </div>
-                <div className="s">
-                  +36 this week
-                </div>
+                </div><div className="v">{s.recent.length}</div><div className="s">{'in your recent list'}</div>
               </div>
-              <div className="kpi">
-                <div className="l">
+              <div className="kpi"><div className="l">
                   Open investigations
-                </div>
-                <div className="v">
-                  24
-                </div>
-                <div className="s">
-                  14 open · 10 assigned
-                </div>
+                </div><div className="v">{N(s.cases, c => c.status !== 'Closed')}</div><div className="s">{'not closed'}</div>
               </div>
-              <div className="kpi">
-                <div className="l">
+              <div className="kpi"><div className="l">
                   <i style={{ background: "#F59E0B" }} />
                   Under review
-                </div>
-                <div className="v">
-                  8
-                </div>
-                <div className="s">
-                  Pending decision
-                </div>
+                </div><div className="v">{N(s.cases, c => c.status === 'Under Review')}</div><div className="s">{'awaiting decision'}</div>
               </div>
-              <div className="kpi">
-                <div className="l">
+              <div className="kpi"><div className="l">
                   Closed (90 d)
-                </div>
-                <div className="v">
-                  42
-                </div>
-                <div className="s">
-                  Median 6.2 days
-                </div>
+                </div><div className="v">{N(s.cases, c => c.status === 'Closed' && Date.now() - new Date(c.opened) < 90 * 864e5)}</div><div className="s">{'last 90 days'}</div>
               </div>
             </div>
             <div className="row" style={{ gap: "16px", alignItems: "flex-start" }}>

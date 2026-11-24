@@ -1,6 +1,8 @@
 import { DLink } from '../design/DLink';
+import { useStore } from '../../mocks/store';
 
 export default function Screen() {
+  const s = useStore(); const N = (xs, f) => (xs || []).filter(f).length;
   return (
     <>
       <div className="app">
@@ -207,28 +209,14 @@ export default function Screen() {
               <div className="acts" />
             </div>
             <div className="kpis">
-              <div className="kpi">
-                <div className="l">
+              <div className="kpi"><div className="l">
                   Cases in period
-                </div>
-                <div className="v">
-                  94
-                </div>
-                <div className="s">
-                  Last 90 days
-                </div>
+                </div><div className="v">{s.cases.length}</div><div className="s">{'all cases'}</div>
               </div>
-              <div className="kpi" style={{ position: "relative" }}>
-                <div className="l">
+              <div className="kpi" style={{ position: "relative" }}><div className="l">
                   <i style={{ background: "#16A34A" }} />
                   Audit events
-                </div>
-                <div className="v">
-                  48,210
-                </div>
-                <div className="s">
-                  Hash chain intact
-                </div>
+                </div><div className="v">{s.audit.length}</div><div className="s">{'all events'}</div>
                 <svg width="166" height="109" viewBox="0 0 166 109" preserveAspectRatio="none" style={{ position: "absolute", left: "3px", top: "1px", width: "166px", height: "109px", overflow: "visible", fill: "none", stroke: "#8a8378", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }}>
                   <path d="M94.2 8 C76.8 8 46.1 1.6 31.1 9.8 C26.1 12.4 23.9 15.9 20 20 C2.5 38.8 0 47.3 0 73.1 C0 83.5 0.2 98 11 104.2 C23.1 111.2 45.9 109.2 59.4 109.2 C98.3 109.2 159 116.2 166.3 64.1 C172.3 21.3 112.2 -13.6 79.1 4" vectorEffect="non-scaling-stroke" />
                 </svg>
