@@ -1,6 +1,10 @@
 import { DLink } from '../design/DLink';
+import { shortAddr } from '../design/dashParts';
+import { useStore } from '../../mocks/store';
+import { useParams } from 'react-router-dom';
 
 export default function Screen() {
+  const { address } = useParams(); const sel = useStore(); const wallet = address || sel.ctx.wallet || '—';
   return (
     <>
       <div className="app">
@@ -168,7 +172,7 @@ export default function Screen() {
               </span>
               {" "}
               <span>
-                0x7a3f…9B21
+                {shortAddr(wallet)}
               </span>
               {" "}
               <span style={{ color: "#A3B0C2" }}>
@@ -241,7 +245,7 @@ export default function Screen() {
                   <div>
                     <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap" }}>
                       <h1 style={{ fontSize: "20px" }} className="mono">
-                        0x7a3f1c5e8b2d4096a1f7c3e5d8b2a49e0c619B21
+                        {wallet}
                       </h1>
                       <span className="tier crit">
                         Critical
@@ -511,7 +515,7 @@ export default function Screen() {
                     Selected wallet
                   </text>
                   <text x="480" y="339" textAnchor="middle" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
-                    0x7a3f…9B21
+                    {shortAddr(wallet)}
                   </text>
                   <text x="480" y="275" textAnchor="middle" fontSize="15" fontWeight="700" fill="#0F172A" fontFamily="Inter,sans-serif">
                     78
