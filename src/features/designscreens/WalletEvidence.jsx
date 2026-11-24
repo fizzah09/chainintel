@@ -557,12 +557,6 @@ export default function Screen() {
                   </b>
                 </div>
               </div>
-              <svg width="224" height="75" viewBox="0 0 224 75" preserveAspectRatio="none" style={{ position: "absolute", left: "910px", top: "6px", width: "224px", height: "75px", overflow: "visible", fill: "none", stroke: "#8a8378", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }}>
-                <path d="M108.597 0.2 C91.198 2.5 73.698 0 56.299 3.5 C35.899 7.5 11.9 16.6 3 37.599 C1.2 41.899 0 47.199 0 52.299 C0 60.498 3 68.298 11.1 71.698 C16.7 73.898 24.699 74.598 33.399 74.598 C45.999 74.598 59.799 73.098 68.498 72.798 C102.497 71.298 145.596 68.398 177.896 56.499 C190.395 51.899 223.594 44.999 224.394 28.399 C224.394 27.999 224.394 27.699 224.394 27.399 C224.394 12.8 208.395 7 196.295 4.5 C193.395 4 190.295 3.8 187.095 3.8 C180.696 3.8 174.096 4.5 168.096 4.5 C143.196 4.5 118.297 4.5 93.398 4.5" vectorEffect="non-scaling-stroke" />
-              </svg>
-              <svg width="180" height="293" viewBox="0 0 180 293" preserveAspectRatio="none" style={{ position: "absolute", left: "595px", top: "105px", width: "180px", height: "293px", overflow: "visible", fill: "none", stroke: "#8a8378", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }}>
-                <path d="M103 4 C62.2 -10.8 33.1 21 18 56 C10.5 73.3 6 88.5 3 107 C1 119.3 0 131.6 0 144 C0 188.3 -4.4 225.2 19 264 C25.8 275.3 36.6 287.6 50 291 C62.4 294.2 77.3 292.4 90 293 C109.2 293.9 132.4 293.5 149 282.2 C192.6 252.6 178.6 191.6 172 149 C170.3 137.9 171.8 129.3 169 118 C166.5 107.9 161.7 96.7 158 87 C144.9 52.4 127 5.2 84 4" vectorEffect="non-scaling-stroke" />
-              </svg>
             </div>
           </main>
         </div>

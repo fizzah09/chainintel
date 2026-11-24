@@ -639,9 +639,6 @@ export default function Screen() {
                   <div className="mu sm" style={{ paddingTop: "12px" }}>
                     Contributions: 18.0 + 13.5 + 20.0 + 16.0 + 6.0 + 4.5 = 78.0
                   </div>
-                  <svg width="2" height="6" viewBox="0 0 2 6" preserveAspectRatio="none" style={{ position: "absolute", left: "179px", top: "-1px", width: "2px", height: "6px", overflow: "visible", fill: "none", stroke: "#8a8378", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }}>
-                    <path d="M1 6 C0.7 4.1 0.4 2 0 0" vectorEffect="non-scaling-stroke" />
-                  </svg>
                 </div>
               </div>
             </div>

@@ -637,9 +637,6 @@ export default function Screen() {
                     Add to case
                   </a>
                 </div>
-                <svg width="379" height="50" viewBox="0 0 379 50" preserveAspectRatio="none" style={{ position: "absolute", left: "-40px", top: "104px", width: "379px", height: "50px", overflow: "visible", fill: "none", stroke: "#8a8378", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }}>
-                  <path d="M51.496 0 C134.157 4.138 218.826 17.862 302.079 9.496 C313.469 8.297 327.523 5.93 340.931 5.93 C356.167 5.93 370.568 8.987 379.275 20.289 C364.038 32.796 336.947 38.476 310.857 41.415 C294.827 43.222 279.174 43.994 266.882 44.679 C236.385 46.377 205.086 44.879 174.789 47.377 C153.934 49.089 133.942 50.091 113.891 50.091 C95.639 50.091 77.339 49.261 58.296 47.377 C45.065 46.104 31.735 45.831 18.693 43.94 C13.304 43.158 7.963 42.1 2.7 40.581 C1.8 36.583 0.9 32.483 0 28.485 C18.899 17.191 72.296 9.896 96.193 5.398" vectorEffect="non-scaling-stroke" />
-                </svg>
               </div>
               <div className="card " style={{ flex: "1 1 380px" }}>
                 <div className="ct-h">

@@ -224,9 +224,6 @@ const me = s.session.name; const isOpen = (c) => c.status !== 'Closed';
                   <i style={{ background: "#16A34A" }} />
                   Audit events
                 </div><div className="v">{s.audit.length}</div><div className="s">{'all events'}</div>
-                <svg width="166" height="109" viewBox="0 0 166 109" preserveAspectRatio="none" style={{ position: "absolute", left: "3px", top: "1px", width: "166px", height: "109px", overflow: "visible", fill: "none", stroke: "#8a8378", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }}>
-                  <path d="M94.2 8 C76.8 8 46.1 1.6 31.1 9.8 C26.1 12.4 23.9 15.9 20 20 C2.5 38.8 0 47.3 0 73.1 C0 83.5 0.2 98 11 104.2 C23.1 111.2 45.9 109.2 59.4 109.2 C98.3 109.2 159 116.2 166.3 64.1 C172.3 21.3 112.2 -13.6 79.1 4" vectorEffect="non-scaling-stroke" />
-                </svg>
               </div>
             </div>
             <div className="row" style={{ gap: "16px", alignItems: "flex-start" }}>
@@ -247,9 +244,6 @@ const me = s.session.name; const isOpen = (c) => c.status !== 'Closed';
                 <div>{integrity.ok ? `Audit chain verified (${integrity.n} entries).` : `Chain broken at ${integrity.at}.`}</div>
               </div>
             </div>
-            <svg width="140" height="126" viewBox="0 0 140 126" preserveAspectRatio="none" style={{ position: "absolute", left: "897px", top: "88px", width: "140px", height: "126px", overflow: "visible", fill: "none", stroke: "#8a8378", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }}>
-              <path d="M52 0 C43.6 0 30.1 -2.2 22.5 3.5 C-4.3 23.5 -10.8 86.2 13.7 110 C30.9 126.6 56.5 127.2 79 126 C93.3 125.3 110.5 120.4 122 111.5 C145.6 93.2 147.3 52.5 124.5 32.7 C117.8 26.9 109.7 25.1 102 21 C96.4 18 90.7 13.9 85 11.5 C65.3 3.2 60.2 6.9 43 4 C37.7 3.1 33 1.2 27 1" vectorEffect="non-scaling-stroke" />
-            </svg>
           </main>
         </div>
       </div>

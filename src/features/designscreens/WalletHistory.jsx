@@ -325,9 +325,6 @@ export default function Screen() {
               <DLink href="/design/WalletHistory" className="on">
                 History
               </DLink>
-              <svg width="1155" height="523" viewBox="0 0 1155 523" preserveAspectRatio="none" style={{ position: "absolute", left: "29px", top: "-5px", width: "1155px", height: "523px", overflow: "visible", fill: "none", stroke: "#8a8378", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }}>
-                <path d="M878 8 C852.4 8 821.4 3.8 797.5 15 C787.9 19.5 782.7 26.4 776 34 C758.4 53.9 738.1 69 711 73 C678.5 77.8 640.5 72.7 608 70 C570.8 67 533.4 66.1 496 67 C447.4 68.2 402 81.4 354 87 C303.8 92.9 252.2 86.8 202 95 C187.8 97.3 174.2 102.9 160 105 C123.4 110.5 27.9 127.5 6 168 C-4.9 188.2 0 218 0 240 C0 258 -2.5 278.9 4 296 C30.6 365.7 96.4 402.1 158 437 C174.9 446.6 191.4 457 209 465 C271.3 493.4 337.7 504.7 405 514 C483.4 524.8 565.6 529 644 516 C720.9 503.3 795.7 477.6 871 458 C923.5 444.3 975.3 426.4 1028 414 C1068.3 404.5 1109.7 396.4 1137 363 C1177.7 313.3 1145.8 244.7 1117 198 C1088.3 151.6 1025 72.7 977 48 C958.8 38.6 937.5 32.1 918 26 C908.1 22.9 899.2 16 889 14 C882.4 12.7 875.1 13.3 868.3 12 C853.1 9 841.9 2.5 826 2 C826 1.3 826 0.7 826 0" vectorEffect="non-scaling-stroke" />
-              </svg>
             </div>
             <div className="row" style={{ gap: "16px", alignItems: "flex-start" }}>
               <div className="card " style={{ flex: "1 1 440px" }}>
@@ -481,9 +478,6 @@ export default function Screen() {
                 </div>
               </div>
             </div>
-            <svg width="582" height="327" viewBox="0 0 582 327" preserveAspectRatio="none" style={{ position: "absolute", left: "609px", top: "272px", width: "582px", height: "327px", overflow: "visible", fill: "none", stroke: "#8a8378", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }}>
-              <path d="M38.7 2.7 C11.3 17.5 8 39.9 4.3 70.099 C3.7 75.199 1.2 80.199 0.5 85.299 C0.2 88.199 0 91.099 0 93.999 C0 120.399 13.6 147.099 19.6 171.799 C24.1 190.398 21.7 211.798 36.1 226.498 C69.199 260.398 117.099 276.498 160.799 290.098 C210.698 305.798 264.498 327.297 318.197 327.297 C328.897 327.297 339.597 326.397 350.297 324.497 C383.897 318.397 410.597 303.198 441.897 291.398 C487.896 274.098 546.796 260.898 569.095 209.998 C577.595 190.598 581.895 172.699 581.895 155.999 C581.895 123.599 565.596 96.099 532.196 72.599 C520.596 64.399 509.796 54.4 496.596 48.5 C477.096 39.7 469.496 41.5 449.496 35.7 C336.597 2.8 218.298 0 100.799 0 C76.699 0 52.5 0.1 28.5 0.1" vectorEffect="non-scaling-stroke" />
-            </svg>
           </main>
         </div>
       </div>
