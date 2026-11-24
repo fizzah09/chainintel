@@ -312,11 +312,6 @@ export const NAV = {
             "label": "Wallet Monitoring",
             "key": "WalletMonitoring",
             "icon": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" ><path d=\"M4 7.5A2.5 2.5 0 0 1 6.5 5H18v3\"/><path d=\"M4 7.5V17a2 2 0 0 0 2 2h13a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1H6.5A2.5 2.5 0 0 1 4 7.5z\"/><circle cx=\"16\" cy=\"13.5\" r=\"1.2\"/></svg>"
-          },
-          {
-            "label": "Transaction Tracing",
-            "key": "TransactionTracing",
-            "icon": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" ><path d=\"M7 7h12l-3-3M17 17H5l3 3\"/></svg>"
           }
         ]
       },
@@ -363,36 +358,6 @@ export const NAV = {
         "icon": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" ><path d=\"M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 2h-15z\"/><path d=\"M10 21h4\"/></svg>"
       }
     ]
-  },
-  "ex": {
-    "name": "Academic Examiner",
-    "person": "Dr. Ayesha Malik",
-    "initials": "AM",
-    "ws": "Research sandbox",
-    "plat": false,
-    "groups": [
-      {
-        "heading": "",
-        "items": [
-          {
-            "label": "Wallet Monitoring",
-            "key": "WalletMonitoring",
-            "icon": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" ><path d=\"M4 7.5A2.5 2.5 0 0 1 6.5 5H18v3\"/><path d=\"M4 7.5V17a2 2 0 0 0 2 2h13a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1H6.5A2.5 2.5 0 0 1 4 7.5z\"/><circle cx=\"16\" cy=\"13.5\" r=\"1.2\"/></svg>"
-          },
-          {
-            "label": "Transaction Tracing",
-            "key": "TransactionTracing",
-            "icon": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" ><path d=\"M7 7h12l-3-3M17 17H5l3 3\"/></svg>"
-          },
-          {
-            "label": "Generate report",
-            "key": "ReportBuilder",
-            "icon": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" ><path d=\"M6 3h8l5 5v13H6z\"/><path d=\"M14 3v5h5M9 13h7M9 17h7\"/></svg>"
-          }
-        ]
-      }
-    ],
-    "foot": []
   },
   "pa": {
     "name": "Platform Admin",

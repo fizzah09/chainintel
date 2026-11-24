@@ -8,14 +8,13 @@ export const ACCOUNTS = [
   { role: 'cm', name: 'Ahmed Khan', email: 'ahmed.khan@examplebank.com' },
   { role: 'ba', name: 'Bilal Qureshi', email: 'bilal@examplebank.com' },
   { role: 'aud', name: 'Imran Sheikh', email: 'imran.s@examplebank.com' },
-  { role: 'ex', name: 'Dr. Ayesha Malik', email: 'ayesha.malik@university.edu' },
   { role: 'pa', name: 'Hina Raza', email: 'hina@chainintel.io' },
   { role: 'sa', name: 'Omar Farooq', email: 'omar@chainintel.io' },
 ];
-export const ROLE_NAMES = { inv: 'Investigator', rev: 'Reviewer', cm: 'Compliance Manager', ba: 'Bank Admin', aud: 'Auditor', ex: 'Academic Examiner', pa: 'Platform Admin', sa: 'Super Admin' };
-export const PERM_ROLES = ['inv', 'rev', 'cm', 'ba', 'aud', 'ex'];
+export const ROLE_NAMES = { inv: 'Investigator', rev: 'Reviewer', cm: 'Compliance Manager', ba: 'Bank Admin', aud: 'Auditor', pa: 'Platform Admin', sa: 'Super Admin' };
+export const PERM_ROLES = ['inv', 'rev', 'cm', 'ba', 'aud'];
 export const PERMS = [['view_wallets', 'View wallets'], ['run_trace', 'Run trace'], ['create_case', 'Create case'], ['verify_evidence', 'Verify evidence'], ['approve_review', 'Approve review'], ['manage_users', 'Manage users'], ['view_audit', 'View audit logs'], ['export_reports', 'Export reports']];
-const M = { view_wallets: [1, 1, 1, 1, 1, 1], run_trace: [1, 1, 1, 1, 0, 0], create_case: [1, 0, 1, 1, 0, 0], verify_evidence: [0, 1, 1, 0, 0, 0], approve_review: [0, 1, 1, 0, 0, 0], manage_users: [0, 0, 0, 1, 0, 0], view_audit: [0, 0, 1, 1, 1, 0], export_reports: [1, 1, 1, 1, 1, 0] };
+const M = { view_wallets: [1, 1, 1, 1, 1], run_trace: [1, 1, 1, 1, 0], create_case: [1, 0, 1, 1, 0], verify_evidence: [0, 1, 1, 0, 0], approve_review: [0, 1, 1, 0, 0], manage_users: [0, 0, 0, 1, 0], view_audit: [0, 0, 1, 1, 1], export_reports: [1, 1, 1, 1, 1] };
 const perms = {}; for (const [k] of PERMS) perms[k] = Object.fromEntries(PERM_ROLES.map((r, i) => [r, !!M[k][i]]));
 
 export function chainLog(list, e) {
