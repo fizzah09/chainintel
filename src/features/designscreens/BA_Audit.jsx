@@ -1,9 +1,6 @@
-import { fmtDate } from '../design/dashParts';
-import { act, useStore } from '../../mocks/store';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
-  const s = useStore();
   return (
     <>
       <div className="app">
@@ -324,9 +321,95 @@ export default function Screen() {
                     </tr>
                   </thead>
                   <tbody>
-{(s.audit).length === 0 && <tr><td colSpan={6} className="mu">No audit entries yet.</td></tr>}
-{(s.audit).map((x) => (<tr key={x.id}><td>{fmtDate(x.at)}</td><td>{x.actor}</td><td>{x.action}</td><td>{x.object || '—'}</td><td>{x.ip || '—'}</td><td>{x.result || 'Success'}</td></tr>))}
-</tbody>
+                    <tr>
+                      <td className="">
+                        02 Nov 14:20
+                      </td>
+                      <td className="">
+                        Sara Ali
+                      </td>
+                      <td className="">
+                        Submitted for review
+                      </td>
+                      <td className="">
+                        CASE-2026-00128
+                      </td>
+                      <td className="">
+                        10.20.4.18
+                      </td>
+                      <td className="">
+                        <span className="chip ok">
+                          Success
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        02 Nov 11:03
+                      </td>
+                      <td className="">
+                        Hira Baig
+                      </td>
+                      <td className="">
+                        Failed sign-in
+                      </td>
+                      <td className="">
+                        Auth
+                      </td>
+                      <td className="">
+                        203.0.113.7
+                      </td>
+                      <td className="">
+                        <span className="chip bad">
+                          Failed
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        02 Nov 10:15
+                      </td>
+                      <td className="">
+                        Ahmed Khan
+                      </td>
+                      <td className="">
+                        Changed priority
+                      </td>
+                      <td className="">
+                        CASE-2026-00128
+                      </td>
+                      <td className="">
+                        10.20.4.9
+                      </td>
+                      <td className="">
+                        <span className="chip ok">
+                          Success
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        02 Nov 09:02
+                      </td>
+                      <td className="">
+                        Bilal Qureshi
+                      </td>
+                      <td className="">
+                        Invited user
+                      </td>
+                      <td className="">
+                        hira.baig@…
+                      </td>
+                      <td className="">
+                        10.20.4.2
+                      </td>
+                      <td className="">
+                        <span className="chip ok">
+                          Success
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
               <div className="pager">

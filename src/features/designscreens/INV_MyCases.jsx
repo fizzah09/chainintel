@@ -1,9 +1,6 @@
-import { fmtDate } from '../design/dashParts';
-import { act, useStore } from '../../mocks/store';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
-  const s = useStore();
   return (
     <>
       <div className="app">
@@ -305,9 +302,121 @@ export default function Screen() {
                     </tr>
                   </thead>
                   <tbody>
-{(s.cases.filter((c) => c.assignee === s.session.name)).length === 0 && <tr><td colSpan={7} className="mu">No cases assigned to you.</td></tr>}
-{(s.cases.filter((c) => c.assignee === s.session.name)).map((x) => (<tr key={x.id}><td><DLink href={`/cases/${x.id}`} className="mono" style={{ color: "var(--pri)", fontWeight: 600 }}>{x.id}</DLink></td><td>{x.title}</td><td><span className="chip">{x.status}</span></td><td><span className={`chip${x.priority === 'Critical' ? ' bad' : ''}`}>{x.priority || '—'}</span></td><td>{x.assignee}</td><td>{fmtDate(x.opened)}</td><td>{fmtDate(x.due)}</td></tr>))}
-</tbody>
+                    <tr>
+                      <td className="">
+                        <DLink href="/design/CaseDetails" className="mono" style={{ color: "var(--pri)", fontWeight: "600" }}>
+                          CASE-2026-00128
+                        </DLink>
+                      </td>
+                      <td className="">
+                        Suspected layering via mixer
+                      </td>
+                      <td className="">
+                        <span className="chip pur">
+                          Under Review
+                        </span>
+                      </td>
+                      <td className="">
+                        <span className="chip bad">
+                          Critical
+                        </span>
+                      </td>
+                      <td className="">
+                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
+                            SA
+                          </span>
+                          <div style={{ lineHeight: "1.25" }}>
+                            <div style={{ fontWeight: "550" }}>
+                              Sara Ali
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="">
+                        02 Nov 2026
+                      </td>
+                      <td className="">
+                        09 Nov 2026
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <DLink href="/design/CaseDetails" className="mono" style={{ color: "var(--pri)", fontWeight: "600" }}>
+                          CASE-2026-00127
+                        </DLink>
+                      </td>
+                      <td className="">
+                        Sanctioned counterparty exposure
+                      </td>
+                      <td className="">
+                        <span className="chip blue">
+                          Analysis
+                        </span>
+                      </td>
+                      <td className="">
+                        <span className="chip warn">
+                          High
+                        </span>
+                      </td>
+                      <td className="">
+                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
+                            SA
+                          </span>
+                          <div style={{ lineHeight: "1.25" }}>
+                            <div style={{ fontWeight: "550" }}>
+                              Sara Ali
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="">
+                        01 Nov 2026
+                      </td>
+                      <td className="">
+                        08 Nov 2026
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <DLink href="/design/CaseDetails" className="mono" style={{ color: "var(--pri)", fontWeight: "600" }}>
+                          CASE-2026-00110
+                        </DLink>
+                      </td>
+                      <td className="">
+                        Bridge hopping across chains
+                      </td>
+                      <td className="">
+                        <span className="chip pur">
+                          Decision
+                        </span>
+                      </td>
+                      <td className="">
+                        <span className="chip warn">
+                          High
+                        </span>
+                      </td>
+                      <td className="">
+                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
+                            SA
+                          </span>
+                          <div style={{ lineHeight: "1.25" }}>
+                            <div style={{ fontWeight: "550" }}>
+                              Sara Ali
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="">
+                        22 Oct 2026
+                      </td>
+                      <td className="">
+                        05 Nov 2026
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
             </div>

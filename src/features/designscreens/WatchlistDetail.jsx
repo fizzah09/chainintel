@@ -1,9 +1,6 @@
-import { fmtDate } from '../design/dashParts';
-import { act, useStore } from '../../mocks/store';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
-  const s = useStore(); const wallet = s.ctx.wallet || '';
   return (
     <>
       <div className="app">
@@ -304,9 +301,187 @@ export default function Screen() {
                     </tr>
                   </thead>
                   <tbody>
-{((s.watchlists.find((w) => w.id === s.ctx.watchlist)?.wallets || [])).length === 0 && <tr><td colSpan={5} className="mu">No wallets on this watchlist yet.</td></tr>}
-{((s.watchlists.find((w) => w.id === s.ctx.watchlist)?.wallets || [])).map((x) => (<tr key={x.a}><td><span className="mono">{x.a}</span></td><td>—</td><td>—</td><td>{fmtDate(x.added)}</td><td>—</td></tr>))}
-</tbody>
+                    <tr>
+                      <td className="">
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                          <DLink href="/design/WalletOverview" className="mono" style={{ color: "var(--pri)", fontWeight: "550" }}>
+                            0xE5f7…90b8
+                          </DLink>
+                          <span style={{ color: "#8A99AE" }}>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <rect x="8" y="8" width="12" height="12" rx="2" />
+                              <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+                            </svg>
+                          </span>
+                        </span>
+                      </td>
+                      <td className="">
+                        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                          <b style={{ minWidth: "24px" }}>
+                            81
+                          </b>
+                          <div className="bar" style={{ width: "80px" }}>
+                            <i style={{ width: "81%", background: "#DC2626" }} />
+                          </div>
+                        </div>
+                      </td>
+                      <td className="">
+                        <span className="tier crit">
+                          Critical
+                        </span>
+                      </td>
+                      <td className="">
+                        02 Nov
+                      </td>
+                      <td className="">
+                        12 min ago
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                          <DLink href="/design/WalletOverview" className="mono" style={{ color: "var(--pri)", fontWeight: "550" }}>
+                            0x5a8e…fd02
+                          </DLink>
+                          <span style={{ color: "#8A99AE" }}>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <rect x="8" y="8" width="12" height="12" rx="2" />
+                              <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+                            </svg>
+                          </span>
+                        </span>
+                      </td>
+                      <td className="">
+                        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                          <b style={{ minWidth: "24px" }}>
+                            92
+                          </b>
+                          <div className="bar" style={{ width: "80px" }}>
+                            <i style={{ width: "92%", background: "#DC2626" }} />
+                          </div>
+                        </div>
+                      </td>
+                      <td className="">
+                        <span className="tier crit">
+                          Critical
+                        </span>
+                      </td>
+                      <td className="">
+                        28 Oct
+                      </td>
+                      <td className="">
+                        1 h ago
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                          <DLink href="/design/WalletOverview" className="mono" style={{ color: "var(--pri)", fontWeight: "550" }}>
+                            0x7a3f…9B21
+                          </DLink>
+                          <span style={{ color: "#8A99AE" }}>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <rect x="8" y="8" width="12" height="12" rx="2" />
+                              <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+                            </svg>
+                          </span>
+                        </span>
+                      </td>
+                      <td className="">
+                        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                          <b style={{ minWidth: "24px" }}>
+                            78
+                          </b>
+                          <div className="bar" style={{ width: "80px" }}>
+                            <i style={{ width: "78%", background: "#DC2626" }} />
+                          </div>
+                        </div>
+                      </td>
+                      <td className="">
+                        <span className="tier crit">
+                          Critical
+                        </span>
+                      </td>
+                      <td className="">
+                        02 Nov
+                      </td>
+                      <td className="">
+                        4 min ago
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                          <DLink href="/design/WalletOverview" className="mono" style={{ color: "var(--pri)", fontWeight: "550" }}>
+                            0xB7c4…0e21
+                          </DLink>
+                          <span style={{ color: "#8A99AE" }}>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <rect x="8" y="8" width="12" height="12" rx="2" />
+                              <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+                            </svg>
+                          </span>
+                        </span>
+                      </td>
+                      <td className="">
+                        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                          <b style={{ minWidth: "24px" }}>
+                            66
+                          </b>
+                          <div className="bar" style={{ width: "80px" }}>
+                            <i style={{ width: "66%", background: "#EA580C" }} />
+                          </div>
+                        </div>
+                      </td>
+                      <td className="">
+                        <span className="tier high">
+                          High
+                        </span>
+                      </td>
+                      <td className="">
+                        30 Oct
+                      </td>
+                      <td className="">
+                        —
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                          <DLink href="/design/WalletOverview" className="mono" style={{ color: "var(--pri)", fontWeight: "550" }}>
+                            0x98b1…2c70
+                          </DLink>
+                          <span style={{ color: "#8A99AE" }}>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <rect x="8" y="8" width="12" height="12" rx="2" />
+                              <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+                            </svg>
+                          </span>
+                        </span>
+                      </td>
+                      <td className="">
+                        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                          <b style={{ minWidth: "24px" }}>
+                            63
+                          </b>
+                          <div className="bar" style={{ width: "80px" }}>
+                            <i style={{ width: "63%", background: "#EA580C" }} />
+                          </div>
+                        </div>
+                      </td>
+                      <td className="">
+                        <span className="tier high">
+                          High
+                        </span>
+                      </td>
+                      <td className="">
+                        29 Oct
+                      </td>
+                      <td className="">
+                        —
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
               <div className="pager">

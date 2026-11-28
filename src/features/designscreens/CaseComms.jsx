@@ -1,10 +1,6 @@
-import { fmtDate } from '../design/dashParts';
-import { act, useStore } from '../../mocks/store';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
-  const s = useStore(); const cid = s.ctx.caseId || '';
-  const c = s.cases.find((x) => x.id === (s.ctx.caseId || '')) || {};
   return (
     <>
       <div className="app">
@@ -172,7 +168,7 @@ export default function Screen() {
               </span>
               {" "}
               <span>
-                {c.id || '—'}
+                CASE-2026-00128
               </span>
               {" "}
               <span style={{ color: "#A3B0C2" }}>
@@ -237,7 +233,7 @@ export default function Screen() {
                 <div>
                   <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap" }}>
                     <span className="mono mu">
-                      {c.id || '—'}
+                      CASE-2026-00128
                     </span>
                     <span className="chip pur">
                       Under Review
@@ -247,20 +243,20 @@ export default function Screen() {
                     </span>
                   </div>
                   <h1 style={{ fontSize: "22px", marginTop: "6px" }}>
-                    {c.title || 'No case selected'}
+                    Suspected layering via mixer
                   </h1>
                   <div className="mu" style={{ marginTop: "6px", display: "flex", gap: "18px", flexWrap: "wrap" }}>
                     <span>
-                      Assignee: {c.assignee || 'Unassigned'}
+                      Assignee: Sara Ali
                     </span>
                     <span>
-                      Opened {fmtDate(c.opened)}
+                      Opened 02 Nov 2026
                     </span>
                     <span>
-                      Due {fmtDate(c.due)}
+                      Due 09 Nov 2026
                     </span>
                     <span>
-                      Subjects: {(c.subjects || []).length}
+                      Subjects: 3
                     </span>
                   </div>
                 </div>
@@ -449,9 +445,83 @@ export default function Screen() {
                     </tr>
                   </thead>
                   <tbody>
-{(s.comms.filter((m) => m.caseId === cid)).length === 0 && <tr><td colSpan={5} className="mu">No messages on this case yet.</td></tr>}
-{(s.comms.filter((m) => m.caseId === cid)).map((x) => (<tr key={x.id}><td>{x.to || '—'}</td><td>{x.subject || '—'}</td><td>{x.dir}</td><td>{fmtDate(x.date)}</td><td><span className="chip">{x.status}</span></td></tr>))}
-</tbody>
+                    <tr>
+                      <td className="">
+                        Customer relations
+                      </td>
+                      <td className="">
+                        Request for source of funds
+                      </td>
+                      <td className="">
+                        Outbound
+                      </td>
+                      <td className="">
+                        31 Oct
+                      </td>
+                      <td className="">
+                        <span className="chip warn">
+                          Awaiting Response
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        Customer relations
+                      </td>
+                      <td className="">
+                        Re: Request for source of funds
+                      </td>
+                      <td className="">
+                        Inbound
+                      </td>
+                      <td className="">
+                        02 Nov
+                      </td>
+                      <td className="">
+                        <span className="chip ok">
+                          Response Received
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        Exchange compliance
+                      </td>
+                      <td className="">
+                        Account ownership enquiry
+                      </td>
+                      <td className="">
+                        Outbound
+                      </td>
+                      <td className="">
+                        02 Nov
+                      </td>
+                      <td className="">
+                        <span className="chip blue">
+                          Sent
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        Law enforcement liaison
+                      </td>
+                      <td className="">
+                        Referral draft
+                      </td>
+                      <td className="">
+                        Outbound
+                      </td>
+                      <td className="">
+                        —
+                      </td>
+                      <td className="">
+                        <span className="chip gray">
+                          Draft
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
             </div>

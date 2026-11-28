@@ -1,11 +1,6 @@
 import { DLink } from '../design/DLink';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { act, useStore } from '../../mocks/store';
-import { assignees } from '../cases/shared';
 
 export default function Screen() {
-  const s = useStore(); const w = s.wizard; const nav = useNavigate(); const [err, setErr] = useState({});
   return (
     <>
       <div className="app">
@@ -336,9 +331,12 @@ export default function Screen() {
                     </i>
                   </label>
                   <div className="in">
-                    <select value={w.priority} onChange={(e) => act.setWizard({ priority: e.target.value })} aria-label="Priority">
-                      {[['Low', 'Low'], ['Medium', 'Medium'], ['High', 'High'], ['Critical', 'Critical']].map(([v, t]) => <option key={v} value={v}>{t}</option>)}
-                    </select>
+                    <span>
+                      Critical
+                    </span>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M6 9l6 6 6-6" />
+                    </svg>
                   </div>
                 </div>
                 <div className="fld" style={{ flex: "1 1 240px" }}>
@@ -349,9 +347,14 @@ export default function Screen() {
                     </i>
                   </label>
                   <div className="in">
-                    <input type="date" value={w.due} onChange={(e) => act.setWizard({ due: e.target.value })} placeholder="Due date" aria-label="Due date" />
+                    <span>
+                      09 Nov 2026
+                    </span>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <rect x="3.5" y="5" width="17" height="15" rx="2" />
+                      <path d="M3.5 10h17M8 3v4M16 3v4" />
+                    </svg>
                   </div>
-                  {err.due && <div className="hint err" role="alert" style={{ marginTop: 6 }}>{err.due}</div>}
                 </div>
               </div>
               <div style={{ height: "16px" }} />
@@ -364,9 +367,12 @@ export default function Screen() {
                     </i>
                   </label>
                   <div className="in">
-                    <select value={w.assignee} onChange={(e) => act.setWizard({ assignee: e.target.value })} aria-label="Assignee">
-                      {[['', 'Unassigned'], ...assignees(s).map((n) => [n, n])].map(([v, t]) => <option key={v} value={v}>{t}</option>)}
-                    </select>
+                    <span>
+                      Sara Ali
+                    </span>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M6 9l6 6 6-6" />
+                    </svg>
                   </div>
                 </div>
               </div>
@@ -384,7 +390,7 @@ export default function Screen() {
                 <DLink href="/cases/new/subjects" className="btn ">
                   Back
                 </DLink>
-                <DLink href="/cases/new/review" className="btn pri" onClick={(e) => { const m = { due: !w.due ? "Choose a due date to continue." : "" }; setErr(m); if (m.due) e.preventDefault(); }}>
+                <DLink href="/cases/new/review" className="btn pri">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M5 12h14M13 6l6 6-6 6" />
                   </svg>

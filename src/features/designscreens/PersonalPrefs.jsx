@@ -1,12 +1,6 @@
-import { useState } from 'react';
-import { act, useStore } from '../../mocks/store';
-import { useToast } from '../../context/ToastContext';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
-  const s = useStore(); const toast = useToast(); const mfaOn = !!(s.prefs && s.prefs.mfa);
-  const [pw, setPw] = useState({ current: '', next: '', confirm: '' }); const [pwErr, setPwErr] = useState('');
-  const changePw = () => { if (pw.next !== pw.confirm) return setPwErr('The new passwords do not match.'); const r = act.changePassword(pw.current, pw.next); if (!r.ok) return setPwErr(r.error); setPw({ current: '', next: '', confirm: '' }); setPwErr(''); toast('Password changed.'); };
   return (
     <>
       <div className="app">
@@ -429,20 +423,6 @@ export default function Screen() {
                     Save changes
                   </DLink>
                 </div>
-              </div>
-            </div>
-            <div className="card" style={{ marginTop: 16, maxWidth: 680 }}>
-              <div className="ct-h"><div><h3>Security</h3><p>Change your password and two-step sign-in</p></div></div>
-              <div style={{ display: "grid", gap: 12 }}>
-                <div><label className="mu sm">Current password</label><input className="in" type="password" value={pw.current} onChange={(e) => setPw({ ...pw, current: e.target.value })} aria-label="Current password" /></div>
-                <div><label className="mu sm">New password (at least 8 characters)</label><input className="in" type="password" value={pw.next} onChange={(e) => setPw({ ...pw, next: e.target.value })} aria-label="New password" /></div>
-                <div><label className="mu sm">Confirm new password</label><input className="in" type="password" value={pw.confirm} onChange={(e) => setPw({ ...pw, confirm: e.target.value })} aria-label="Confirm new password" /></div>
-                {pwErr && <div className="hint err" role="alert">{pwErr}</div>}
-                <div><button className="btn pri" onClick={changePw}>Change password</button></div>
-              </div>
-              <div className="set" style={{ marginTop: 16 }}>
-                <div><b>Two-step sign-in (email code)</b><span className="d">Ask for a code by email each time you sign in</span></div>
-                <span role="switch" aria-checked={mfaOn} aria-label="Two-step sign-in" className={`tg${mfaOn ? " on" : ""}`} onClick={() => { act.setMfa(!mfaOn); toast(mfaOn ? "Two-step sign-in turned off." : "Two-step sign-in turned on."); }} />
               </div>
             </div>
           </main>

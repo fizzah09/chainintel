@@ -1,16 +1,7 @@
 import { DLink } from '../design/DLink';
-import { Bars, Empty, fmtDate, shortAddr } from '../design/dashParts';
-import { verifyChain } from '../../mocks/store';
-import { ROLE_NAMES } from '../../mocks/seed';
-import { useStore } from '../../mocks/store';
-
-const ROLES = [['inv', 'Investigator'], ['rev', 'Reviewer'], ['cm', 'Compliance Manager'], ['ba', 'Bank Admin'], ['aud', 'Auditor']];
 
 
 export default function Screen() {
-  const s = useStore(); const N = (xs, f) => (xs || []).filter(f).length;
-const me = s.session.name; const isOpen = (c) => c.status !== 'Closed';
-  const openFor = (name) => N(s.cases, c => c.assignee === name && isOpen(c));
   return (
     <>
       <div className="app">
@@ -229,41 +220,210 @@ const me = s.session.name; const isOpen = (c) => c.status !== 'Closed';
               <div className="acts" />
             </div>
             <div className="kpis">
-              <div className="kpi"><div className="l">
+              <div className="kpi">
+                <div className="l">
                   Active users
-                </div><div className="v">{N(s.users, u => u.status === 'Active')}</div><div className="s">{`of ${s.users.length} accounts`}</div>
-              </div>
-              <div className="kpi"><div className="l">
-                  Monitored wallets
-                </div><div className="v">{s.watchlists.reduce((n, w) => n + w.wallets.length, 0)}</div><div className="s">{'on watchlists'}</div>
-              </div>
-              <div className="kpi"><div className="l">
-                  Open cases
-                </div><div className="v">{N(s.cases, c => c.status !== 'Closed')}</div><div className="s">{'not closed'}</div>
-              </div>
-              <div className="kpi"><div className="l">
-                  Audit events (24 h)
-                </div><div className="v">{N(s.audit, a => Date.now() - new Date(a.at) < 864e5)}</div><div className="s">{'last 24 hours'}</div>
-              </div>
-            </div>
-            <div className="card" style={{ marginBottom: "16px" }}>
-              <div className="ct-h"><div><h3>Users by role</h3><p>Accounts in this workspace</p></div></div>
-              {ROLES.map(([k, label]) => { const n = s.users.filter((u) => u.role === k).length; const max = Math.max(1, s.users.length); return (
-                <div key={k} style={{ display: "flex", alignItems: "center", gap: "10px", margin: "8px 0" }}>
-                  <span style={{ width: "170px", fontSize: "13px" }}>{label}</span>
-                  <div className="bar" style={{ flex: 1 }}><i style={{ width: (n / max * 100) + "%", background: "#1769E0" }} /></div>
-                  <b style={{ width: "28px", textAlign: "right" }}>{n}</b>
                 </div>
-              ); })}
+                <div className="v">
+                  38
+                </div>
+                <div className="s">
+                  of 50 seats
+                </div>
+              </div>
+              <div className="kpi">
+                <div className="l">
+                  Monitored wallets
+                </div>
+                <div className="v">
+                  1,284
+                </div>
+                <div className="s">
+                  Quota 2,000
+                </div>
+              </div>
+              <div className="kpi">
+                <div className="l">
+                  Open cases
+                </div>
+                <div className="v">
+                  24
+                </div>
+                <div className="s" />
+              </div>
+              <div className="kpi">
+                <div className="l">
+                  Audit events (24 h)
+                </div>
+                <div className="v">
+                  1,842
+                </div>
+                <div className="s" />
+              </div>
             </div>
             <div className="row" style={{ gap: "16px", alignItems: "flex-start" }}>
               <div style={{ flex: "2 1 560px", display: "flex", flexDirection: "column", gap: "16px", minWidth: "0" }}>
                 <div className="card">
-                  <div className="ct-h"><div><h3>Members</h3><p>Who is active and how many open cases each person holds</p></div><DLink href="/admin/users" className="btn sm">All users</DLink></div>
-                  <div className="tbl"><table><thead><tr><th className="">Member</th><th className="">Role</th><th className="">Status</th><th className="">Open cases</th></tr></thead><tbody>
-                  {s.users.length === 0 && <tr><td colSpan={4} className="mu">No accounts yet.</td></tr>}
-                  {s.users.map((x) => (<tr key={x.id}><td>{x.name}</td><td>{ROLE_NAMES[x.role] || x.role}</td><td><span className={`chip`}>{x.status}</span></td><td>{openFor(x.name)}</td></tr>))}
-                  </tbody></table></div>
+                  <div className="ct-h">
+                    <div>
+                      <h3>
+                        Members
+                      </h3>
+                      <p>
+                        Who is active and how many open cases each person holds.
+                      </p>
+                    </div>
+                    <DLink href="/admin/users" className="btn sm">
+                      All users
+                    </DLink>
+                  </div>
+                  <div className="tbl">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>
+                            Member
+                          </th>
+                          <th>
+                            Role
+                          </th>
+                          <th>
+                            Status
+                          </th>
+                          <th className="r">
+                            Open cases
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                              <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
+                                SA
+                              </span>
+                              <span style={{ fontWeight: "550" }}>
+                                Sara Ali
+                              </span>
+                            </div>
+                          </td>
+                          <td>
+                            Investigator
+                          </td>
+                          <td>
+                            <span className="chip ok">
+                              Active
+                            </span>
+                          </td>
+                          <td className="r">
+                            <b>
+                              7
+                            </b>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                              <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
+                                AK
+                              </span>
+                              <span style={{ fontWeight: "550" }}>
+                                Ahmed Khan
+                              </span>
+                            </div>
+                          </td>
+                          <td>
+                            Compliance Manager
+                          </td>
+                          <td>
+                            <span className="chip ok">
+                              Active
+                            </span>
+                          </td>
+                          <td className="r">
+                            <b>
+                              3
+                            </b>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                              <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
+                                NH
+                              </span>
+                              <span style={{ fontWeight: "550" }}>
+                                Nadia Hussain
+                              </span>
+                            </div>
+                          </td>
+                          <td>
+                            Reviewer
+                          </td>
+                          <td>
+                            <span className="chip ok">
+                              Active
+                            </span>
+                          </td>
+                          <td className="r">
+                            <b>
+                              5
+                            </b>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                              <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
+                                IS
+                              </span>
+                              <span style={{ fontWeight: "550" }}>
+                                Imran Sheikh
+                              </span>
+                            </div>
+                          </td>
+                          <td>
+                            Auditor
+                          </td>
+                          <td>
+                            <span className="chip gray">
+                              Away
+                            </span>
+                          </td>
+                          <td className="r">
+                            <b>
+                              0
+                            </b>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                              <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
+                                HB
+                              </span>
+                              <span style={{ fontWeight: "550" }}>
+                                Hira Baig
+                              </span>
+                            </div>
+                          </td>
+                          <td>
+                            Investigator
+                          </td>
+                          <td>
+                            <span className="chip warn">
+                              Invited
+                            </span>
+                          </td>
+                          <td className="r">
+                            <b>
+                              0
+                            </b>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>

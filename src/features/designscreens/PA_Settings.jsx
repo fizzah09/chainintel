@@ -1,13 +1,6 @@
-import { act, useStore } from '../../mocks/store';
-import { useToast } from '../../context/ToastContext';
-import { useState } from 'react';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
-  const s = useStore(); const toast = useToast(); const pick = (x) => ({providerErrAlert: x.providerErrAlert ?? '5%', queueDepthAlert: x.queueDepthAlert ?? '500', notifyOnCall: x.notifyOnCall ?? true});
-  const [f, setF] = useState(() => pick(s.settings)); const dirty = Object.keys(f).filter((k) => f[k] !== s.settings[k]);
-  const save = () => { dirty.forEach((k) => act.setting(k, f[k])); toast(dirty.length ? 'Settings saved.' : 'No changes to save.'); };
-  const discard = () => setF(pick(s.settings));
   return (
     <>
       <div className="app">
@@ -250,7 +243,9 @@ export default function Screen() {
                       Alert when error rate exceeds
                     </span>
                   </div>
-                  <input className="in" value={f.providerErrAlert} onChange={(e) => setF({ ...f, providerErrAlert: e.target.value })} aria-label="Provider error alert" style={{ minWidth: 120 }} />
+                  <span className="chip blue">
+                    2%
+                  </span>
                 </div>
                 <div className="set">
                   <div>
@@ -261,7 +256,9 @@ export default function Screen() {
                       Alert above
                     </span>
                   </div>
-                  <input className="in" value={f.queueDepthAlert} onChange={(e) => setF({ ...f, queueDepthAlert: e.target.value })} aria-label="Queue depth alert" style={{ minWidth: 120 }} />
+                  <span className="chip blue">
+                    500
+                  </span>
                 </div>
                 <div className="set">
                   <div>
@@ -270,13 +267,19 @@ export default function Screen() {
                     </b>
                     <span className="d" />
                   </div>
-                  <span role="switch" aria-checked={!!f.notifyOnCall} aria-label="Notify on-call" className={`tg${f.notifyOnCall ? " on" : ""}`} onClick={() => setF({ ...f, notifyOnCall: !f.notifyOnCall })} />
+                  <span className="tg on">
+                    <i />
+                  </span>
                 </div>
               </div>
             </div>
             <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px" }}>
-              <button className="btn " onClick={discard}>Discard</button>
-              <button className="btn pri" onClick={save}>Save changes</button>
+              <a href="#" className="btn ">
+                Discard
+              </a>
+              <a href="#" className="btn pri">
+                Save changes
+              </a>
             </div>
           </main>
         </div>

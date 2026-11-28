@@ -1,15 +1,6 @@
 import { DLink } from '../design/DLink';
-import { Gauge } from '../../components/ui';
-import { CFG, TN } from '../../lib/risk';
-import { fdt, ago, num, usd } from '../../lib/format';
-import { useWallet } from '../wallets/shared';
-import { shortAddr } from '../design/dashParts';
-import { useStore } from '../../mocks/store';
-import { useParams } from 'react-router-dom';
 
 export default function Screen() {
-  const { address } = useParams(); const sel = useStore(); const wallet = address || sel.ctx.wallet || '—';
-  const [p] = useWallet(); const onWatch = sel.watchlists.some((w) => w.wallets.some((x) => x.a.toLowerCase() === (wallet || '').toLowerCase()));
   return (
     <>
       <div className="app">
@@ -177,7 +168,7 @@ export default function Screen() {
               </span>
               {" "}
               <span>
-                {shortAddr(wallet)}
+                0x7a3f…9B21
               </span>
               {" "}
               <span style={{ color: "#A3B0C2" }}>
@@ -250,16 +241,20 @@ export default function Screen() {
                   <div>
                     <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap" }}>
                       <h1 style={{ fontSize: "20px" }} className="mono">
-                        {wallet}
+                        0x7a3f1c5e8b2d4096a1f7c3e5d8b2a49e0c619B21
                       </h1>
-                      <span className={`tier ${p.tier}`}>{TN[p.tier] || "Unknown"}</span>
+                      <span className="tier crit">
+                        Critical
+                      </span>
                       <span className="chip blue">
                         Ethereum
                       </span>
-                      {onWatch && <span className="chip warn">On watchlist</span>}
+                      <span className="chip warn">
+                        On watchlist
+                      </span>
                     </div>
                     <div className="mu" style={{ marginTop: "6px" }}>
-                      {p.first ? `First seen ${fdt(p.first)} · Last active ${fdt(p.last)}` : 'No on-chain activity loaded. The backend analyses a wallet when it is opened.'}
+                      Type: Externally owned · First seen 14 Mar 2025 · Last active 02 Nov 2026 · Data fresh 4 min ago
                     </div>
                   </div>
                 </div>
@@ -525,13 +520,123 @@ export default function Screen() {
                         </tr>
                       </thead>
                       <tbody>
-<tr><td colSpan={4} className="mu">Risk evidence comes from the backend risk engine, which is not connected in this build.</td></tr>
-</tbody>
+                        <tr>
+                          <td className="">
+                            <b>
+                              EVD-000184
+                            </b>
+                          </td>
+                          <td className="">
+                            Direct transfer to a mixing service
+                          </td>
+                          <td className="">
+                            Transaction
+                          </td>
+                          <td className="">
+                            <b>
+                              +18.0
+                            </b>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="">
+                            <b>
+                              EVD-000185
+                            </b>
+                          </td>
+                          <td className="">
+                            Exposure to 9 flagged counterparties
+                          </td>
+                          <td className="">
+                            Exposure
+                          </td>
+                          <td className="">
+                            <b>
+                              +13.5
+                            </b>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="">
+                            <b>
+                              EVD-000186
+                            </b>
+                          </td>
+                          <td className="">
+                            Velocity 3.1× 30-day baseline
+                          </td>
+                          <td className="">
+                            Behaviour
+                          </td>
+                          <td className="">
+                            <b>
+                              +20.0
+                            </b>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="">
+                            <b>
+                              EVD-000187
+                            </b>
+                          </td>
+                          <td className="">
+                            Rapid pass-through of inbound funds
+                          </td>
+                          <td className="">
+                            Behaviour
+                          </td>
+                          <td className="">
+                            <b>
+                              +16.0
+                            </b>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="">
+                            <b>
+                              EVD-000188
+                            </b>
+                          </td>
+                          <td className="">
+                            Attribute: no ENS, fresh funding source
+                          </td>
+                          <td className="">
+                            Attribute
+                          </td>
+                          <td className="">
+                            <b>
+                              +6.0
+                            </b>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="">
+                            <b>
+                              EVD-000189
+                            </b>
+                          </td>
+                          <td className="">
+                            Other: repeated micro-transfers
+                          </td>
+                          <td className="">
+                            Other
+                          </td>
+                          <td className="">
+                            <b>
+                              +4.5
+                            </b>
+                          </td>
+                        </tr>
+                      </tbody>
                     </table>
                   </div>
                   <div className="mu sm" style={{ paddingTop: "12px" }}>
                     Contributions: 18.0 + 13.5 + 20.0 + 16.0 + 6.0 + 4.5 = 78.0
                   </div>
+                  <svg width="2" height="6" viewBox="0 0 2 6" preserveAspectRatio="none" style={{ position: "absolute", left: "179px", top: "-1px", width: "2px", height: "6px", overflow: "visible", fill: "none", stroke: "#8a8378", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }}>
+                    <path d="M1 6 C0.7 4.1 0.4 2 0 0" vectorEffect="non-scaling-stroke" />
+                  </svg>
                 </div>
               </div>
             </div>

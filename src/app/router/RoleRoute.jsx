@@ -6,6 +6,7 @@ import { PAGES } from '../config/paths';
 import { isAddr, isTx } from '../../lib/format';
 import AccessDenied from '../../features/errors/pages/AccessDenied';
 import RecordMissing from '../../features/errors/pages/RecordMissing';
+import { DESIGN_NAMES } from '../../features/design/designNames';
 
 // Which collection a path id must exist in.
 const COLLECTION = { caseId: 'cases', evidence: 'evidence', watchlist: 'watchlists', alert: 'alerts', report: 'reports', complaint: 'complaints' };
@@ -35,7 +36,8 @@ export default function RoleRoute({ pageKey, roles, children }) {
   }, [ok, field, isValid, value, s.ctx]);
 
   if (!ok) return <AccessDenied />;
-  if (!isValid) return <RecordMissing field={field} value={value} />;
+  // Design screens show their own static content; only app pages need the record to exist.
+  if (!isValid && !DESIGN_NAMES.has(pageKey)) return <RecordMissing field={field} value={value} />;
   if (!synced) return null;
   return children;
 }

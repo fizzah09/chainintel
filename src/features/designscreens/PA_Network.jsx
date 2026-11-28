@@ -236,8 +236,26 @@ export default function Screen() {
                     </tr>
                   </thead>
                   <tbody>
-<tr><td colSpan={5} className="mu">Network status needs the backend, which is not connected in this build.</td></tr>
-</tbody>
+                    <tr>
+                      <td className="">
+                        Ethereum Mainnet
+                      </td>
+                      <td className="">
+                        21,044,611
+                      </td>
+                      <td className="">
+                        2 s
+                      </td>
+                      <td className="">
+                        64
+                      </td>
+                      <td className="">
+                        <span className="chip ok">
+                          Healthy
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
             </div>

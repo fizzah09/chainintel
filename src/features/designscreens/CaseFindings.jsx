@@ -1,13 +1,6 @@
-import { useState } from 'react';
-import { act, useStore } from '../../mocks/store';
-import { useToast } from '../../context/ToastContext';
-import { fmtDate } from '../design/dashParts';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
-  const s = useStore(); const toast = useToast(); const cid = s.ctx.caseId || ''; const c = s.cases.find((x) => x.id === cid) || {}; const caseFindings = (s.findings || []).filter((f) => f.caseId === cid);
-  const [draft, setDraft] = useState({ title: '', desc: '', tier: 'Moderate' }); const [ferr, setFerr] = useState('');
-  const addFinding = () => { if (!draft.title.trim()) return setFerr('Enter a title.'); if (!cid) return setFerr('Open a case first.'); act.addFinding({ caseId: cid, title: draft.title.trim(), desc: draft.desc.trim(), tier: draft.tier, evidence: [] }); setDraft({ title: '', desc: '', tier: 'Moderate' }); setFerr(''); toast('Finding added.'); };
   return (
     <>
       <div className="app">
@@ -175,7 +168,7 @@ export default function Screen() {
               </span>
               {" "}
               <span>
-                {c.id || '—'}
+                CASE-2026-00128
               </span>
               {" "}
               <span style={{ color: "#A3B0C2" }}>
@@ -235,22 +228,258 @@ export default function Screen() {
             </DLink>
           </header>
           <main className="content">
-            <div className="card">
-              <div className="ct-h"><div><h3>Findings</h3><p>Conclusions this case supports, with the evidence behind them</p></div></div>
-              <div style={{ display: "grid", gap: 10, marginBottom: 14, padding: 14, border: "1px solid #EDF1F6", borderRadius: 10 }}>
-                <input className="in" value={draft.title} onChange={(e) => setDraft({ ...draft, title: e.target.value })} placeholder="Finding title" aria-label="Finding title" />
-                <textarea className="in ta" value={draft.desc} onChange={(e) => setDraft({ ...draft, desc: e.target.value })} placeholder="What the evidence shows" aria-label="Finding description" />
-                <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}><select className="in" style={{ minWidth: 160 }} value={draft.tier} onChange={(e) => setDraft({ ...draft, tier: e.target.value })} aria-label="Finding tier">{["Low", "Moderate", "High", "Critical"].map((x) => <option key={x} value={x}>{x}</option>)}</select><button className="btn pri" onClick={addFinding}>Add finding</button></div>
-                {ferr && <div className="hint err" role="alert">{ferr}</div>}
-              </div>
-              {caseFindings.length === 0 && <div className="mu">No findings on this case yet.</div>}
-              {caseFindings.map((f) => (
-                <div key={f.id} className="ev" style={{ marginBottom: 12 }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}><div><span className="mono mu">{f.id}</span> · <b>{f.title}</b></div><div style={{ display: "flex", gap: 8 }}><span className={`tier ${f.tier === "Critical" ? "crit" : f.tier === "High" ? "high" : f.tier === "Moderate" ? "mod" : "low"}`}>{f.tier}</span><span className={`chip ${f.status === "Verified" ? "ok" : "warn"}`}>{f.status}</span>{f.status !== "Verified" && <button className="link" onClick={() => { act.findingStatus(f.id, "Verified"); toast("Finding verified."); }}>Verify</button>}</div></div>
-                  <div style={{ margin: "6px 0 10px", color: "#334155" }}>{f.desc}</div>
-                  <div className="mu sm">Evidence: {(f.evidence || []).length ? f.evidence.join(", ") : "none attached"}</div>
+            <div className="card" style={{ padding: "22px" }}>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "20px", justifyContent: "space-between", alignItems: "flex-start" }}>
+                <div>
+                  <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap" }}>
+                    <span className="mono mu">
+                      CASE-2026-00128
+                    </span>
+                    <span className="chip pur">
+                      Under Review
+                    </span>
+                    <span className="chip bad">
+                      Critical
+                    </span>
+                  </div>
+                  <h1 style={{ fontSize: "22px", marginTop: "6px" }}>
+                    Suspected layering via mixer
+                  </h1>
+                  <div className="mu" style={{ marginTop: "6px", display: "flex", gap: "18px", flexWrap: "wrap" }}>
+                    <span>
+                      Assignee: Sara Ali
+                    </span>
+                    <span>
+                      Opened 02 Nov 2026
+                    </span>
+                    <span>
+                      Due 09 Nov 2026
+                    </span>
+                    <span>
+                      Subjects: 3
+                    </span>
+                  </div>
                 </div>
-              ))}
+                <div className="acts">
+                  <DLink href="/reports/new" className="btn ">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M6 3h8l5 5v13H6z" />
+                      <path d="M14 3v5h5M9 13h7M9 17h7" />
+                    </svg>
+                    Generate report
+                  </DLink>
+                  <DLink href="/design/CaseReview" className="btn pri">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M21 3L10 14M21 3l-7 18-4-7-7-4z" />
+                    </svg>
+                    Submit for review
+                  </DLink>
+                </div>
+              </div>
+              <div style={{ marginTop: "20px" }}>
+                <div className="step">
+                  <div className="s done">
+                    <em>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M5 12.5l4.5 4.5L19 7.5" />
+                      </svg>
+                    </em>
+                    <span>
+                      Open
+                    </span>
+                    <hr />
+                  </div>
+                  <div className="s done">
+                    <em>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M5 12.5l4.5 4.5L19 7.5" />
+                      </svg>
+                    </em>
+                    <span>
+                      Assigned
+                    </span>
+                    <hr />
+                  </div>
+                  <div className="s done">
+                    <em>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M5 12.5l4.5 4.5L19 7.5" />
+                      </svg>
+                    </em>
+                    <span>
+                      Evidence Collection
+                    </span>
+                    <hr />
+                  </div>
+                  <div className="s done">
+                    <em>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M5 12.5l4.5 4.5L19 7.5" />
+                      </svg>
+                    </em>
+                    <span>
+                      Analysis
+                    </span>
+                    <hr />
+                  </div>
+                  <div className="s cur">
+                    <em>
+                      5
+                    </em>
+                    <span>
+                      Under Review
+                    </span>
+                    <hr />
+                  </div>
+                  <div className="s ">
+                    <em>
+                      6
+                    </em>
+                    <span>
+                      Decision
+                    </span>
+                    <hr />
+                  </div>
+                  <div className="s ">
+                    <em>
+                      7
+                    </em>
+                    <span>
+                      Closed
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="tabs">
+              <DLink href="/design/CaseDetails">
+                Overview
+              </DLink>
+              <DLink href="/design/CaseSubjects">
+                Subjects
+              </DLink>
+              <DLink href="/design/CaseEvidence">
+                Evidence
+              </DLink>
+              <DLink href="/design/CaseFindings" className="on">
+                Findings
+              </DLink>
+              <DLink href="/design/CaseRelGraph">
+                Graph
+              </DLink>
+              <DLink href="/design/CaseTasks">
+                Tasks
+              </DLink>
+              <DLink href="/design/CaseNotes">
+                Notes
+              </DLink>
+              <DLink href="/design/CaseComms">
+                Communication
+              </DLink>
+              <DLink href="/design/CaseReview">
+                Review
+              </DLink>
+              <DLink href="/design/CaseTimeline">
+                Timeline
+              </DLink>
+            </div>
+            <div className="card " style={{  }}>
+              <div className="ct-h">
+                <div>
+                  <h3>
+                    Findings
+                  </h3>
+                </div>
+                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                  <a href="#" className="btn pri sm">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg>
+                    Add finding
+                  </a>
+                </div>
+              </div>
+              <div className="ev" style={{ marginBottom: "12px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", gap: "12px", flexWrap: "wrap" }}>
+                  <div>
+                    <span className="mono mu">
+                      FND-0012
+                    </span>
+                    ·
+                    <b>
+                      Mixer interaction
+                    </b>
+                  </div>
+                  <div style={{ display: "flex", gap: "8px" }}>
+                    <span className="tier crit">
+                      Critical
+                    </span>
+                    <span className="chip ok">
+                      Verified
+                    </span>
+                  </div>
+                </div>
+                <div style={{ margin: "6px 0 10px", color: "#334155" }}>
+                  Direct transfer of 3.20 ETH to a known mixing service at 08:15 UTC.
+                </div>
+                <div className="mu sm">
+                  Evidence: EVD-000185, EVD-000187
+                </div>
+              </div>
+              <div className="ev" style={{ marginBottom: "12px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", gap: "12px", flexWrap: "wrap" }}>
+                  <div>
+                    <span className="mono mu">
+                      FND-0013
+                    </span>
+                    ·
+                    <b>
+                      Exposure to flagged wallets
+                    </b>
+                  </div>
+                  <div style={{ display: "flex", gap: "8px" }}>
+                    <span className="tier high">
+                      High
+                    </span>
+                    <span className="chip ok">
+                      Verified
+                    </span>
+                  </div>
+                </div>
+                <div style={{ margin: "6px 0 10px", color: "#334155" }}>
+                  Nine flagged counterparties within two hops of the primary wallet.
+                </div>
+                <div className="mu sm">
+                  Evidence: EVD-000184
+                </div>
+              </div>
+              <div className="ev" style={{ marginBottom: "12px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", gap: "12px", flexWrap: "wrap" }}>
+                  <div>
+                    <span className="mono mu">
+                      FND-0014
+                    </span>
+                    ·
+                    <b>
+                      Rapid pass-through
+                    </b>
+                  </div>
+                  <div style={{ display: "flex", gap: "8px" }}>
+                    <span className="tier high">
+                      High
+                    </span>
+                    <span className="chip warn">
+                      Pending Verification
+                    </span>
+                  </div>
+                </div>
+                <div style={{ margin: "6px 0 10px", color: "#334155" }}>
+                  Inbound funds forwarded within 90 minutes of receipt.
+                </div>
+                <div className="mu sm">
+                  Evidence: EVD-000186
+                </div>
+              </div>
             </div>
           </main>
         </div>

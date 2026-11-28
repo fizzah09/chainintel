@@ -1,14 +1,6 @@
 import { DLink } from '../design/DLink';
-import { Bars, Empty, fmtDate, shortAddr } from '../design/dashParts';
-import { verifyChain } from '../../mocks/store';
-import { ROLE_NAMES } from '../../mocks/seed';
-import { useStore } from '../../mocks/store';
 
 export default function Screen() {
-  const s = useStore(); const N = (xs, f) => (xs || []).filter(f).length;
-const me = s.session.name; const isOpen = (c) => c.status !== 'Closed';
-  const active = s.cases.filter(isOpen);
-  const byAssignee = Object.entries(active.reduce((m, c) => { const k = c.assignee || 'Unassigned'; m[k] = (m[k] || 0) + 1; return m; }, {})).map(([label, value]) => ({ label, value }));
   return (
     <>
       <div className="app">
@@ -238,43 +230,385 @@ const me = s.session.name; const isOpen = (c) => c.status !== 'Closed';
               </div>
             </div>
             <div className="kpis" style={{ position: "relative" }}>
-              <div className="kpi"><div className="l">
+              <div className="kpi">
+                <div className="l">
                   Total wallets
-                </div><div className="v">{s.recent.length}</div><div className="s">{'in your recent list'}</div>
+                </div>
+                <div className="v">
+                  1,284
+                </div>
+                <div className="s">
+                  +36 this week
+                </div>
               </div>
-              <div className="kpi"><div className="l">
+              <div className="kpi">
+                <div className="l">
                   Open investigations
-                </div><div className="v">{N(s.cases, c => c.status !== 'Closed')}</div><div className="s">{'not closed'}</div>
+                </div>
+                <div className="v">
+                  24
+                </div>
+                <div className="s">
+                  14 open · 10 assigned
+                </div>
               </div>
-              <div className="kpi"><div className="l">
+              <div className="kpi">
+                <div className="l">
                   <i style={{ background: "#F59E0B" }} />
                   Under review
-                </div><div className="v">{N(s.cases, c => c.status === 'Under Review')}</div><div className="s">{'awaiting decision'}</div>
+                </div>
+                <div className="v">
+                  8
+                </div>
+                <div className="s">
+                  Pending decision
+                </div>
               </div>
-              <div className="kpi"><div className="l">
+              <div className="kpi">
+                <div className="l">
                   Closed (90 d)
-                </div><div className="v">{N(s.cases, c => c.status === 'Closed' && Date.now() - new Date(c.opened) < 90 * 864e5)}</div><div className="s">{'last 90 days'}</div>
+                </div>
+                <div className="v">
+                  42
+                </div>
+                <div className="s">
+                  Median 6.2 days
+                </div>
               </div>
             </div>
             <div className="row" style={{ gap: "16px", alignItems: "flex-start" }}>
-              <div style={{ flex: "1 1 100%", display: "flex", flexDirection: "column", gap: "16px", minWidth: "0" }}>
-                <div className="card">
-                  <div className="ct-h"><div><h3>Active cases</h3><p>Not closed</p></div></div>
-                  <div className="tbl"><table><thead><tr><th className="">Case ID</th><th className="">Title</th><th className="">Status</th><th className="">Priority</th><th className="">Assigned By</th><th className="">Opened</th><th className="">Due</th></tr></thead><tbody>
-                  {active.length === 0 && <tr><td colSpan={7} className="mu">No active cases.</td></tr>}
-                  {active.map((x) => (<tr key={x.id}><td><DLink href={`/cases/${x.id}`} className="mono" style={{ color: "var(--pri)", fontWeight: 600 }}>{x.id}</DLink></td><td>{x.title}</td><td><span className={`chip`}>{x.status}</span></td><td><span className={`chip${x.priority === 'Critical' ? ' bad' : ''}`}>{x.priority}</span></td><td>{x.createdBy || '—'}</td><td>{fmtDate(x.opened)}</td><td>{fmtDate(x.due)}</td></tr>))}
-                  </tbody></table></div>
+              <div style={{ flex: "2 1 560", display: "flex", flexDirection: "column", gap: "16px", minWidth: "0" }}>
+                <div className="card " style={{  }}>
+                  <div className="ct-h">
+                    <div>
+                      <h3>
+                        Active cases
+                      </h3>
+                    </div>
+                    <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                      <DLink href="/cases" className="btn sm">
+                        View all
+                      </DLink>
+                    </div>
+                  </div>
+                  <div className="tbl">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th className="">
+                            Case ID
+                          </th>
+                          <th className="">
+                            Title
+                          </th>
+                          <th className="">
+                            Status
+                          </th>
+                          <th className="">
+                            Priority
+                          </th>
+                          <th className="">
+                            Assigned By
+                          </th>
+                          <th className="">
+                            Opened
+                          </th>
+                          <th className="">
+                            Due
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td className="">
+                            <DLink href="/design/CaseDetails" className="mono" style={{ color: "var(--pri)", fontWeight: "600" }}>
+                              CASE-2026-00128
+                            </DLink>
+                          </td>
+                          <td className="">
+                            Suspected layering via mixer
+                          </td>
+                          <td className="">
+                            <span className="chip pur">
+                              Under Review
+                            </span>
+                          </td>
+                          <td className="">
+                            <span className="chip bad">
+                              Critical
+                            </span>
+                          </td>
+                          <td className="">
+                            <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                              <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
+                                SA
+                              </span>
+                              <div style={{ lineHeight: "1.25" }}>
+                                <div style={{ fontWeight: "550" }}>
+                                  Sara Ali
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="">
+                            02 Nov 2026
+                          </td>
+                          <td className="">
+                            09 Nov 2026
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="">
+                            <DLink href="/design/CaseDetails" className="mono" style={{ color: "var(--pri)", fontWeight: "600" }}>
+                              CASE-2026-00127
+                            </DLink>
+                          </td>
+                          <td className="">
+                            Sanctioned counterparty exposure
+                          </td>
+                          <td className="">
+                            <span className="chip blue">
+                              Analysis
+                            </span>
+                          </td>
+                          <td className="">
+                            <span className="chip warn">
+                              High
+                            </span>
+                          </td>
+                          <td className="">
+                            <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                              <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
+                                SA
+                              </span>
+                              <div style={{ lineHeight: "1.25" }}>
+                                <div style={{ fontWeight: "550" }}>
+                                  Sara Ali
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="">
+                            01 Nov 2026
+                          </td>
+                          <td className="">
+                            08 Nov 2026
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="">
+                            <DLink href="/design/CaseDetails" className="mono" style={{ color: "var(--pri)", fontWeight: "600" }}>
+                              CASE-2026-00124
+                            </DLink>
+                          </td>
+                          <td className="">
+                            Rapid pass-through of customer funds
+                          </td>
+                          <td className="">
+                            <span className="chip blue">
+                              Evidence Collection
+                            </span>
+                          </td>
+                          <td className="">
+                            <span className="chip warn">
+                              High
+                            </span>
+                          </td>
+                          <td className="">
+                            <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                              <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
+                                OS
+                              </span>
+                              <div style={{ lineHeight: "1.25" }}>
+                                <div style={{ fontWeight: "550" }}>
+                                  Omar Siddiq
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="">
+                            30 Oct 2026
+                          </td>
+                          <td className="">
+                            07 Nov 2026
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="">
+                            <DLink href="/design/CaseDetails" className="mono" style={{ color: "var(--pri)", fontWeight: "600" }}>
+                              CASE-2026-00121
+                            </DLink>
+                          </td>
+                          <td className="">
+                            Unexplained inbound volume spike
+                          </td>
+                          <td className="">
+                            <span className="chip blue">
+                              Assigned
+                            </span>
+                          </td>
+                          <td className="">
+                            <span className="chip blue">
+                              Medium
+                            </span>
+                          </td>
+                          <td className="">
+                            <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                              <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
+                                MC
+                              </span>
+                              <div style={{ lineHeight: "1.25" }}>
+                                <div style={{ fontWeight: "550" }}>
+                                  Maria Chen
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="">
+                            29 Oct 2026
+                          </td>
+                          <td className="">
+                            12 Nov 2026
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
               <div style={{ flex: "1 1 320", display: "flex", flexDirection: "column", gap: "16px", minWidth: "0" }}>
                 <div className="card">
-                  <div className="ct-h"><div><h3>Fund flow in USDT</h3></div></div>
-                  <Empty>Fund flow appears when a case has transfers loaded.</Empty>
+                  <div className="ct-h">
+                    <div>
+                      <h3>
+                        Fund flow in USDT
+                      </h3>
+                      <p>
+                        Inflow vs outflow of monitored wallets, last 6 weeks (thousand USDT)
+                      </p>
+                    </div>
+                  </div>
+                  <div className="legend" style={{ marginBottom: "10px" }}>
+                    <span>
+                      <i style={{ background: "#1769E0" }} />
+                      Inflow · 440k
+                    </span>
+                    <span>
+                      <i style={{ background: "#EA580C" }} />
+                      Outflow · 356k
+                    </span>
+                  </div>
+                  <div role="img" aria-label="Weekly inflow and outflow in USDT" style={{ display: "flex", gap: "6px", alignItems: "flex-end" }}>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", flex: "1" }}>
+                      <div style={{ display: "flex", alignItems: "flex-end", gap: "4px", height: "120px" }}>
+                        <i style={{ display: "block", width: "12px", height: "74px", background: "#1769E0", borderRadius: "3px" }} />
+                        <i style={{ display: "block", width: "12px", height: "57px", background: "#EA580C", borderRadius: "3px" }} />
+                      </div>
+                      <span className="mu sm">
+                        W1
+                      </span>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", flex: "1" }}>
+                      <div style={{ display: "flex", alignItems: "flex-end", gap: "4px", height: "120px" }}>
+                        <i style={{ display: "block", width: "12px", height: "90px", background: "#1769E0", borderRadius: "3px" }} />
+                        <i style={{ display: "block", width: "12px", height: "61px", background: "#EA580C", borderRadius: "3px" }} />
+                      </div>
+                      <span className="mu sm">
+                        W2
+                      </span>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", flex: "1" }}>
+                      <div style={{ display: "flex", alignItems: "flex-end", gap: "4px", height: "120px" }}>
+                        <i style={{ display: "block", width: "12px", height: "69px", background: "#1769E0", borderRadius: "3px" }} />
+                        <i style={{ display: "block", width: "12px", height: "79px", background: "#EA580C", borderRadius: "3px" }} />
+                      </div>
+                      <span className="mu sm">
+                        W3
+                      </span>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", flex: "1" }}>
+                      <div style={{ display: "flex", alignItems: "flex-end", gap: "4px", height: "120px" }}>
+                        <i style={{ display: "block", width: "12px", height: "109px", background: "#1769E0", borderRadius: "3px" }} />
+                        <i style={{ display: "block", width: "12px", height: "68px", background: "#EA580C", borderRadius: "3px" }} />
+                      </div>
+                      <span className="mu sm">
+                        W4
+                      </span>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", flex: "1" }}>
+                      <div style={{ display: "flex", alignItems: "flex-end", gap: "4px", height: "120px" }}>
+                        <i style={{ display: "block", width: "12px", height: "84px", background: "#1769E0", borderRadius: "3px" }} />
+                        <i style={{ display: "block", width: "12px", height: "87px", background: "#EA580C", borderRadius: "3px" }} />
+                      </div>
+                      <span className="mu sm">
+                        W5
+                      </span>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", flex: "1" }}>
+                      <div style={{ display: "flex", alignItems: "flex-end", gap: "4px", height: "120px" }}>
+                        <i style={{ display: "block", width: "12px", height: "100px", background: "#1769E0", borderRadius: "3px" }} />
+                        <i style={{ display: "block", width: "12px", height: "73px", background: "#EA580C", borderRadius: "3px" }} />
+                      </div>
+                      <span className="mu sm">
+                        W6
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="card">
-                <div className="ct-h"><div><h3>Workload by investigator</h3><p>Open cases per assignee</p></div></div>
-                <Bars items={byAssignee} empty="No open cases yet." />
+              <div className="card " style={{ width: "355px", height: "232px" }}>
+                <div className="ct-h">
+                  <div>
+                    <h3>
+                      Workload by investigator
+                    </h3>
+                  </div>
+                  <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }} />
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: "132px 1fr 44px", gap: "12px", alignItems: "center", margin: "9px 0" }}>
+                  <span className="mu">
+                    Sara Ali
+                  </span>
+                  <div className="bar">
+                    <i style={{ width: "100.0%", background: "#1769E0" }} />
+                  </div>
+                  <b style={{ textAlign: "right" }}>
+                    6
+                  </b>
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: "132px 1fr 44px", gap: "12px", alignItems: "center", margin: "9px 0" }}>
+                  <span className="mu">
+                    Omar Siddiq
+                  </span>
+                  <div className="bar">
+                    <i style={{ width: "83.3%", background: "#1769E0" }} />
+                  </div>
+                  <b style={{ textAlign: "right" }}>
+                    5
+                  </b>
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: "132px 1fr 44px", gap: "12px", alignItems: "center", margin: "9px 0" }}>
+                  <span className="mu">
+                    Maria Chen
+                  </span>
+                  <div className="bar">
+                    <i style={{ width: "66.7%", background: "#1769E0" }} />
+                  </div>
+                  <b style={{ textAlign: "right" }}>
+                    4
+                  </b>
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: "132px 1fr 44px", gap: "12px", alignItems: "center", margin: "9px 0" }}>
+                  <span className="mu">
+                    Unassigned
+                  </span>
+                  <div className="bar">
+                    <i style={{ width: "50.0%", background: "#94A3B8" }} />
+                  </div>
+                  <b style={{ textAlign: "right" }}>
+                    3
+                  </b>
+                </div>
               </div>
             </div>
           </main>

@@ -366,8 +366,59 @@ export default function Screen() {
                       </tr>
                     </thead>
                     <tbody>
-<tr><td colSpan={3} className="mu">Risk-engine tiers come from the backend risk engine, which is not connected in this build.</td></tr>
-</tbody>
+                      <tr>
+                        <td className="">
+                          <span className="tier low">
+                            Low
+                          </span>
+                        </td>
+                        <td className="">
+                          0
+                        </td>
+                        <td className="">
+                          24
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="">
+                          <span className="tier mod">
+                            Moderate
+                          </span>
+                        </td>
+                        <td className="">
+                          25
+                        </td>
+                        <td className="">
+                          49
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="">
+                          <span className="tier high">
+                            High
+                          </span>
+                        </td>
+                        <td className="">
+                          50
+                        </td>
+                        <td className="">
+                          74
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="">
+                          <span className="tier crit">
+                            Critical
+                          </span>
+                        </td>
+                        <td className="">
+                          75
+                        </td>
+                        <td className="">
+                          100
+                        </td>
+                      </tr>
+                    </tbody>
                   </table>
                 </div>
               </div>

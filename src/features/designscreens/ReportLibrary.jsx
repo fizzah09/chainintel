@@ -1,9 +1,6 @@
-import { fmtDate } from '../design/dashParts';
-import { act, useStore } from '../../mocks/store';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
-  const s = useStore();
   return (
     <>
       <div className="app">
@@ -298,9 +295,103 @@ export default function Screen() {
                     </tr>
                   </thead>
                   <tbody>
-{(s.reports).length === 0 && <tr><td colSpan={6} className="mu">No reports yet. Generate one from Generate report.</td></tr>}
-{(s.reports).map((x) => (<tr key={x.id}><td><span className="mono">{x.id}</span></td><td>{x.title || '—'}</td><td>{x.type || '—'}</td><td>{x.by}</td><td>{fmtDate(x.date)}</td><td><span className="chip">{x.status}</span></td></tr>))}
-</tbody>
+                    <tr>
+                      <td className="">
+                        <b>
+                          RPT-2026-0214
+                        </b>
+                      </td>
+                      <td className="">
+                        Wallet risk assessment
+                      </td>
+                      <td className="">
+                        Wallet
+                      </td>
+                      <td className="">
+                        Sara Ali
+                      </td>
+                      <td className="">
+                        02 Nov 2026
+                      </td>
+                      <td className="">
+                        <span className="chip ok">
+                          Final
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <b>
+                          RPT-2026-0213
+                        </b>
+                      </td>
+                      <td className="">
+                        Case summary CASE-2026-00128
+                      </td>
+                      <td className="">
+                        Case
+                      </td>
+                      <td className="">
+                        Sara Ali
+                      </td>
+                      <td className="">
+                        02 Nov 2026
+                      </td>
+                      <td className="">
+                        <span className="chip gray">
+                          Draft
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <b>
+                          RPT-2026-0210
+                        </b>
+                      </td>
+                      <td className="">
+                        Monthly compliance summary
+                      </td>
+                      <td className="">
+                        Compliance
+                      </td>
+                      <td className="">
+                        Ahmed Khan
+                      </td>
+                      <td className="">
+                        01 Nov 2026
+                      </td>
+                      <td className="">
+                        <span className="chip ok">
+                          Final
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <b>
+                          RPT-2026-0204
+                        </b>
+                      </td>
+                      <td className="">
+                        Alert activity report
+                      </td>
+                      <td className="">
+                        Alerts
+                      </td>
+                      <td className="">
+                        Ahmed Khan
+                      </td>
+                      <td className="">
+                        28 Oct 2026
+                      </td>
+                      <td className="">
+                        <span className="chip ok">
+                          Final
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
               <div className="pager">

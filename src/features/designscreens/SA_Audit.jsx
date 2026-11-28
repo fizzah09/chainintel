@@ -1,9 +1,6 @@
-import { fmtDate } from '../design/dashParts';
-import { act, useStore } from '../../mocks/store';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
-  const s = useStore();
   return (
     <>
       <div className="app">
@@ -303,9 +300,64 @@ export default function Screen() {
                     </tr>
                   </thead>
                   <tbody>
-{(s.audit).length === 0 && <tr><td colSpan={5} className="mu">No audit entries yet.</td></tr>}
-{(s.audit).map((x) => (<tr key={x.id}><td>{fmtDate(x.at)}</td><td>{x.actor}</td><td>{'Example Bank'}</td><td>{x.action}</td><td>{x.result || 'Success'}</td></tr>))}
-</tbody>
+                    <tr>
+                      <td className="">
+                        02 Nov 14:20
+                      </td>
+                      <td className="">
+                        Hina Raza
+                      </td>
+                      <td className="">
+                        Platform
+                      </td>
+                      <td className="">
+                        Updated provider quota
+                      </td>
+                      <td className="">
+                        <span className="chip ok">
+                          Success
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        02 Nov 11:03
+                      </td>
+                      <td className="">
+                        Omar Farooq
+                      </td>
+                      <td className="">
+                        Harbour Credit
+                      </td>
+                      <td className="">
+                        Created tenant
+                      </td>
+                      <td className="">
+                        <span className="chip ok">
+                          Success
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        02 Nov 09:02
+                      </td>
+                      <td className="">
+                        Bilal Qureshi
+                      </td>
+                      <td className="">
+                        Example Bank
+                      </td>
+                      <td className="">
+                        Invited user
+                      </td>
+                      <td className="">
+                        <span className="chip ok">
+                          Success
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
             </div>

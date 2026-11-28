@@ -1,13 +1,6 @@
 import { DLink } from '../design/DLink';
-import { Bars, Empty, fmtDate, shortAddr } from '../design/dashParts';
-import { verifyChain } from '../../mocks/store';
-import { ROLE_NAMES } from '../../mocks/seed';
-import { useStore } from '../../mocks/store';
 
 export default function Screen() {
-  const s = useStore(); const N = (xs, f) => (xs || []).filter(f).length;
-const me = s.session.name; const isOpen = (c) => c.status !== 'Closed';
-  const chip_status = (st) => <span className="chip">{st || '—'}</span>;
   return (
     <>
       <div className="app">
@@ -221,31 +214,153 @@ const me = s.session.name; const isOpen = (c) => c.status !== 'Closed';
               <div className="acts" />
             </div>
             <div className="kpis">
-              <div className="kpi"><div className="l">
+              <div className="kpi">
+                <div className="l">
                   Tenants
-                </div><div className="v">{s.tenants.length}</div><div className="s">{`${N(s.tenants, t => t.status === 'Active')} active`}</div>
+                </div>
+                <div className="v">
+                  14
+                </div>
+                <div className="s">
+                  12 active
+                </div>
               </div>
-              <div className="kpi"><div className="l">
+              <div className="kpi">
+                <div className="l">
                   Platform users
-                </div><div className="v">{s.users.length}</div><div className="s">{'all accounts'}</div>
+                </div>
+                <div className="v">
+                  412
+                </div>
+                <div className="s" />
               </div>
-              <div className="kpi"><div className="l">
+              <div className="kpi">
+                <div className="l">
+                  Wallets analysed (24 h)
+                </div>
+                <div className="v">
+                  9,820
+                </div>
+                <div className="s">
+                  +4%
+                </div>
+              </div>
+              <div className="kpi">
+                <div className="l">
                   <i style={{ background: "#16A34A" }} />
                   Provider errors
-                </div><div className="v">{s.providers.length ? ((N(s.providers, p => /error|down|degraded/i.test(p.status || ''))) / s.providers.length * 100).toFixed(1) + '%' : '—'}</div><div className="s">{`${N(s.providers, p => /error|down|degraded/i.test(p.status || ''))} of ${s.providers.length} providers`}</div>
-              </div>
-              <div className="kpi"><div className="l">Wallets analysed</div><div className="v">{s.recent.length}</div><div className="s">{'in your recent list'}</div>
+                </div>
+                <div className="v">
+                  0.3%
+                </div>
+                <div className="s">
+                  Within SLO
+                </div>
               </div>
             </div>
             <div className="row" style={{ gap: "16px", alignItems: "flex-start" }}>
-              <div className="card" style={{ flex: "2 1 520px" }}>
-                <div className="ct-h"><div><h3>Analyses per day</h3></div></div>
-                <Empty>Daily analysis counts appear once the monitoring backend reports them.</Empty>
+              <div className="card " style={{ flex: "2 1 520px" }}>
+                <div className="ct-h">
+                  <div>
+                    <h3>
+                      Analyses per day
+                    </h3>
+                  </div>
+                  <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }} />
+                </div>
+                <svg viewBox="0 0 600 230" width="100%" role="img" aria-label="Trend chart" style={{ display: "block" }}>
+                  <defs>
+                    <lineargradient id="sad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0" stopColor="#1769E0" stopOpacity=".22" />
+                      <stop offset="1" stopColor="#1769E0" stopOpacity="0" />
+                    </lineargradient>
+                  </defs>
+                  <line x1="48" x2="586" y1="202.0" y2="202.0" stroke="#E2E8F0" />
+                  <text x="40" y="206.0" textAnchor="end" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    5,200
+                  </text>
+                  <line x1="48" x2="586" y1="154.5" y2="154.5" stroke="#E2E8F0" />
+                  <text x="40" y="158.5" textAnchor="end" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    6,355
+                  </text>
+                  <line x1="48" x2="586" y1="107.0" y2="107.0" stroke="#E2E8F0" />
+                  <text x="40" y="111.0" textAnchor="end" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    7,510
+                  </text>
+                  <line x1="48" x2="586" y1="59.5" y2="59.5" stroke="#E2E8F0" />
+                  <text x="40" y="63.5" textAnchor="end" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    8,665
+                  </text>
+                  <line x1="48" x2="586" y1="12.0" y2="12.0" stroke="#E2E8F0" />
+                  <text x="40" y="16.0" textAnchor="end" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    9,820
+                  </text>
+                  <text x="48.0" y="222" textAnchor="middle" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    Mon
+                  </text>
+                  <text x="137.7" y="222" textAnchor="middle" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    Tue
+                  </text>
+                  <text x="227.3" y="222" textAnchor="middle" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    Wed
+                  </text>
+                  <text x="317.0" y="222" textAnchor="middle" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    Thu
+                  </text>
+                  <text x="406.7" y="222" textAnchor="middle" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    Fri
+                  </text>
+                  <text x="496.3" y="222" textAnchor="middle" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    Sat
+                  </text>
+                  <text x="586.0" y="222" textAnchor="middle" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    Sun
+                  </text>
+                  <path d="M48.0 202.0L137.7 177.3L227.3 152.6L317.0 165.0L406.7 119.7L496.3 82.7L586.0 12.0L586.0 202L48.0 202Z" fill="url(#sad)" />
+                  <path d="M48.0 202.0L137.7 177.3L227.3 152.6L317.0 165.0L406.7 119.7L496.3 82.7L586.0 12.0" fill="none" stroke="#1769E0" strokeWidth="2.4" strokeLinejoin="round" strokeLinecap="round" />
+                </svg>
               </div>
-              <div className="card" style={{ flex: "1 1 320px" }}>
-                <div className="ct-h"><div><h3>Provider status</h3></div></div>
-                {s.providers.length === 0 && <Empty>No data providers configured.</Empty>}
-                {s.providers.map((p) => (<div key={p.id || p.name} style={{ display: 'flex', gap: 10, padding: '9px 0', borderBottom: '1px solid #EDF1F6', alignItems: 'center' }}><span style={{ flex: 1 }}>{p.name}</span>{chip_status(p.status)}</div>))}
+              <div className="card " style={{ flex: "1 1 320px" }}>
+                <div className="ct-h">
+                  <div>
+                    <h3>
+                      Provider status
+                    </h3>
+                  </div>
+                  <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }} />
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", padding: "9px 0", borderBottom: "1px solid #EDF1F6" }}>
+                  <span>
+                    Etherscan
+                  </span>
+                  <span className="chip ok">
+                    Healthy
+                  </span>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", padding: "9px 0", borderBottom: "1px solid #EDF1F6" }}>
+                  <span>
+                    Ethereum RPC
+                  </span>
+                  <span className="chip ok">
+                    Healthy
+                  </span>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", padding: "9px 0", borderBottom: "1px solid #EDF1F6" }}>
+                  <span>
+                    Blockscout
+                  </span>
+                  <span className="chip ok">
+                    Healthy
+                  </span>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", padding: "9px 0", borderBottom: "1px solid #EDF1F6" }}>
+                  <span>
+                    Forta labels
+                  </span>
+                  <span className="chip warn">
+                    Degraded
+                  </span>
+                </div>
               </div>
             </div>
           </main>

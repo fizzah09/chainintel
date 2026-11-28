@@ -1,9 +1,6 @@
-import { fmtDate } from '../design/dashParts';
-import { act, useStore } from '../../mocks/store';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
-  const s = useStore(); const c = s.cases.find((x) => x.id === (s.ctx.caseId || '')) || {}; const cid = s.ctx.caseId || '';
   return (
     <>
       <div className="app">
@@ -152,7 +149,7 @@ export default function Screen() {
               </span>
               {" "}
               <b>
-                {c.id || '—'}
+                CASE-2026-00128
               </b>
             </div>
             <label className="search">
@@ -212,7 +209,7 @@ export default function Screen() {
                   </h1>
                 </div>
                 <p>
-                  {`Immutable record of every action on ${c.id || 'this case'}.`}
+                  Immutable record of every action on CASE-2026-00128.
                 </p>
               </div>
               <div className="acts">
@@ -306,9 +303,117 @@ export default function Screen() {
                     </tr>
                   </thead>
                   <tbody>
-{(s.audit.filter((a) => a.caseId === cid)).length === 0 && <tr><td colSpan={6} className="mu">No audit entries for this case yet.</td></tr>}
-{(s.audit.filter((a) => a.caseId === cid)).map((x) => (<tr key={x.id}><td>{fmtDate(x.at)}</td><td>{x.actor}</td><td>{x.action}</td><td>{x.object || '—'}</td><td>{x.ip || '—'}</td><td><span className="mono">{(x.hash || '').slice(0, 12)}</span></td></tr>))}
-</tbody>
+                    <tr>
+                      <td className="">
+                        02 Nov 14:20:11
+                      </td>
+                      <td className="">
+                        Sara Ali
+                      </td>
+                      <td className="">
+                        Submitted for review
+                      </td>
+                      <td className="">
+                        CASE-2026-00128
+                      </td>
+                      <td className="">
+                        10.20.4.18
+                      </td>
+                      <td className="">
+                        <span className="mono">
+                          9f3a…c2d1
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        02 Nov 14:02:40
+                      </td>
+                      <td className="">
+                        Sara Ali
+                      </td>
+                      <td className="">
+                        Added finding
+                      </td>
+                      <td className="">
+                        FND-0014
+                      </td>
+                      <td className="">
+                        10.20.4.18
+                      </td>
+                      <td className="">
+                        <span className="mono">
+                          41be…77a0
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        02 Nov 13:02:19
+                      </td>
+                      <td className="">
+                        Sara Ali
+                      </td>
+                      <td className="">
+                        Attached evidence
+                      </td>
+                      <td className="">
+                        EVD-000186
+                      </td>
+                      <td className="">
+                        10.20.4.18
+                      </td>
+                      <td className="">
+                        <span className="mono">
+                          c07d…12ef
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        02 Nov 10:15:03
+                      </td>
+                      <td className="">
+                        Ahmed Khan
+                      </td>
+                      <td className="">
+                        Changed priority
+                      </td>
+                      <td className="">
+                        CASE-2026-00128
+                      </td>
+                      <td className="">
+                        10.20.4.9
+                      </td>
+                      <td className="">
+                        <span className="mono">
+                          e5a1…98b3
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        02 Nov 09:50:44
+                      </td>
+                      <td className="">
+                        Sara Ali
+                      </td>
+                      <td className="">
+                        Created case
+                      </td>
+                      <td className="">
+                        CASE-2026-00128
+                      </td>
+                      <td className="">
+                        10.20.4.18
+                      </td>
+                      <td className="">
+                        <span className="mono">
+                          2d60…aa14
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
               <div className="pager">

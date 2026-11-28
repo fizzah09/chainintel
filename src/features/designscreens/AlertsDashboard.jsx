@@ -1,12 +1,6 @@
-import { shortAddr } from '../design/dashParts';
-import { TN, tierOf } from '../../lib/risk';
-import { ago } from '../../lib/format';
-import { useToast } from '../../context/ToastContext';
-import { act, useStore } from '../../mocks/store';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
-  const s = useStore(); const toast = useToast();
   return (
     <>
       <div className="app">
@@ -474,20 +468,150 @@ export default function Screen() {
                     </tr>
                   </thead>
                   <tbody>
-                    {s.alerts.length === 0 && <tr><td colSpan={6} className="mu">No alerts yet. Alerts appear when a watchlist rule matches.</td></tr>}
-                    {s.alerts.map((a) => { const tier = tierOf(a.score); return (
-                      <tr key={a.id}>
-                        <td className="mono">{a.id}</td>
-                        <td className="mono">{shortAddr(a.wallet)}</td>
-                        <td>{a.trigger}</td>
-                        <td><span className={`tier ${tier}`}>{TN[tier]}</span></td>
-                        <td>{ago(a.at)}</td>
-                        <td>
-                          <span className={`chip ${a.status === "Resolved" ? "ok" : a.status === "Acknowledged" ? "blue" : "warn"}`}>{a.status}</span>
-                          {a.status === "Unacknowledged" && <button className="link" style={{ marginLeft: 8 }} onClick={() => { act.alertStatus(a.id, "Acknowledged"); toast("Alert acknowledged."); }}>Acknowledge</button>}
-                          {a.status !== "Resolved" && <button className="link" style={{ marginLeft: 8 }} onClick={() => { act.alertStatus(a.id, "Resolved"); toast("Alert resolved."); }}>Resolve</button>}
-                        </td>
-                      </tr>); })}
+                    <tr>
+                      <td className="">
+                        <b>
+                          ALR-2026-0912
+                        </b>
+                      </td>
+                      <td className="">
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                          <DLink href="/design/WalletOverview" className="mono" style={{ color: "var(--pri)", fontWeight: "550" }}>
+                            0x7a3f…9B21
+                          </DLink>
+                          <span style={{ color: "#8A99AE" }}>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <rect x="8" y="8" width="12" height="12" rx="2" />
+                              <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+                            </svg>
+                          </span>
+                        </span>
+                      </td>
+                      <td className="">
+                        Score crossed 75
+                      </td>
+                      <td className="">
+                        <span className="tier crit">
+                          Critical
+                        </span>
+                      </td>
+                      <td className="">
+                        12 min ago
+                      </td>
+                      <td className="">
+                        <span className="chip bad">
+                          Unacknowledged
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <b>
+                          ALR-2026-0911
+                        </b>
+                      </td>
+                      <td className="">
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                          <DLink href="/design/WalletOverview" className="mono" style={{ color: "var(--pri)", fontWeight: "550" }}>
+                            0xE5f7…90b8
+                          </DLink>
+                          <span style={{ color: "#8A99AE" }}>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <rect x="8" y="8" width="12" height="12" rx="2" />
+                              <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+                            </svg>
+                          </span>
+                        </span>
+                      </td>
+                      <td className="">
+                        New flagged counterparty
+                      </td>
+                      <td className="">
+                        <span className="tier crit">
+                          Critical
+                        </span>
+                      </td>
+                      <td className="">
+                        1 h ago
+                      </td>
+                      <td className="">
+                        <span className="chip blue">
+                          Acknowledged
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <b>
+                          ALR-2026-0908
+                        </b>
+                      </td>
+                      <td className="">
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                          <DLink href="/design/WalletOverview" className="mono" style={{ color: "var(--pri)", fontWeight: "550" }}>
+                            0x5a8e…fd02
+                          </DLink>
+                          <span style={{ color: "#8A99AE" }}>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <rect x="8" y="8" width="12" height="12" rx="2" />
+                              <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+                            </svg>
+                          </span>
+                        </span>
+                      </td>
+                      <td className="">
+                        Watchlist activity
+                      </td>
+                      <td className="">
+                        <span className="tier crit">
+                          Critical
+                        </span>
+                      </td>
+                      <td className="">
+                        3 h ago
+                      </td>
+                      <td className="">
+                        <span className="chip blue">
+                          Acknowledged
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <b>
+                          ALR-2026-0902
+                        </b>
+                      </td>
+                      <td className="">
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                          <DLink href="/design/WalletOverview" className="mono" style={{ color: "var(--pri)", fontWeight: "550" }}>
+                            0x98b1…2c70
+                          </DLink>
+                          <span style={{ color: "#8A99AE" }}>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <rect x="8" y="8" width="12" height="12" rx="2" />
+                              <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+                            </svg>
+                          </span>
+                        </span>
+                      </td>
+                      <td className="">
+                        Velocity increase
+                      </td>
+                      <td className="">
+                        <span className="tier high">
+                          High
+                        </span>
+                      </td>
+                      <td className="">
+                        Yesterday
+                      </td>
+                      <td className="">
+                        <span className="chip ok">
+                          Resolved
+                        </span>
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>

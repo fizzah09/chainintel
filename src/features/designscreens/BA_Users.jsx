@@ -1,11 +1,6 @@
-import { useToast } from '../../context/ToastContext';
-import { ago } from '../../lib/format';
-import { ROLE_NAMES } from '../../mocks/seed';
-import { act, useStore } from '../../mocks/store';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
-  const s = useStore(); const toast = useToast(); const N = (xs, f) => (xs || []).filter(f).length;
   return (
     <>
       <div className="app">
@@ -303,16 +298,192 @@ export default function Screen() {
                     </tr>
                   </thead>
                   <tbody>
-                    {s.users.length === 0 && <tr><td colSpan={5} className="mu">No accounts yet.</td></tr>}
-                    {s.users.map((x) => (
-                      <tr key={x.id}>
-                        <td><div><div style={{ fontWeight: 550 }}>{x.name}</div><div className="mu" style={{ fontSize: 11.5 }}>{x.email}</div></div></td>
-                        <td><select className="in" value={x.role} onChange={(e) => { act.userPatch(x.id, { role: e.target.value }, 'Changed user role'); toast('Role updated.'); }} aria-label={`Role of ${x.name}`}>{Object.entries(ROLE_NAMES).filter(([k]) => k !== 'sa' && k !== 'pa').map(([k, v]) => <option key={k} value={k}>{v}</option>)}</select></td>
-                        <td>{N(s.cases, (c) => c.assignee === x.name && c.status !== 'Closed')}</td>
-                        <td><select className="in" value={x.status} onChange={(e) => { act.userPatch(x.id, { status: e.target.value }, 'Changed user status'); toast('Status updated.'); }} aria-label={`Status of ${x.name}`}>{['Active', 'Suspended', 'Removed'].map((v) => <option key={v} value={v}>{v}</option>)}</select></td>
-                        <td>{x.last ? ago(x.last) : '—'}</td>
-                      </tr>
-                    ))}
+                    <tr>
+                      <td className="">
+                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
+                            SA
+                          </span>
+                          <div style={{ lineHeight: "1.25" }}>
+                            <div style={{ fontWeight: "550" }}>
+                              Sara Ali
+                            </div>
+                            <div className="mu" style={{ fontSize: "11.5px" }}>
+                              sara.ali@examplebank.com
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="">
+                        Investigator
+                      </td>
+                      <td className="r">
+                        7
+                      </td>
+                      <td className="">
+                        <span className="chip ok">
+                          Active
+                        </span>
+                      </td>
+                      <td className="">
+                        2 h ago
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
+                            AK
+                          </span>
+                          <div style={{ lineHeight: "1.25" }}>
+                            <div style={{ fontWeight: "550" }}>
+                              Ahmed Khan
+                            </div>
+                            <div className="mu" style={{ fontSize: "11.5px" }}>
+                              ahmed.khan@examplebank.com
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="">
+                        Compliance Manager
+                      </td>
+                      <td className="r">
+                        3
+                      </td>
+                      <td className="">
+                        <span className="chip ok">
+                          Active
+                        </span>
+                      </td>
+                      <td className="">
+                        10 min ago
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
+                            NH
+                          </span>
+                          <div style={{ lineHeight: "1.25" }}>
+                            <div style={{ fontWeight: "550" }}>
+                              Nadia Hussain
+                            </div>
+                            <div className="mu" style={{ fontSize: "11.5px" }}>
+                              nadia.h@examplebank.com
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="">
+                        Reviewer
+                      </td>
+                      <td className="r">
+                        5
+                      </td>
+                      <td className="">
+                        <span className="chip ok">
+                          Active
+                        </span>
+                      </td>
+                      <td className="">
+                        Yesterday
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
+                            IS
+                          </span>
+                          <div style={{ lineHeight: "1.25" }}>
+                            <div style={{ fontWeight: "550" }}>
+                              Imran Sheikh
+                            </div>
+                            <div className="mu" style={{ fontSize: "11.5px" }}>
+                              imran.s@examplebank.com
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="">
+                        Auditor
+                      </td>
+                      <td className="r">
+                        0
+                      </td>
+                      <td className="">
+                        <span className="chip ok">
+                          Active
+                        </span>
+                      </td>
+                      <td className="">
+                        3 d ago
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
+                            NH
+                          </span>
+                          <div style={{ lineHeight: "1.25" }}>
+                            <div style={{ fontWeight: "550" }}>
+                              New Hire
+                            </div>
+                            <div className="mu" style={{ fontSize: "11.5px" }}>
+                              new.hire@examplebank.com
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="">
+                        Investigator
+                      </td>
+                      <td className="r">
+                        0
+                      </td>
+                      <td className="">
+                        <span className="chip warn">
+                          Invited
+                        </span>
+                      </td>
+                      <td className="">
+                        —
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
+                            OU
+                          </span>
+                          <div style={{ lineHeight: "1.25" }}>
+                            <div style={{ fontWeight: "550" }}>
+                              Old User
+                            </div>
+                            <div className="mu" style={{ fontSize: "11.5px" }}>
+                              old.user@examplebank.com
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="">
+                        Reviewer
+                      </td>
+                      <td className="r">
+                        0
+                      </td>
+                      <td className="">
+                        <span className="chip gray">
+                          Disabled
+                        </span>
+                      </td>
+                      <td className="">
+                        90 d ago
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>

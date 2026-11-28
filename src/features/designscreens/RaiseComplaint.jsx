@@ -1,11 +1,6 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { act, PRIORITY, useStore } from '../../mocks/store';
 import { DLink } from '../design/DLink';
-import { fmtDate } from '../design/dashParts';
 
 export default function Screen() {
-  const s = useStore(); const nav = useNavigate(); const mine = (s.complaints || []).slice(0, 5); const [v, setV] = useState({ problem: 'Something is not working', where: 'Cases', subject: '', details: '' }); const [err, setErr] = useState({});
   return (
     <>
       <div className="app">
@@ -241,28 +236,55 @@ export default function Screen() {
                     <label htmlFor="c-type">
                       What is the problem?
                     </label>
-                    <select id="c-type" className="in" value={v.problem} onChange={(e) => setV({ ...v, problem: e.target.value })}>{Object.keys(PRIORITY).map((k) => <option key={k} value={k}>{k}</option>)}</select>
+                    <select id="c-type" className="in">
+                      <option>
+                        A page or button is not working
+                      </option>
+                      <option>
+                        Data looks wrong or is missing
+                      </option>
+                      <option>
+                        Cannot sign in or access something
+                      </option>
+                      <option>
+                        Other
+                      </option>
+                    </select>
                   </div>
                   <div className="fld" style={{ flex: "1 1 240px" }}>
                     <label htmlFor="c-page">
                       Where did it happen?
                     </label>
-                    <select id="c-page" className="in" value={v.where} onChange={(e) => setV({ ...v, where: e.target.value })}>{["Wallet risk assessment", "Transaction tracing", "Cases", "Reports", "Other"].map((k) => <option key={k} value={k}>{k}</option>)}</select>
+                    <select id="c-page" className="in">
+                      <option>
+                        Wallet risk assessment
+                      </option>
+                      <option>
+                        Transaction tracing
+                      </option>
+                      <option>
+                        Cases
+                      </option>
+                      <option>
+                        Reports
+                      </option>
+                      <option>
+                        Other
+                      </option>
+                    </select>
                   </div>
                 </div>
                 <div className="fld" style={{ marginTop: "14px" }}>
                   <label htmlFor="c-subj">
                     Subject
                   </label>
-                  <input id="c-subj" className="in" type="text" placeholder="Short summary" value={v.subject} onChange={(e) => setV({ ...v, subject: e.target.value })} />
-                  {err.subject && <div className="hint err" role="alert">{err.subject}</div>}
+                  <input id="c-subj" className="in" type="text" placeholder="Short summary" />
                 </div>
                 <div className="fld" style={{ marginTop: "14px" }}>
                   <label htmlFor="c-desc">
                     Details
                   </label>
-                  <textarea id="c-desc" className="in ta" placeholder="What did you do, and what happened?" value={v.details} onChange={(e) => setV({ ...v, details: e.target.value })} />
-                  {err.details && <div className="hint err" role="alert">{err.details}</div>}
+                  <textarea id="c-desc" className="in ta" placeholder="What did you do, and what happened?" />
                 </div>
                 <div className="fld" style={{ marginTop: "14px" }}>
                   <label htmlFor="c-file">
@@ -274,7 +296,7 @@ export default function Screen() {
                   <DLink href="/complaints/new" className="btn">
                     Cancel
                   </DLink>
-                  <DLink href="/complaints/new" className="btn pri" onClick={(e) => { e.preventDefault(); const m = {}; if (!v.subject.trim()) m.subject = "Add a short summary."; if (v.details.trim().length < 10) m.details = "Describe the problem in at least 10 characters."; setErr(m); if (Object.keys(m).length) return; const id = act.raiseComplaint({ problem: v.problem, where: v.where, subject: v.subject.trim(), details: v.details.trim(), caseId: "", shot: "" }); nav(`/complaints/${id}`); }}>
+                  <DLink href="/complaints/new" className="btn pri">
                     Submit complaint
                   </DLink>
                 </div>
@@ -306,9 +328,39 @@ export default function Screen() {
                       </tr>
                     </thead>
                     <tbody>
-{mine.length === 0 && <tr><td colSpan={4} className="mu">No complaints yet.</td></tr>}
-{mine.map((c) => (<tr key={c.id}><td className="mono">{c.id}</td><td>{c.subject}</td><td><span className={`chip${c.status === 'Open' ? ' warn' : ''}`}>{c.status}</span></td><td>{fmtDate(c.updated || c.raisedAt)}</td></tr>))}
-</tbody>
+                      <tr>
+                        <td className="mono">
+                          CMP-1042
+                        </td>
+                        <td>
+                          Etherscan data not loading for one wallet
+                        </td>
+                        <td>
+                          <span className="chip blue">
+                            Open
+                          </span>
+                        </td>
+                        <td>
+                          Today 10:05
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="mono">
+                          CMP-1028
+                        </td>
+                        <td>
+                          Graph export cut off at 50 nodes
+                        </td>
+                        <td>
+                          <span className="chip ok">
+                            Resolved
+                          </span>
+                        </td>
+                        <td>
+                          02 Nov
+                        </td>
+                      </tr>
+                    </tbody>
                   </table>
                 </div>
               </div>

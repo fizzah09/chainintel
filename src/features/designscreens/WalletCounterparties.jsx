@@ -1,15 +1,6 @@
 import { DLink } from '../design/DLink';
-import { Gauge } from '../../components/ui';
-import { CFG, TN } from '../../lib/risk';
-import { fdt, ago, num, usd } from '../../lib/format';
-import { useWallet } from '../wallets/shared';
-import { shortAddr } from '../design/dashParts';
-import { useStore } from '../../mocks/store';
-import { useParams } from 'react-router-dom';
 
 export default function Screen() {
-  const { address } = useParams(); const sel = useStore(); const wallet = address || sel.ctx.wallet || '—';
-  const [p] = useWallet(); const onWatch = sel.watchlists.some((w) => w.wallets.some((x) => x.a.toLowerCase() === (wallet || '').toLowerCase()));
   return (
     <>
       <div className="app">
@@ -177,7 +168,7 @@ export default function Screen() {
               </span>
               {" "}
               <span>
-                {shortAddr(wallet)}
+                0x7a3f…9B21
               </span>
               {" "}
               <span style={{ color: "#A3B0C2" }}>
@@ -250,16 +241,20 @@ export default function Screen() {
                   <div>
                     <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap" }}>
                       <h1 style={{ fontSize: "20px" }} className="mono">
-                        {wallet}
+                        0x7a3f1c5e8b2d4096a1f7c3e5d8b2a49e0c619B21
                       </h1>
-                      <span className={`tier ${p.tier}`}>{TN[p.tier] || "Unknown"}</span>
+                      <span className="tier crit">
+                        Critical
+                      </span>
                       <span className="chip blue">
                         Ethereum
                       </span>
-                      {onWatch && <span className="chip warn">On watchlist</span>}
+                      <span className="chip warn">
+                        On watchlist
+                      </span>
                     </div>
                     <div className="mu" style={{ marginTop: "6px" }}>
-                      {p.first ? `First seen ${fdt(p.first)} · Last active ${fdt(p.last)}` : 'No on-chain activity loaded. The backend analyses a wallet when it is opened.'}
+                      Type: Externally owned · First seen 14 Mar 2025 · Last active 02 Nov 2026 · Data fresh 4 min ago
                     </div>
                   </div>
                 </div>
@@ -530,8 +525,193 @@ export default function Screen() {
                     </tr>
                   </thead>
                   <tbody>
-<tr><td colSpan={5} className="mu">Counterparties come from the backend, which is not connected in this build.</td></tr>
-</tbody>
+                    <tr>
+                      <td className="">
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                          <DLink href="/design/WalletOverview" className="mono" style={{ color: "var(--pri)", fontWeight: "550" }}>
+                            0xE5f7…90b8
+                          </DLink>
+                          <span style={{ color: "#8A99AE" }}>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <rect x="8" y="8" width="12" height="12" rx="2" />
+                              <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+                            </svg>
+                          </span>
+                        </span>
+                      </td>
+                      <td className="">
+                        7
+                      </td>
+                      <td className="">
+                        $128K
+                      </td>
+                      <td className="">
+                        <span className="chip ok">
+                          Inbound
+                        </span>
+                      </td>
+                      <td className="">
+                        <span className="tier crit">
+                          Critical
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                          <DLink href="/design/WalletOverview" className="mono" style={{ color: "var(--pri)", fontWeight: "550" }}>
+                            0x5a8e…fd02
+                          </DLink>
+                          <span style={{ color: "#8A99AE" }}>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <rect x="8" y="8" width="12" height="12" rx="2" />
+                              <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+                            </svg>
+                          </span>
+                        </span>
+                      </td>
+                      <td className="">
+                        4
+                      </td>
+                      <td className="">
+                        $96K
+                      </td>
+                      <td className="">
+                        <span className="chip gray">
+                          Outbound
+                        </span>
+                      </td>
+                      <td className="">
+                        <span className="tier crit">
+                          Critical
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                          <DLink href="/design/WalletOverview" className="mono" style={{ color: "var(--pri)", fontWeight: "550" }}>
+                            0xd4b3…11c4
+                          </DLink>
+                          <span style={{ color: "#8A99AE" }}>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <rect x="8" y="8" width="12" height="12" rx="2" />
+                              <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+                            </svg>
+                          </span>
+                        </span>
+                      </td>
+                      <td className="">
+                        18
+                      </td>
+                      <td className="">
+                        $212K
+                      </td>
+                      <td className="">
+                        <span className="chip gray">
+                          Outbound
+                        </span>
+                      </td>
+                      <td className="">
+                        <span className="tier mod">
+                          Moderate
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                          <DLink href="/design/WalletOverview" className="mono" style={{ color: "var(--pri)", fontWeight: "550" }}>
+                            0xB7c4…0e21
+                          </DLink>
+                          <span style={{ color: "#8A99AE" }}>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <rect x="8" y="8" width="12" height="12" rx="2" />
+                              <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+                            </svg>
+                          </span>
+                        </span>
+                      </td>
+                      <td className="">
+                        12
+                      </td>
+                      <td className="">
+                        $74K
+                      </td>
+                      <td className="">
+                        <span className="chip ok">
+                          Inbound
+                        </span>
+                      </td>
+                      <td className="">
+                        <span className="tier high">
+                          High
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                          <DLink href="/design/WalletOverview" className="mono" style={{ color: "var(--pri)", fontWeight: "550" }}>
+                            0x28c6…1d60
+                          </DLink>
+                          <span style={{ color: "#8A99AE" }}>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <rect x="8" y="8" width="12" height="12" rx="2" />
+                              <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+                            </svg>
+                          </span>
+                        </span>
+                      </td>
+                      <td className="">
+                        31
+                      </td>
+                      <td className="">
+                        $401K
+                      </td>
+                      <td className="">
+                        <span className="chip blue">
+                          Both
+                        </span>
+                      </td>
+                      <td className="">
+                        <span className="tier low">
+                          Low
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                          <DLink href="/design/WalletOverview" className="mono" style={{ color: "var(--pri)", fontWeight: "550" }}>
+                            0x98b1…2c70
+                          </DLink>
+                          <span style={{ color: "#8A99AE" }}>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <rect x="8" y="8" width="12" height="12" rx="2" />
+                              <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+                            </svg>
+                          </span>
+                        </span>
+                      </td>
+                      <td className="">
+                        9
+                      </td>
+                      <td className="">
+                        $48K
+                      </td>
+                      <td className="">
+                        <span className="chip gray">
+                          Outbound
+                        </span>
+                      </td>
+                      <td className="">
+                        <span className="tier high">
+                          High
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
               <div className="pager">

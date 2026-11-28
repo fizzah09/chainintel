@@ -1,11 +1,6 @@
-import { act, useStore } from '../../mocks/store';
-import { useToast } from '../../context/ToastContext';
-import { fmtDate } from '../design/dashParts';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
-  const s = useStore(); const toast = useToast(); const ev = s.evidence.find((x) => x.id === (s.ctx.evidence || '')) || {};
-  const download = () => { if (!ev.id) return toast('Select an evidence item first.'); const blob = new Blob([ev.content || ev.title || ''], { type: 'text/plain' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `${ev.id}.txt`; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url); };
   return (
     <>
       <div className="app">
@@ -181,7 +176,7 @@ export default function Screen() {
               </span>
               {" "}
               <b>
-                {ev.id || '—'}
+                EVD-000184
               </b>
             </div>
             <label className="search">
@@ -224,7 +219,7 @@ export default function Screen() {
               </div>
               <div>
                 <b>
-                  {ev.by || '—'}
+                  Sara Ali
                 </b>
                 <span>
                   Investigator
@@ -237,25 +232,29 @@ export default function Screen() {
               <div>
                 <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
                   <h1>
-                    {ev.id || '—'}
+                    EVD-000184
                   </h1>
-                  <span className={`chip ${ev.status === "Verified" ? "ok" : "warn"}`}>{ev.status || "—"}</span>
+                  <span className="chip ok">
+                    Verified
+                  </span>
                 </div>
                 <p>
-                  {ev.title || 'No evidence selected'}
+                  Counterparty exposure snapshot
                 </p>
               </div>
               <div className="acts">
-                <button className="btn" onClick={download}>
+                <a href="#" className="btn ">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M12 4v11M7.5 11l4.5 4.5 4.5-4.5M5 20h14" />
                   </svg>
-                  Download</button>
-                <button className="btn pri" disabled={ev.status === "Verified"} onClick={() => { act.evidenceStatus(ev.id, "Verified"); toast("Evidence verified."); }}>
+                  Download
+                </a>
+                <a href="#" className="btn pri">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M5 12.5l4.5 4.5L19 7.5" />
                   </svg>
-                  Verify</button>
+                  Verify
+                </a>
               </div>
             </div>
             <div className="row" style={{ gap: "16px", alignItems: "flex-start" }}>
@@ -273,19 +272,19 @@ export default function Screen() {
                     Type
                   </span>
                   <span>
-                    {ev.type || '—'}
+                    Risk snapshot
                   </span>
                   <span className="t">
                     Source
                   </span>
                   <span>
-                    {ev.source || '—'}
+                    Chain Intel risk engine v3
                   </span>
                   <span className="t">
                     Captured
                   </span>
                   <span>
-                    {fmtDate(ev.date)}
+                    02 Nov 2026 09:44 UTC
                   </span>
                   <span className="t">
                     Captured by
@@ -297,13 +296,13 @@ export default function Screen() {
                     SHA-256
                   </span>
                   <span className="mono">
-                    {ev.hash ? ev.hash.slice(0, 32) + '…' : '—'}
+                    d039bc6398af03092b0ad17e1e12a965…
                   </span>
                   <span className="t">
                     Linked to
                   </span>
                   <span>
-                    {ev.caseId || '—'}
+                    CASE-2026-00128 · Wallet 0x7a3f…9B21
                   </span>
                 </div>
               </div>

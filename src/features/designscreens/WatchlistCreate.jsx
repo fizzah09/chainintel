@@ -1,10 +1,6 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { act } from '../../mocks/store';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
-  const nav = useNavigate(); const [v, setV] = useState({ name: '', scope: 'Personal', desc: '', rule: 'score', thr: '50' }); const [err, setErr] = useState({});
   return (
     <>
       <div className="app">
@@ -244,9 +240,10 @@ export default function Screen() {
                     </i>
                   </label>
                   <div className="in">
-                    <input type="text" value={v.name} onChange={(e) => setV({ ...v, name: e.target.value })} placeholder="Watchlist name" aria-label="Watchlist name" />
+                    <span>
+                      Mixer-adjacent wallets
+                    </span>
                   </div>
-                  {err.name && <div className="hint err" role="alert" style={{ marginTop: 6 }}>{err.name}</div>}
                 </div>
                 <div className="fld" style={{ flex: "1 1 240px" }}>
                   <label>
@@ -256,9 +253,12 @@ export default function Screen() {
                     </i>
                   </label>
                   <div className="in">
-                    <select value={v.scope} onChange={(e) => setV({ ...v, scope: e.target.value })} aria-label="Scope">
-                      {[['Personal', 'Personal'], ['Tenant', 'Tenant']].map(([v, t]) => <option key={v} value={v}>{t}</option>)}
-                    </select>
+                    <span>
+                      Personal
+                    </span>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M6 9l6 6 6-6" />
+                    </svg>
                   </div>
                 </div>
               </div>
@@ -268,7 +268,9 @@ export default function Screen() {
                   Description
                 </label>
                 <div className="in ta">
-                  <textarea rows={3} value={v.desc} onChange={(e) => setV({ ...v, desc: e.target.value })} placeholder="Description" aria-label="Description" />
+                  <span>
+                    Wallets within two hops of known mixers.
+                  </span>
                 </div>
               </div>
               <div style={{ height: "14px" }} />
@@ -283,7 +285,7 @@ export default function Screen() {
                   <label style={{ position: "absolute", left: "-9999px" }} htmlFor="wa1">
                     Wallet address 1
                   </label>
-                  <input id="wa1" className="in mono" type="text" placeholder="0x…" />
+                  <input id="wa1" className="in mono" type="text" defaultValue="0x7a3f1c5e8b2d4096a1f7c3e5d8b2a49e0c619B21" />
                   <label style={{ position: "absolute", left: "-9999px" }} htmlFor="wa2">
                     Wallet address 2
                   </label>
@@ -304,9 +306,12 @@ export default function Screen() {
                     Alert when
                   </label>
                   <div className="in">
-                    <select value={v.rule} onChange={(e) => setV({ ...v, rule: e.target.value })} aria-label="Alert when">
-                      {[['score', 'Score at or above threshold'], ['any', 'Any activity']].map(([v, t]) => <option key={v} value={v}>{t}</option>)}
-                    </select>
+                    <span>
+                      Risk score is at least
+                    </span>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M6 9l6 6 6-6" />
+                    </svg>
                   </div>
                 </div>
                 <div className="fld" style={{ flex: "1 1 240px" }}>
@@ -314,7 +319,9 @@ export default function Screen() {
                     Threshold
                   </label>
                   <div className="in">
-                    <input type="text" value={v.thr} onChange={(e) => setV({ ...v, thr: e.target.value })} placeholder="Threshold (0-100)" aria-label="Threshold (0-100)" />
+                    <span>
+                      75
+                    </span>
                   </div>
                 </div>
               </div>
@@ -335,7 +342,7 @@ export default function Screen() {
                 <a href="#" className="btn ">
                   Cancel
                 </a>
-                <DLink href="/watchlists/new" className="btn pri" onClick={(e) => { e.preventDefault(); if (!v.name.trim()) { setErr({ name: "Enter a watchlist name." }); return; } const thr = Math.min(100, Math.max(0, Number(v.thr) || 0)); const id = act.createWatchlist({ name: v.name.trim(), scope: v.scope, desc: v.desc, rule: v.rule, thr: v.rule === "any" ? 0 : thr, email: false, app: true }); nav(`/watchlists/${id}`); }}>
+                <DLink href="/design/WatchlistDetail" className="btn pri">
                   Create watchlist
                 </DLink>
               </div>

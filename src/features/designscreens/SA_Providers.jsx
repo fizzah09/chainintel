@@ -278,8 +278,148 @@ export default function Screen() {
                     </tr>
                   </thead>
                   <tbody>
-<tr><td colSpan={11} className="mu">Provider health needs the backend, which is not connected in this build.</td></tr>
-</tbody>
+                    <tr>
+                      <td className="">
+                        Etherscan API V2
+                      </td>
+                      <td className="">
+                        Transactions and labels
+                      </td>
+                      <td className="">
+                        <div className="bar" style={{ width: "120px" }}>
+                          <i style={{ width: "62%", background: "#1769E0" }} />
+                        </div>
+                      </td>
+                      <td className="">
+                        210 ms
+                      </td>
+                      <td className="">
+                        <span className="chip ok">
+                          Healthy
+                        </span>
+                      </td>
+                      <td className="mu sm">
+                        1 min ago
+                      </td>
+                      <td className="r">
+                        <a href="#" className="btn sm">
+                          Check now
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        Ethereum RPC (primary)
+                      </td>
+                      <td className="">
+                        Raw chain data
+                      </td>
+                      <td className="">
+                        <div className="bar" style={{ width: "120px" }}>
+                          <i style={{ width: "35%", background: "#1769E0" }} />
+                        </div>
+                      </td>
+                      <td className="">
+                        90 ms
+                      </td>
+                      <td className="">
+                        <span className="chip ok">
+                          Healthy
+                        </span>
+                      </td>
+                      <td className="mu sm">
+                        1 min ago
+                      </td>
+                      <td className="r">
+                        <a href="#" className="btn sm">
+                          Check now
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        Blockscout
+                      </td>
+                      <td className="">
+                        Fallback explorer
+                      </td>
+                      <td className="">
+                        <div className="bar" style={{ width: "120px" }}>
+                          <i style={{ width: "12%", background: "#1769E0" }} />
+                        </div>
+                      </td>
+                      <td className="">
+                        260 ms
+                      </td>
+                      <td className="">
+                        <span className="chip ok">
+                          Healthy
+                        </span>
+                      </td>
+                      <td className="mu sm">
+                        1 min ago
+                      </td>
+                      <td className="r">
+                        <a href="#" className="btn sm">
+                          Check now
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        Forta labels
+                      </td>
+                      <td className="">
+                        Malicious labels
+                      </td>
+                      <td className="">
+                        —
+                      </td>
+                      <td className="">
+                        —
+                      </td>
+                      <td className="">
+                        <span className="chip warn">
+                          Degraded
+                        </span>
+                      </td>
+                      <td className="mu sm">
+                        1 min ago
+                      </td>
+                      <td className="r">
+                        <a href="#" className="btn sm">
+                          Check now
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        OFAC SDN
+                      </td>
+                      <td className="">
+                        Sanctions list
+                      </td>
+                      <td className="">
+                        —
+                      </td>
+                      <td className="">
+                        —
+                      </td>
+                      <td className="">
+                        <span className="chip ok">
+                          Healthy
+                        </span>
+                      </td>
+                      <td className="mu sm">
+                        1 min ago
+                      </td>
+                      <td className="r">
+                        <a href="#" className="btn sm">
+                          Check now
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
             </div>

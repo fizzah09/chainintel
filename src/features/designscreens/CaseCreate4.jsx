@@ -1,10 +1,6 @@
 import { DLink } from '../design/DLink';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { act, useStore } from '../../mocks/store';
 
 export default function Screen() {
-  const s = useStore(); const w = s.wizard; const nav = useNavigate(); const [err, setErr] = useState({});
   return (
     <>
       <div className="app">
@@ -335,39 +331,39 @@ export default function Screen() {
                   Title
                 </span>
                 <span>
-                  {w.title || "—"}
+                  Suspected layering via mixer
                 </span>
                 <span className="t">
                   Subjects
                 </span>
                 <span>
-                  {`${w.subjects.length} (${w.subjects.filter((x) => x.kind === "wallet").length} wallets, ${w.subjects.filter((x) => x.kind === "tx").length} transactions)`}
+                  3 (2 wallets, 1 transaction)
                 </span>
                 <span className="t">
                   Priority
                 </span>
                 <span>
-                  <span className={`chip${w.priority === "Critical" ? " bad" : ""}`}>
-                    {w.priority}
+                  <span className="chip bad">
+                    Critical
                   </span>
                 </span>
                 <span className="t">
                   Assignee
                 </span>
                 <span>
-                  {w.assignee || "Unassigned"}
+                  Sara Ali
                 </span>
                 <span className="t">
                   Due
                 </span>
                 <span>
-                  {w.due ? new Date(w.due).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }) : "—"}
+                  09 Nov 2026
                 </span>
                 <span className="t">
                   Evidence
                 </span>
                 <span>
-                  {`${w.evidence.length} item${w.evidence.length === 1 ? "" : "s"} attached`}
+                  3 items attached (EVD-000184 to 000186)
                 </span>
               </div>
               <div style={{ marginTop: "16px" }}>
@@ -385,7 +381,7 @@ export default function Screen() {
                 <DLink href="/cases/new/assignment" className="btn ">
                   Back
                 </DLink>
-                <DLink href="/design/CaseDetails" className="btn pri" onClick={(e) => { e.preventDefault(); if (!w.title.trim() || !w.desc.trim()) { setErr({ submit: "Go back and complete the case title and description." }); return; } const id = act.createCase(); nav(`/cases/${id}`); }}>
+                <DLink href="/design/CaseDetails" className="btn pri">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M21 3L10 14M21 3l-7 18-4-7-7-4z" />
                   </svg>

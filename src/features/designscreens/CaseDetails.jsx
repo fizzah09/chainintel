@@ -1,12 +1,6 @@
 import { DLink } from '../design/DLink';
-import { useParams } from 'react-router-dom';
-import { act, useStore } from '../../mocks/store';
-import { useToast } from '../../context/ToastContext';
 
 export default function Screen() {
-  const s = useStore(); const { id: routeId } = useParams();
-  const c = s.cases.find((x) => x.id === (routeId || s.ctx.caseId)) || {};
-  const cid = c.id; const toast = useToast();
   return (
     <>
       <div className="app">
@@ -174,7 +168,7 @@ export default function Screen() {
               </span>
               {" "}
               <span>
-                {c.id || '—'}
+                CASE-2026-00128
               </span>
               {" "}
               <span style={{ color: "#A3B0C2" }}>
@@ -239,7 +233,7 @@ export default function Screen() {
                 <div>
                   <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap" }}>
                     <span className="mono mu">
-                      {c.id || '—'}
+                      CASE-2026-00128
                     </span>
                     <span className="chip pur">
                       Under Review
@@ -249,7 +243,7 @@ export default function Screen() {
                     </span>
                   </div>
                   <h1 style={{ fontSize: "22px", marginTop: "6px" }}>
-                    {c.title || 'No case selected'}
+                    Suspected layering via mixer
                   </h1>
                   <div className="mu" style={{ marginTop: "6px", display: "flex", gap: "18px", flexWrap: "wrap" }}>
                     <span>
@@ -274,11 +268,6 @@ export default function Screen() {
                     </svg>
                     Generate report
                   </DLink>
-                  {s.session.role === "cm" && cid && (
-                    <select className="in" style={{ minWidth: 170 }} value={c.status} onChange={(e) => { act.caseUpdate(c.id, { status: e.target.value, prev: null }, `Status set to ${e.target.value}`); toast(`Case status set to ${e.target.value}.`); }} aria-label="Case status">
-                      {["Open", "Assigned", "Evidence Collection", "Analysis", "Under Review", "Decision", "Closed"].map((x) => <option key={x} value={x}>{x}</option>)}
-                    </select>
-                  )}
                   <DLink href="/design/CaseReview" className="btn pri">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                       <path d="M21 3L10 14M21 3l-7 18-4-7-7-4z" />

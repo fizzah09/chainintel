@@ -1,11 +1,6 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { act } from '../../mocks/store';
-import { useToast } from '../../context/ToastContext';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
-  const nav = useNavigate(); const toast = useToast(); const [f, setF] = useState({ name: '', plan: 'Starter', adminEmail: '', region: 'Pakistan', seats: '50', quota: '2000' }); const [err, setErr] = useState({});
   return (
     <>
       <div className="app">
@@ -241,8 +236,9 @@ export default function Screen() {
                     </i>
                   </label>
                   <div className="in">
-                    <input type="text" value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} placeholder="Organisation name" aria-label="Organisation name" />
-                  {err.name && <div className="hint err" role="alert">{err.name}</div>}
+                    <span>
+                      Harbour Credit Union
+                    </span>
                   </div>
                 </div>
                 <div className="fld" style={{ flex: "1 1 240px" }}>
@@ -253,7 +249,12 @@ export default function Screen() {
                     </i>
                   </label>
                   <div className="in">
-                    <select value={f.plan} onChange={(e) => setF({ ...f, plan: e.target.value })} aria-label="Plan">{[['Starter', 'Starter'], ['Growth', 'Growth'], ['Enterprise', 'Enterprise']].map(([v, x]) => <option key={v} value={v}>{x}</option>)}</select>
+                    <span>
+                      Professional
+                    </span>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M6 9l6 6 6-6" />
+                    </svg>
                   </div>
                 </div>
               </div>
@@ -267,8 +268,9 @@ export default function Screen() {
                     </i>
                   </label>
                   <div className="in">
-                    <input type="text" value={f.adminEmail} onChange={(e) => setF({ ...f, adminEmail: e.target.value })} placeholder="name@bank.com" aria-label="Initial Bank Admin email" />
-                  {err.adminEmail && <div className="hint err" role="alert">{err.adminEmail}</div>}
+                    <span>
+                      admin@harbourcu.com
+                    </span>
                   </div>
                 </div>
                 <div className="fld" style={{ flex: "1 1 240px" }}>
@@ -276,7 +278,12 @@ export default function Screen() {
                     Region
                   </label>
                   <div className="in">
-                    <select value={f.region} onChange={(e) => setF({ ...f, region: e.target.value })} aria-label="Region">{[['Pakistan', 'Pakistan'], ['UAE', 'UAE'], ['UK', 'UK']].map(([v, x]) => <option key={v} value={v}>{x}</option>)}</select>
+                    <span>
+                      EU (Frankfurt)
+                    </span>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M6 9l6 6 6-6" />
+                    </svg>
                   </div>
                 </div>
               </div>
@@ -287,7 +294,9 @@ export default function Screen() {
                     User seats
                   </label>
                   <div className="in">
-                    <input type="number" value={f.seats} onChange={(e) => setF({ ...f, seats: e.target.value })} placeholder="50" aria-label="User seats" />
+                    <span>
+                      25
+                    </span>
                   </div>
                 </div>
                 <div className="fld" style={{ flex: "1 1 240px" }}>
@@ -295,7 +304,9 @@ export default function Screen() {
                     Monitored wallet quota
                   </label>
                   <div className="in">
-                    <input type="number" value={f.quota} onChange={(e) => setF({ ...f, quota: e.target.value })} placeholder="2000" aria-label="Monitored wallet quota" />
+                    <span>
+                      1,000
+                    </span>
                   </div>
                 </div>
               </div>
@@ -311,7 +322,7 @@ export default function Screen() {
                 <a href="#" className="btn ">
                   Cancel
                 </a>
-                <DLink href="/platform/tenants" className="btn pri" onClick={(e) => { e.preventDefault(); const m = {}; if (!f.name.trim()) m.name = "Enter the organisation name."; if (!/^\S+@\S+\.\S+$/.test(f.adminEmail)) m.adminEmail = "Enter a valid admin email."; setErr(m); if (Object.keys(m).length) return; act.createTenant({ name: f.name.trim(), plan: f.plan, adminEmail: f.adminEmail.trim(), region: f.region, seats: Number(f.seats) || 0, quota: Number(f.quota) || 0, status: 'Invited' }); toast("Invite sent. The tenant is listed as Invited."); nav("/platform/tenants"); }}>
+                <DLink href="/platform/tenants" className="btn pri">
                   Send invite
                 </DLink>
               </div>

@@ -1,10 +1,6 @@
-import { act, useStore } from '../../mocks/store';
-import { useToast } from '../../context/ToastContext';
-import { fmtDate } from '../design/dashParts';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
-  const s = useStore(); const toast = useToast(); const admins = s.users.filter((u) => ['pa', 'sa'].includes(u.role) && u.status !== 'Removed').map((u) => u.name);
   return (
     <>
       <div className="app">
@@ -307,36 +303,163 @@ export default function Screen() {
                         Status
                       </th>
                       <th>
-                        Assign to
+                        Handled by
                       </th>
                       <th>
                         Updated
                       </th>
-                      <th className="r">Action</th>
                       <th className="r" />
                     </tr>
                   </thead>
                   <tbody>
-                    {s.complaints.length === 0 && <tr><td colSpan={8} className="mu">No complaints yet.</td></tr>}
-                    {s.complaints.map((c) => (
-                      <tr key={c.id}>
-                        <td><DLink href={`/complaints/${c.id}`} className="mono" style={{ color: "var(--pri)", fontWeight: 600 }}>{c.id}</DLink></td>
-                        <td>{c.by || "—"}</td>
-                        <td>{c.subject}</td>
-                        <td><span className={`chip ${c.priority === "High" ? "bad" : c.priority === "Medium" ? "warn" : "gray"}`}>{c.priority}</span></td>
-                        <td><span className={`chip ${c.status === "Open" ? "warn" : "ok"}`}>{c.status}</span></td>
-                        <td>
-                          <select className="in" style={{ minWidth: 150 }} value={c.handledBy || ""} onChange={(e) => { act.assignComplaint(c.id, e.target.value); toast(e.target.value ? `Assigned to ${e.target.value}.` : "Assignment cleared."); }} aria-label={`Assign ${c.id}`}>
-                            <option value="">Unassigned</option>
-                            {admins.map((n) => <option key={n} value={n}>{n}</option>)}
-                          </select>
-                        </td>
-                        <td>{fmtDate(c.updated || c.raisedAt)}</td>
-                        <td className="r">
-                          <button className="link" onClick={() => { act.setComplaintStatus(c.id, c.status === "Open" ? "Closed" : "Open"); toast(c.status === "Open" ? "Complaint closed." : "Complaint reopened."); }}>{c.status === "Open" ? "Close" : "Reopen"}</button>
-                        </td>
-                      </tr>
-                    ))}
+                    <tr>
+                      <td className="mono">
+                        CMP-1042
+                      </td>
+                      <td>
+                        <b>
+                          Sara Ali
+                        </b>
+                        <div className="mu sm">
+                          Example Bank · Investigator
+                        </div>
+                      </td>
+                      <td>
+                        Etherscan data not loading for one wallet
+                      </td>
+                      <td>
+                        <span className="chip bad">
+                          High
+                        </span>
+                      </td>
+                      <td>
+                        <span className="chip blue">
+                          Open
+                        </span>
+                      </td>
+                      <td>
+                        Hina Raza
+                      </td>
+                      <td>
+                        Today 10:05
+                      </td>
+                      <td className="r">
+                        <a href="#" className="btn sm">
+                          Resolve
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="mono">
+                        CMP-1041
+                      </td>
+                      <td>
+                        <b>
+                          Bilal Qureshi
+                        </b>
+                        <div className="mu sm">
+                          Northern Savings · Bank Admin
+                        </div>
+                      </td>
+                      <td>
+                        Cannot invite more users
+                      </td>
+                      <td>
+                        <span className="chip warn">
+                          Medium
+                        </span>
+                      </td>
+                      <td>
+                        <span className="chip warn">
+                          In progress
+                        </span>
+                      </td>
+                      <td>
+                        Hina Raza
+                      </td>
+                      <td>
+                        Yesterday
+                      </td>
+                      <td className="r">
+                        <a href="#" className="btn sm">
+                          Resolve
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="mono">
+                        CMP-1039
+                      </td>
+                      <td>
+                        <b>
+                          Nadia Hussain
+                        </b>
+                        <div className="mu sm">
+                          Harbour Credit · Reviewer
+                        </div>
+                      </td>
+                      <td>
+                        Invite link expired before sign-up
+                      </td>
+                      <td>
+                        <span className="chip warn">
+                          Medium
+                        </span>
+                      </td>
+                      <td>
+                        <span className="chip gray">
+                          Waiting on bank
+                        </span>
+                      </td>
+                      <td>
+                        Hina Raza
+                      </td>
+                      <td>
+                        18 Nov
+                      </td>
+                      <td className="r">
+                        <a href="#" className="btn sm">
+                          Resolve
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="mono">
+                        CMP-1035
+                      </td>
+                      <td>
+                        <b>
+                          Ahmed Khan
+                        </b>
+                        <div className="mu sm">
+                          Example Bank · Compliance Manager
+                        </div>
+                      </td>
+                      <td>
+                        Report PDF missing case graph
+                      </td>
+                      <td>
+                        <span className="chip gray">
+                          Low
+                        </span>
+                      </td>
+                      <td>
+                        <span className="chip ok">
+                          Resolved
+                        </span>
+                      </td>
+                      <td>
+                        Hina Raza
+                      </td>
+                      <td>
+                        15 Nov
+                      </td>
+                      <td className="r">
+                        <a href="#" className="btn sm">
+                          Resolve
+                        </a>
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>

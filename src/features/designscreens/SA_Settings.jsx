@@ -1,13 +1,6 @@
-import { act, useStore } from '../../mocks/store';
-import { useToast } from '../../context/ToastContext';
-import { useState } from 'react';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
-  const s = useStore(); const toast = useToast(); const pick = (x) => ({traceLimit: x.traceLimit ?? '5000', retention: x.retention ?? '7 years'});
-  const [f, setF] = useState(() => pick(s.settings)); const dirty = Object.keys(f).filter((k) => f[k] !== s.settings[k]);
-  const save = () => { dirty.forEach((k) => act.setting(k, f[k])); toast(dirty.length ? 'Settings saved.' : 'No changes to save.'); };
-  const discard = () => setF(pick(s.settings));
   return (
     <>
       <div className="app">
@@ -288,7 +281,9 @@ export default function Screen() {
                       3 hops · 100 nodes · 250 edges · 30 days
                     </span>
                   </div>
-                  <input className="in" value={f.traceLimit} onChange={(e) => setF({ ...f, traceLimit: e.target.value })} aria-label="Trace limits" style={{ minWidth: 120 }} />
+                  <span className="chip blue">
+                    Default
+                  </span>
                 </div>
                 <div className="set">
                   <div>
@@ -299,7 +294,9 @@ export default function Screen() {
                       Wallet analyses kept for
                     </span>
                   </div>
-                  <input className="in" value={f.retention} onChange={(e) => setF({ ...f, retention: e.target.value })} aria-label="Data retention" style={{ minWidth: 120 }} />
+                  <span className="chip blue">
+                    7 years
+                  </span>
                 </div>
                 <div className="set">
                   <div>
@@ -317,8 +314,12 @@ export default function Screen() {
               </div>
             </div>
             <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px" }}>
-              <button className="btn " onClick={discard}>Discard</button>
-              <button className="btn pri" onClick={save}>Save changes</button>
+              <a href="#" className="btn ">
+                Discard
+              </a>
+              <a href="#" className="btn pri">
+                Save changes
+              </a>
             </div>
           </main>
         </div>

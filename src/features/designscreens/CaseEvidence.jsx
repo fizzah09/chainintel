@@ -1,10 +1,6 @@
-import { fmtDate } from '../design/dashParts';
-import { act, useStore } from '../../mocks/store';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
-  const s = useStore(); const cid = s.ctx.caseId || '';
-  const c = s.cases.find((x) => x.id === (s.ctx.caseId || '')) || {};
   return (
     <>
       <div className="app">
@@ -172,7 +168,7 @@ export default function Screen() {
               </span>
               {" "}
               <span>
-                {c.id || '—'}
+                CASE-2026-00128
               </span>
               {" "}
               <span style={{ color: "#A3B0C2" }}>
@@ -237,7 +233,7 @@ export default function Screen() {
                 <div>
                   <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap" }}>
                     <span className="mono mu">
-                      {c.id || '—'}
+                      CASE-2026-00128
                     </span>
                     <span className="chip pur">
                       Under Review
@@ -247,20 +243,20 @@ export default function Screen() {
                     </span>
                   </div>
                   <h1 style={{ fontSize: "22px", marginTop: "6px" }}>
-                    {c.title || 'No case selected'}
+                    Suspected layering via mixer
                   </h1>
                   <div className="mu" style={{ marginTop: "6px", display: "flex", gap: "18px", flexWrap: "wrap" }}>
                     <span>
-                      Assignee: {c.assignee || 'Unassigned'}
+                      Assignee: Sara Ali
                     </span>
                     <span>
-                      Opened {fmtDate(c.opened)}
+                      Opened 02 Nov 2026
                     </span>
                     <span>
-                      Due {fmtDate(c.due)}
+                      Due 09 Nov 2026
                     </span>
                     <span>
-                      Subjects: {(c.subjects || []).length}
+                      Subjects: 3
                     </span>
                   </div>
                 </div>
@@ -475,9 +471,151 @@ export default function Screen() {
                     </tr>
                   </thead>
                   <tbody>
-{(s.evidence.filter((e) => e.caseId === cid)).length === 0 && <tr><td colSpan={6} className="mu">No evidence on this case yet.</td></tr>}
-{(s.evidence.filter((e) => e.caseId === cid)).map((x) => (<tr key={x.id}><td><span className="mono">{x.id}</span></td><td>{x.title}</td><td>{x.type || '—'}</td><td>{x.source || '—'}</td><td>{x.by || '—'}</td><td><span className="chip">{x.status}</span></td></tr>))}
-</tbody>
+                    <tr>
+                      <td className="">
+                        <b>
+                          EVD-000184
+                        </b>
+                      </td>
+                      <td className="">
+                        Counterparty exposure snapshot
+                      </td>
+                      <td className="">
+                        Risk snapshot
+                      </td>
+                      <td className="">
+                        Chain Intel
+                      </td>
+                      <td className="">
+                        Sara Ali
+                      </td>
+                      <td className="">
+                        <span className="chip ok">
+                          Verified
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <b>
+                          EVD-000185
+                        </b>
+                      </td>
+                      <td className="">
+                        Mixer interaction transaction set
+                      </td>
+                      <td className="">
+                        Transaction set
+                      </td>
+                      <td className="">
+                        Etherscan
+                      </td>
+                      <td className="">
+                        Sara Ali
+                      </td>
+                      <td className="">
+                        <span className="chip ok">
+                          Verified
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <b>
+                          EVD-000186
+                        </b>
+                      </td>
+                      <td className="">
+                        Graph export (3 hops)
+                      </td>
+                      <td className="">
+                        Graph image
+                      </td>
+                      <td className="">
+                        Chain Intel
+                      </td>
+                      <td className="">
+                        Sara Ali
+                      </td>
+                      <td className="">
+                        <span className="chip warn">
+                          Pending Verification
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <b>
+                          EVD-000187
+                        </b>
+                      </td>
+                      <td className="">
+                        Label reference: mixing service
+                      </td>
+                      <td className="">
+                        External source
+                      </td>
+                      <td className="">
+                        Forta labels
+                      </td>
+                      <td className="">
+                        System
+                      </td>
+                      <td className="">
+                        <span className="chip ok">
+                          Verified
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <b>
+                          EVD-000188
+                        </b>
+                      </td>
+                      <td className="">
+                        Customer statement PDF
+                      </td>
+                      <td className="">
+                        Document
+                      </td>
+                      <td className="">
+                        Customer
+                      </td>
+                      <td className="">
+                        Ahmed Khan
+                      </td>
+                      <td className="">
+                        <span className="chip gray">
+                          Unverified
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <b>
+                          EVD-000189
+                        </b>
+                      </td>
+                      <td className="">
+                        Sanctions screening result
+                      </td>
+                      <td className="">
+                        External source
+                      </td>
+                      <td className="">
+                        OFAC list
+                      </td>
+                      <td className="">
+                        System
+                      </td>
+                      <td className="">
+                        <span className="chip bad">
+                          Source Unavailable
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
               <div className="pager">

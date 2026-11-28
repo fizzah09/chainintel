@@ -1,15 +1,6 @@
 import { DLink } from '../design/DLink';
-import { Bars, Empty, fmtDate, shortAddr } from '../design/dashParts';
-import { verifyChain } from '../../mocks/store';
-import { ROLE_NAMES } from '../../mocks/seed';
-import { useStore } from '../../mocks/store';
 
 export default function Screen() {
-  const s = useStore(); const N = (xs, f) => (xs || []).filter(f).length;
-const me = s.session.name; const isOpen = (c) => c.status !== 'Closed';
-  const myCases = s.cases.filter((c) => c.assignee === me && isOpen(c));
-  const myTasks = (s.tasks || []).filter((k) => k.assignee === me && k.status !== 'Done');
-  const alerts = (s.alerts || []).filter((a) => a.status !== 'Resolved').slice(0, 5);
   return (
     <>
       <div className="app">
@@ -242,47 +233,418 @@ const me = s.session.name; const isOpen = (c) => c.status !== 'Closed';
               </div>
             </div>
             <div className="kpis" style={{ position: "relative" }}>
-              <div className="kpi"><div className="l">
+              <div className="kpi">
+                <div className="l">
                   My open cases
-                </div><div className="v">{N(s.cases, c => c.assignee === s.session.name && c.status !== 'Closed')}</div><div className="s">{'assigned to you'}</div>
+                </div>
+                <div className="v">
+                  6
+                </div>
+                <div className="s">
+                  2 due this week
+                </div>
               </div>
-              <div className="kpi"><div className="l">
+              <div className="kpi">
+                <div className="l">
                   <i style={{ background: "#DC2626" }} />
                   Open tasks
-                </div><div className="v">{N(s.tasks, t => t.assignee === s.session.name && t.status !== 'Done')}</div><div className="s">{'assigned to you'}</div>
+                </div>
+                <div className="v">
+                  9
+                </div>
+                <div className="s">
+                  1 overdue
+                </div>
               </div>
-              <div className="kpi"><div className="l">
+              <div className="kpi">
+                <div className="l">
                   <i style={{ background: "#EA580C" }} />
                   Watchlist alerts
-                </div><div className="v">{N(s.alerts, a => a.status !== 'Resolved')}</div><div className="s">{`${N(s.alerts, a => a.status !== 'Resolved' && a.score >= s.cfg.thr[2])} critical`}</div>
+                </div>
+                <div className="v">
+                  5
+                </div>
+                <div className="s">
+                  2 critical
+                </div>
               </div>
             </div>
             <div className="row" style={{ gap: "16px", alignItems: "flex-start" }}>
               <div style={{ flex: "2 1 560", display: "flex", flexDirection: "column", gap: "16px", minWidth: "0" }}>
-                <div className="card">
-                  <div className="ct-h"><div><h3>Active cases</h3><p>Assigned to you, not closed</p></div><DLink href="/cases" className="btn sm">View all</DLink></div>
-                  <div className="tbl"><table><thead><tr><th className="">Case ID</th><th className="">Title</th><th className="">Status</th><th className="">Priority</th><th className="">Assignee</th><th className="">Opened</th><th className="">Due</th></tr></thead><tbody>
-                  {myCases.length === 0 && <tr><td colSpan={7} className="mu">No active cases assigned to you.</td></tr>}
-                  {myCases.map((x) => (<tr key={x.id}><td><DLink href={`/cases/${x.id}`} className="mono" style={{ color: "var(--pri)", fontWeight: 600 }}>{x.id}</DLink></td><td>{x.title}</td><td><span className={`chip`}>{x.status}</span></td><td><span className={`chip${x.priority === 'Critical' ? ' bad' : ''}`}>{x.priority}</span></td><td>{x.assignee}</td><td>{fmtDate(x.opened)}</td><td>{fmtDate(x.due)}</td></tr>))}
-                  </tbody></table></div>
+                <div className="card " style={{  }}>
+                  <div className="ct-h">
+                    <div>
+                      <h3>
+                        Active cases
+                      </h3>
+                    </div>
+                    <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                      <DLink href="/cases" className="btn sm">
+                        View all
+                      </DLink>
+                    </div>
+                  </div>
+                  <div className="tbl">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th className="">
+                            Case ID
+                          </th>
+                          <th className="">
+                            Title
+                          </th>
+                          <th className="">
+                            Status
+                          </th>
+                          <th className="">
+                            Priority
+                          </th>
+                          <th className="">
+                            Assignee
+                          </th>
+                          <th className="">
+                            Opened
+                          </th>
+                          <th className="">
+                            Due
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td className="">
+                            <DLink href="/design/CaseDetails" className="mono" style={{ color: "var(--pri)", fontWeight: "600" }}>
+                              CASE-2026-00128
+                            </DLink>
+                          </td>
+                          <td className="">
+                            Suspected layering via mixer
+                          </td>
+                          <td className="">
+                            <span className="chip pur">
+                              Under Review
+                            </span>
+                          </td>
+                          <td className="">
+                            <span className="chip bad">
+                              Critical
+                            </span>
+                          </td>
+                          <td className="">
+                            <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                              <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
+                                SA
+                              </span>
+                              <div style={{ lineHeight: "1.25" }}>
+                                <div style={{ fontWeight: "550" }}>
+                                  Sara Ali
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="">
+                            02 Nov 2026
+                          </td>
+                          <td className="">
+                            09 Nov 2026
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="">
+                            <DLink href="/design/CaseDetails" className="mono" style={{ color: "var(--pri)", fontWeight: "600" }}>
+                              CASE-2026-00127
+                            </DLink>
+                          </td>
+                          <td className="">
+                            Sanctioned counterparty exposure
+                          </td>
+                          <td className="">
+                            <span className="chip blue">
+                              Analysis
+                            </span>
+                          </td>
+                          <td className="">
+                            <span className="chip warn">
+                              High
+                            </span>
+                          </td>
+                          <td className="">
+                            <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                              <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
+                                SA
+                              </span>
+                              <div style={{ lineHeight: "1.25" }}>
+                                <div style={{ fontWeight: "550" }}>
+                                  Sara Ali
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="">
+                            01 Nov 2026
+                          </td>
+                          <td className="">
+                            08 Nov 2026
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="">
+                            <DLink href="/design/CaseDetails" className="mono" style={{ color: "var(--pri)", fontWeight: "600" }}>
+                              CASE-2026-00124
+                            </DLink>
+                          </td>
+                          <td className="">
+                            Rapid pass-through of customer funds
+                          </td>
+                          <td className="">
+                            <span className="chip blue">
+                              Evidence Collection
+                            </span>
+                          </td>
+                          <td className="">
+                            <span className="chip warn">
+                              High
+                            </span>
+                          </td>
+                          <td className="">
+                            <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                              <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
+                                OS
+                              </span>
+                              <div style={{ lineHeight: "1.25" }}>
+                                <div style={{ fontWeight: "550" }}>
+                                  Omar Siddiq
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="">
+                            30 Oct 2026
+                          </td>
+                          <td className="">
+                            07 Nov 2026
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="">
+                            <DLink href="/design/CaseDetails" className="mono" style={{ color: "var(--pri)", fontWeight: "600" }}>
+                              CASE-2026-00121
+                            </DLink>
+                          </td>
+                          <td className="">
+                            Unexplained inbound volume spike
+                          </td>
+                          <td className="">
+                            <span className="chip blue">
+                              Assigned
+                            </span>
+                          </td>
+                          <td className="">
+                            <span className="chip blue">
+                              Medium
+                            </span>
+                          </td>
+                          <td className="">
+                            <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                              <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
+                                MC
+                              </span>
+                              <div style={{ lineHeight: "1.25" }}>
+                                <div style={{ fontWeight: "550" }}>
+                                  Maria Chen
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="">
+                            29 Oct 2026
+                          </td>
+                          <td className="">
+                            12 Nov 2026
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-                <div className="card">
-                  <div className="ct-h"><div><h3>My tasks due</h3><p>Open tasks assigned to you</p></div></div>
-                  <div className="tbl"><table><thead><tr><th className="">Task</th><th className="">Case</th><th className="">Due</th><th className="">Status</th></tr></thead><tbody>
-                  {myTasks.length === 0 && <tr><td colSpan={4} className="mu">No open tasks assigned to you.</td></tr>}
-                  {myTasks.map((x) => (<tr key={x.id}><td>{x.title || x.id}</td><td>{x.caseId || '—'}</td><td>{fmtDate(x.due)}</td><td><span className={`chip`}>{x.status}</span></td></tr>))}
-                  </tbody></table></div>
+                <div className="card " style={{  }}>
+                  <div className="ct-h">
+                    <div>
+                      <h3>
+                        My tasks due
+                      </h3>
+                    </div>
+                    <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }} />
+                  </div>
+                  <div className="tbl">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th className="">
+                            Task
+                          </th>
+                          <th className="">
+                            Case
+                          </th>
+                          <th className="">
+                            Due
+                          </th>
+                          <th className="">
+                            Status
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td className="">
+                            Draft case report
+                          </td>
+                          <td className="">
+                            CASE-2026-00128
+                          </td>
+                          <td className="">
+                            09 Nov
+                          </td>
+                          <td className="">
+                            <span className="chip bad">
+                              Overdue
+                            </span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="">
+                            Verify mixer label
+                          </td>
+                          <td className="">
+                            CASE-2026-00128
+                          </td>
+                          <td className="">
+                            07 Nov
+                          </td>
+                          <td className="">
+                            <span className="chip blue">
+                              In Progress
+                            </span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="">
+                            Screen related wallets
+                          </td>
+                          <td className="">
+                            CASE-2026-00127
+                          </td>
+                          <td className="">
+                            08 Nov
+                          </td>
+                          <td className="">
+                            <span className="chip warn">
+                              Waiting
+                            </span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
               <div style={{ flex: "1 1 320", display: "flex", flexDirection: "column", gap: "16px", minWidth: "0" }}>
-                <div className="card">
-                  <div className="ct-h"><div><h3>Wallets by risk tier</h3></div></div>
-                  <Empty>Risk tiers appear once wallets are analysed by the risk engine.</Empty>
+                <div className="card " style={{  }}>
+                  <div className="ct-h">
+                    <div>
+                      <h3>
+                        Wallets by risk tier
+                      </h3>
+                    </div>
+                    <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }} />
+                  </div>
+                  <div style={{ display: "flex", gap: "20px", alignItems: "center", flexWrap: "wrap" }}>
+                    <svg viewBox="0 0 160 160" width="160" height="160" role="img" aria-label="Distribution chart" style={{ display: "block", maxWidth: "100%", height: "auto" }}>
+                      <circle cx="80.0" cy="80.0" r="59.2" fill="none" stroke="#16A34A" strokeWidth="21" strokeDasharray="139.37 232.59" strokeDashoffset="0.00" transform="rotate(-90 80.0 80.0)" />
+                      <circle cx="80.0" cy="80.0" r="59.2" fill="none" stroke="#F59E0B" strokeWidth="21" strokeDasharray="105.77 266.20" strokeDashoffset="-141.37" transform="rotate(-90 80.0 80.0)" />
+                      <circle cx="80.0" cy="80.0" r="59.2" fill="none" stroke="#EA580C" strokeWidth="21" strokeDasharray="76.22 295.75" strokeDashoffset="-249.14" transform="rotate(-90 80.0 80.0)" />
+                      <circle cx="80.0" cy="80.0" r="59.2" fill="none" stroke="#DC2626" strokeWidth="21" strokeDasharray="42.61 329.35" strokeDashoffset="-327.35" transform="rotate(-90 80.0 80.0)" />
+                      <text x="80.0" y="83.0" textAnchor="middle" fontWeight="700" fontSize="24" fill="#0F172A" fontFamily="Inter,sans-serif">
+                        1,284
+                      </text>
+                      <text x="80.0" y="96" textAnchor="middle" fontSize="10" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                        wallets
+                      </text>
+                    </svg>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "9px", flex: "1", minWidth: "150px" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                        <i style={{ width: "10px", height: "10px", borderRadius: "3px", background: "#16A34A" }} />
+                        <span style={{ flex: "1" }}>
+                          Low
+                        </span>
+                        <b>
+                          488
+                        </b>
+                      </div>
+                      <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                        <i style={{ width: "10px", height: "10px", borderRadius: "3px", background: "#F59E0B" }} />
+                        <span style={{ flex: "1" }}>
+                          Moderate
+                        </span>
+                        <b>
+                          372
+                        </b>
+                      </div>
+                      <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                        <i style={{ width: "10px", height: "10px", borderRadius: "3px", background: "#EA580C" }} />
+                        <span style={{ flex: "1" }}>
+                          High
+                        </span>
+                        <b>
+                          270
+                        </b>
+                      </div>
+                      <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                        <i style={{ width: "10px", height: "10px", borderRadius: "3px", background: "#DC2626" }} />
+                        <span style={{ flex: "1" }}>
+                          Critical
+                        </span>
+                        <b>
+                          154
+                        </b>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="card">
-                  <div className="ct-h"><div><h3>Recent alerts</h3></div></div>
-                  {alerts.length === 0 && <Empty>No open alerts.</Empty>}
-                  {alerts.map((a) => (<div key={a.id} style={{ display: 'flex', gap: 10, padding: '9px 0', borderBottom: '1px solid #EDF1F6', alignItems: 'center' }}><span className="mono" style={{ flex: 1 }}>{shortAddr(a.wallet)}</span><span className={`tier ${a.score >= s.cfg.thr[2] ? 'crit' : a.score >= s.cfg.thr[1] ? 'high' : a.score >= s.cfg.thr[0] ? 'mod' : 'low'}`}>{a.trigger}</span></div>))}
+                <div className="card " style={{  }}>
+                  <div className="ct-h">
+                    <div>
+                      <h3>
+                        Recent alerts
+                      </h3>
+                    </div>
+                    <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }} />
+                  </div>
+                  <div style={{ display: "flex", gap: "10px", padding: "9px 0", borderBottom: "1px solid #EDF1F6", alignItems: "center" }}>
+                    <span className="mono" style={{ flex: "1" }}>
+                      0x7a3f…9B21
+                    </span>
+                    <span className="tier crit">
+                      Critical
+                    </span>
+                  </div>
+                  <div style={{ display: "flex", gap: "10px", padding: "9px 0", borderBottom: "1px solid #EDF1F6", alignItems: "center" }}>
+                    <span className="mono" style={{ flex: "1" }}>
+                      0xE5f7…90b8
+                    </span>
+                    <span className="tier crit">
+                      Critical
+                    </span>
+                  </div>
+                  <div style={{ display: "flex", gap: "10px", padding: "9px 0", borderBottom: "1px solid #EDF1F6", alignItems: "center" }}>
+                    <span className="mono" style={{ flex: "1" }}>
+                      0x98b1…2c70
+                    </span>
+                    <span className="tier high">
+                      High
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>

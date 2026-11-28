@@ -1,9 +1,6 @@
-import { fmtDate } from '../design/dashParts';
-import { useStore } from '../../mocks/store';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
-  const s = useStore(); const c = s.cases.find((x) => x.id === (s.ctx.caseId || '')) || {};
   return (
     <>
       <div className="app">
@@ -171,7 +168,7 @@ export default function Screen() {
               </span>
               {" "}
               <span>
-                {c.id || '—'}
+                CASE-2026-00128
               </span>
               {" "}
               <span style={{ color: "#A3B0C2" }}>
@@ -236,7 +233,7 @@ export default function Screen() {
                 <div>
                   <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap" }}>
                     <span className="mono mu">
-                      {c.id || '—'}
+                      CASE-2026-00128
                     </span>
                     <span className="chip pur">
                       Under Review
@@ -246,20 +243,20 @@ export default function Screen() {
                     </span>
                   </div>
                   <h1 style={{ fontSize: "22px", marginTop: "6px" }}>
-                    {c.title || 'No case selected'}
+                    Suspected layering via mixer
                   </h1>
                   <div className="mu" style={{ marginTop: "6px", display: "flex", gap: "18px", flexWrap: "wrap" }}>
                     <span>
-                      Assignee: {c.assignee || 'Unassigned'}
+                      Assignee: Sara Ali
                     </span>
                     <span>
-                      Opened {fmtDate(c.opened)}
+                      Opened 02 Nov 2026
                     </span>
                     <span>
-                      Due {fmtDate(c.due)}
+                      Due 09 Nov 2026
                     </span>
                     <span>
-                      Subjects: {(c.subjects || []).length}
+                      Subjects: 3
                     </span>
                   </div>
                 </div>
@@ -400,8 +397,10 @@ export default function Screen() {
                   <label>
                     Note
                   </label>
-                  <div className="in ta">
-                    <textarea rows={3} placeholder="Add context for other investigators…" aria-label="Note" />
+                  <div className="in ta ph">
+                    <span>
+                      Add context for other investigators…
+                    </span>
                   </div>
                 </div>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "12px" }}>

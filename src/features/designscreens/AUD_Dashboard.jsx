@@ -1,16 +1,6 @@
-import { useState } from 'react';
 import { DLink } from '../design/DLink';
-import { Bars, Empty, fmtDate, shortAddr } from '../design/dashParts';
-import { verifyChain } from '../../mocks/store';
-import { ROLE_NAMES } from '../../mocks/seed';
-import { useStore } from '../../mocks/store';
 
 export default function Screen() {
-  const s = useStore(); const [vr, setVr] = useState(null); const N = (xs, f) => (xs || []).filter(f).length;
-const me = s.session.name; const isOpen = (c) => c.status !== 'Closed';
-  const days = Array.from({ length: 7 }, (_, i) => { const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - (6 - i)); return d; });
-  const weekBars = days.map((d) => ({ label: d.toLocaleDateString('en-GB', { weekday: 'short', day: '2-digit', month: 'short' }), value: N(s.audit, a => { const t = new Date(a.at); return t.toDateString() === d.toDateString(); }) }));
-  const integrity = verifyChain(s.audit);
   return (
     <>
       <div className="app">
@@ -217,35 +207,129 @@ const me = s.session.name; const isOpen = (c) => c.status !== 'Closed';
               <div className="acts" />
             </div>
             <div className="kpis">
-              <div className="kpi"><div className="l">
+              <div className="kpi">
+                <div className="l">
                   Cases in period
-                </div><div className="v">{s.cases.length}</div><div className="s">{'all cases'}</div>
+                </div>
+                <div className="v">
+                  94
+                </div>
+                <div className="s">
+                  Last 90 days
+                </div>
               </div>
-              <div className="kpi" style={{ position: "relative" }}><div className="l">
+              <div className="kpi" style={{ position: "relative" }}>
+                <div className="l">
                   <i style={{ background: "#16A34A" }} />
                   Audit events
-                </div><div className="v">{s.audit.length}</div><div className="s">{'all events'}</div>
+                </div>
+                <div className="v">
+                  48,210
+                </div>
+                <div className="s">
+                  Hash chain intact
+                </div>
+                <svg width="166" height="109" viewBox="0 0 166 109" preserveAspectRatio="none" style={{ position: "absolute", left: "3px", top: "1px", width: "166px", height: "109px", overflow: "visible", fill: "none", stroke: "#8a8378", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }}>
+                  <path d="M94.2 8 C76.8 8 46.1 1.6 31.1 9.8 C26.1 12.4 23.9 15.9 20 20 C2.5 38.8 0 47.3 0 73.1 C0 83.5 0.2 98 11 104.2 C23.1 111.2 45.9 109.2 59.4 109.2 C98.3 109.2 159 116.2 166.3 64.1 C172.3 21.3 112.2 -13.6 79.1 4" vectorEffect="non-scaling-stroke" />
+                </svg>
               </div>
             </div>
             <div className="row" style={{ gap: "16px", alignItems: "flex-start" }}>
-              <div className="card" style={{ flex: "1 1 440px" }}>
-                <div className="ct-h"><div><h3>Activity by week</h3><p>Audit events per day, last 7 days</p></div></div>
-                {weekBars.every((b) => b.value === 0) ? <Empty>No audit events in the last 7 days.</Empty> : (
-                  <div style={{ display: "flex", alignItems: "flex-end", gap: 14, height: 180, padding: "8px 4px 0", borderBottom: "1px solid #EDF1F6" }}>
-                    {weekBars.map((b) => { const max = Math.max(1, ...weekBars.map((x) => x.value)); return (
-                      <div key={b.label} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end", height: "100%" }}>
-                        <b style={{ fontSize: 12, marginBottom: 4 }}>{b.value}</b>
-                        <div style={{ width: "100%", maxWidth: 46, height: `${(b.value / max) * 130}px`, minHeight: 2, background: "#1769E0", borderRadius: "4px 4px 0 0" }} />
-                        <span className="mu" style={{ fontSize: 11, marginTop: 6, whiteSpace: "nowrap" }}>{b.label.split(" ").slice(0, 2).join(" ")}</span>
-                      </div>); })}
-                  </div>)}
+              <div className="card " style={{ flex: "1 1 440px" }}>
+                <div className="ct-h">
+                  <div>
+                    <h3>
+                      Activity by week
+                    </h3>
+                  </div>
+                  <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }} />
+                </div>
+                <svg viewBox="0 0 560 220" width="100%" role="img" aria-label="Bar chart" style={{ display: "block" }}>
+                  <line x1="40" x2="550" y1="192.0" y2="192.0" stroke="#E2E8F0" />
+                  <text x="32" y="196.0" textAnchor="end" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    0
+                  </text>
+                  <line x1="40" x2="550" y1="147.0" y2="147.0" stroke="#E2E8F0" />
+                  <text x="32" y="151.0" textAnchor="end" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    152
+                  </text>
+                  <line x1="40" x2="550" y1="102.0" y2="102.0" stroke="#E2E8F0" />
+                  <text x="32" y="106.0" textAnchor="end" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    305
+                  </text>
+                  <line x1="40" x2="550" y1="57.0" y2="57.0" stroke="#E2E8F0" />
+                  <text x="32" y="61.0" textAnchor="end" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    457
+                  </text>
+                  <line x1="40" x2="550" y1="12.0" y2="12.0" stroke="#E2E8F0" />
+                  <text x="32" y="16.0" textAnchor="end" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    610
+                  </text>
+                  <rect x="56.0" y="100.4" width="40.8" height="91.6" rx="4" fill="#1769E0" />
+                  <text x="76.4" y="211" textAnchor="middle" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    W40
+                  </text>
+                  <rect x="128.9" y="68.0" width="40.8" height="124.0" rx="4" fill="#1769E0" />
+                  <text x="149.3" y="211" textAnchor="middle" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    W41
+                  </text>
+                  <rect x="201.7" y="79.8" width="40.8" height="112.2" rx="4" fill="#1769E0" />
+                  <text x="222.1" y="211" textAnchor="middle" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    W42
+                  </text>
+                  <rect x="274.6" y="41.4" width="40.8" height="150.6" rx="4" fill="#1769E0" />
+                  <text x="295.0" y="211" textAnchor="middle" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    W43
+                  </text>
+                  <rect x="347.5" y="56.2" width="40.8" height="135.8" rx="4" fill="#1769E0" />
+                  <text x="367.9" y="211" textAnchor="middle" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    W44
+                  </text>
+                  <rect x="420.3" y="35.5" width="40.8" height="156.5" rx="4" fill="#1769E0" />
+                  <text x="440.7" y="211" textAnchor="middle" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    W45
+                  </text>
+                  <rect x="493.2" y="47.3" width="40.8" height="144.7" rx="4" fill="#1769E0" />
+                  <text x="513.6" y="211" textAnchor="middle" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
+                    W46
+                  </text>
+                </svg>
               </div>
-              <div className="card" style={{ flex: "1 1 360px" }}>
-                <div className="ct-h"><div><h3>Integrity</h3></div></div>
-                <div>{vr ? (vr.ok ? `Audit chain verified (${vr.n} entries).` : `Chain broken at ${vr.at}.`) : (integrity.ok ? `Audit chain verified (${integrity.n} entries).` : `Chain broken at ${integrity.at}.`)}</div>
-                <div style={{ marginTop: 12 }}><button className="btn pri" onClick={() => setVr(verifyChain(s.audit))}>Run verification</button></div>
+              <div className="card " style={{ flex: "1 1 360px" }}>
+                <div className="ct-h">
+                  <div>
+                    <h3>
+                      Integrity
+                    </h3>
+                  </div>
+                  <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }} />
+                </div>
+                <div className="note ok">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6z" />
+                  </svg>
+                  <div>
+                    <b>
+                      Audit log integrity verified
+                    </b>
+                    <div>
+                      Last check 02 Nov 2026 15:00 UTC · 48,210 entries · no gaps
+                    </div>
+                  </div>
+                </div>
+                <div style={{ marginTop: "14px" }}>
+                  <a href="#" className="btn pri">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6z" />
+                    </svg>
+                    Run verification
+                  </a>
+                </div>
               </div>
             </div>
+            <svg width="140" height="126" viewBox="0 0 140 126" preserveAspectRatio="none" style={{ position: "absolute", left: "897px", top: "88px", width: "140px", height: "126px", overflow: "visible", fill: "none", stroke: "#8a8378", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }}>
+              <path d="M52 0 C43.6 0 30.1 -2.2 22.5 3.5 C-4.3 23.5 -10.8 86.2 13.7 110 C30.9 126.6 56.5 127.2 79 126 C93.3 125.3 110.5 120.4 122 111.5 C145.6 93.2 147.3 52.5 124.5 32.7 C117.8 26.9 109.7 25.1 102 21 C96.4 18 90.7 13.9 85 11.5 C65.3 3.2 60.2 6.9 43 4 C37.7 3.1 33 1.2 27 1" vectorEffect="non-scaling-stroke" />
+            </svg>
           </main>
         </div>
       </div>

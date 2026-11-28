@@ -1,15 +1,6 @@
 import { DLink } from '../design/DLink';
-import { Gauge } from '../../components/ui';
-import { CFG, TN } from '../../lib/risk';
-import { fdt, ago, num, usd } from '../../lib/format';
-import { useWallet } from '../wallets/shared';
-import { shortAddr } from '../design/dashParts';
-import { useStore } from '../../mocks/store';
-import { useParams } from 'react-router-dom';
 
 export default function Screen() {
-  const { address } = useParams(); const sel = useStore(); const wallet = address || sel.ctx.wallet || '—';
-  const [p] = useWallet(); const onWatch = sel.watchlists.some((w) => w.wallets.some((x) => x.a.toLowerCase() === (wallet || '').toLowerCase()));
   return (
     <>
       <div className="app">
@@ -177,7 +168,7 @@ export default function Screen() {
               </span>
               {" "}
               <span>
-                {shortAddr(wallet)}
+                0x7a3f…9B21
               </span>
               {" "}
               <span style={{ color: "#A3B0C2" }}>
@@ -250,16 +241,20 @@ export default function Screen() {
                   <div>
                     <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap" }}>
                       <h1 style={{ fontSize: "20px" }} className="mono">
-                        {wallet}
+                        0x7a3f1c5e8b2d4096a1f7c3e5d8b2a49e0c619B21
                       </h1>
-                      <span className={`tier ${p.tier}`}>{TN[p.tier] || "Unknown"}</span>
+                      <span className="tier crit">
+                        Critical
+                      </span>
                       <span className="chip blue">
                         Ethereum
                       </span>
-                      {onWatch && <span className="chip warn">On watchlist</span>}
+                      <span className="chip warn">
+                        On watchlist
+                      </span>
                     </div>
                     <div className="mu" style={{ marginTop: "6px" }}>
-                      {p.first ? `First seen ${fdt(p.first)} · Last active ${fdt(p.last)}` : 'No on-chain activity loaded. The backend analyses a wallet when it is opened.'}
+                      Type: Externally owned · First seen 14 Mar 2025 · Last active 02 Nov 2026 · Data fresh 4 min ago
                     </div>
                   </div>
                 </div>
@@ -516,7 +511,7 @@ export default function Screen() {
                     Selected wallet
                   </text>
                   <text x="480" y="339" textAnchor="middle" fontSize="11" fill="#5B6B82" fontFamily="Inter,sans-serif">
-                    {shortAddr(wallet)}
+                    0x7a3f…9B21
                   </text>
                   <text x="480" y="275" textAnchor="middle" fontSize="15" fontWeight="700" fill="#0F172A" fontFamily="Inter,sans-serif">
                     78
@@ -637,6 +632,9 @@ export default function Screen() {
                     Add to case
                   </a>
                 </div>
+                <svg width="379" height="50" viewBox="0 0 379 50" preserveAspectRatio="none" style={{ position: "absolute", left: "-40px", top: "104px", width: "379px", height: "50px", overflow: "visible", fill: "none", stroke: "#8a8378", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }}>
+                  <path d="M51.496 0 C134.157 4.138 218.826 17.862 302.079 9.496 C313.469 8.297 327.523 5.93 340.931 5.93 C356.167 5.93 370.568 8.987 379.275 20.289 C364.038 32.796 336.947 38.476 310.857 41.415 C294.827 43.222 279.174 43.994 266.882 44.679 C236.385 46.377 205.086 44.879 174.789 47.377 C153.934 49.089 133.942 50.091 113.891 50.091 C95.639 50.091 77.339 49.261 58.296 47.377 C45.065 46.104 31.735 45.831 18.693 43.94 C13.304 43.158 7.963 42.1 2.7 40.581 C1.8 36.583 0.9 32.483 0 28.485 C18.899 17.191 72.296 9.896 96.193 5.398" vectorEffect="non-scaling-stroke" />
+                </svg>
               </div>
               <div className="card " style={{ flex: "1 1 380px" }}>
                 <div className="ct-h">

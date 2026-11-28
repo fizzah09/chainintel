@@ -1,9 +1,6 @@
-import { act, useStore } from '../../mocks/store';
 import { DLink } from '../design/DLink';
 
-const PERMS = [{ key: 'view_wallets', label: 'View wallets' }, { key: 'run_trace', label: 'Run trace' }, { key: 'create_case', label: 'Create case' }, { key: 'verify_evidence', label: 'Verify evidence' }, { key: 'approve_review', label: 'Approve review' }, { key: 'manage_users', label: 'Manage users' }, { key: 'view_audit', label: 'View audit logs' }, { key: 'export_reports', label: 'Export reports' }];
 export default function Screen() {
-  const s = useStore();
   return (
     <>
       <div className="app">
@@ -280,8 +277,299 @@ export default function Screen() {
                     </tr>
                   </thead>
                   <tbody>
-{PERMS.map((x) => (<tr key={x.key}><td>{x.label}</td><td><input type="checkbox" checked={!!s.perms[x.key]?.['inv']} onChange={(e) => act.setPerm(x.key, 'inv', e.target.checked)} aria-label={`${x.label} for inv`} /></td><td><input type="checkbox" checked={!!s.perms[x.key]?.['rev']} onChange={(e) => act.setPerm(x.key, 'rev', e.target.checked)} aria-label={`${x.label} for rev`} /></td><td><input type="checkbox" checked={!!s.perms[x.key]?.['cm']} onChange={(e) => act.setPerm(x.key, 'cm', e.target.checked)} aria-label={`${x.label} for cm`} /></td><td><input type="checkbox" checked={!!s.perms[x.key]?.['ba']} onChange={(e) => act.setPerm(x.key, 'ba', e.target.checked)} aria-label={`${x.label} for ba`} /></td><td><input type="checkbox" checked={!!s.perms[x.key]?.['aud']} onChange={(e) => act.setPerm(x.key, 'aud', e.target.checked)} aria-label={`${x.label} for aud`} /></td><td className="mu">—</td></tr>))}
-</tbody>
+                    <tr>
+                      <td>
+                        View wallets
+                      </td>
+                      <td>
+                        <span className="cb on">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <span className="cb on">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <span className="cb on">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <span className="cb on">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <span className="cb on">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <span className="cb on">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                          </svg>
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Run trace
+                      </td>
+                      <td>
+                        <span className="cb on">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <span className="cb on">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <span className="cb on">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <span className="cb on">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <span className="cb" />
+                      </td>
+                      <td>
+                        <span className="cb on">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                          </svg>
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Create case
+                      </td>
+                      <td>
+                        <span className="cb on">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <span className="cb" />
+                      </td>
+                      <td>
+                        <span className="cb on">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <span className="cb on">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <span className="cb" />
+                      </td>
+                      <td>
+                        <span className="cb" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Verify evidence
+                      </td>
+                      <td>
+                        <span className="cb" />
+                      </td>
+                      <td>
+                        <span className="cb on">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <span className="cb on">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <span className="cb" />
+                      </td>
+                      <td>
+                        <span className="cb" />
+                      </td>
+                      <td>
+                        <span className="cb" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Approve review
+                      </td>
+                      <td>
+                        <span className="cb" />
+                      </td>
+                      <td>
+                        <span className="cb on">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <span className="cb on">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <span className="cb" />
+                      </td>
+                      <td>
+                        <span className="cb" />
+                      </td>
+                      <td>
+                        <span className="cb" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Manage users
+                      </td>
+                      <td>
+                        <span className="cb" />
+                      </td>
+                      <td>
+                        <span className="cb" />
+                      </td>
+                      <td>
+                        <span className="cb" />
+                      </td>
+                      <td>
+                        <span className="cb on">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <span className="cb" />
+                      </td>
+                      <td>
+                        <span className="cb" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        View audit logs
+                      </td>
+                      <td>
+                        <span className="cb" />
+                      </td>
+                      <td>
+                        <span className="cb" />
+                      </td>
+                      <td>
+                        <span className="cb on">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <span className="cb on">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <span className="cb on">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <span className="cb" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Export reports
+                      </td>
+                      <td>
+                        <span className="cb on">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <span className="cb on">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <span className="cb on">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <span className="cb on">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <span className="cb on">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M5 12.5l4.5 4.5L19 7.5" />
+                          </svg>
+                        </span>
+                      </td>
+                      <td>
+                        <span className="cb" />
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
             </div>

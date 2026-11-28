@@ -1,9 +1,6 @@
-import { ago } from '../../lib/format';
-import { useStore } from '../../mocks/store';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
-  const s = useStore();
   return (
     <>
       <div className="app">
@@ -329,17 +326,102 @@ export default function Screen() {
                     </tr>
                   </thead>
                   <tbody>
-                    {s.watchlists.length === 0 && <tr><td colSpan={6} className="mu">No watchlists yet. Create one to start monitoring wallets.</td></tr>}
-                    {s.watchlists.map((w) => (
-                      <tr key={w.id}>
-                        <td><DLink href={`/watchlists/${w.id}`} className="mono" style={{ color: "var(--pri)", fontWeight: 600 }}>{w.name}</DLink></td>
-                        <td>{w.scope || "Personal"}</td>
-                        <td>{w.wallets.length}</td>
-                        <td>{w.rule === "any" ? "Any activity" : `Score at or above ${w.thr}`}</td>
-                        <td>{w.owner || "—"}</td>
-                        <td>{ago(w.updated)}</td>
-                      </tr>
-                    ))}
+                    <tr>
+                      <td className="">
+                        <DLink href="/design/WatchlistDetail" style={{ color: "var(--pri)", fontWeight: "600" }}>
+                          High-risk counterparties
+                        </DLink>
+                      </td>
+                      <td className="">
+                        <span className="chip blue">
+                          Tenant
+                        </span>
+                      </td>
+                      <td className="">
+                        124
+                      </td>
+                      <td className="">
+                        Score ≥ 75
+                      </td>
+                      <td className="">
+                        Ahmed Khan
+                      </td>
+                      <td className="">
+                        02 Nov
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <DLink href="/design/WatchlistDetail" style={{ color: "var(--pri)", fontWeight: "600" }}>
+                          Case 00128 subjects
+                        </DLink>
+                      </td>
+                      <td className="">
+                        <span className="chip gray">
+                          Personal
+                        </span>
+                      </td>
+                      <td className="">
+                        3
+                      </td>
+                      <td className="">
+                        Any new transaction
+                      </td>
+                      <td className="">
+                        Sara Ali
+                      </td>
+                      <td className="">
+                        02 Nov
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <DLink href="/design/WatchlistDetail" style={{ color: "var(--pri)", fontWeight: "600" }}>
+                          Sanctions screening hits
+                        </DLink>
+                      </td>
+                      <td className="">
+                        <span className="chip blue">
+                          Tenant
+                        </span>
+                      </td>
+                      <td className="">
+                        17
+                      </td>
+                      <td className="">
+                        Any activity
+                      </td>
+                      <td className="">
+                        Ahmed Khan
+                      </td>
+                      <td className="">
+                        30 Oct
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <DLink href="/design/WatchlistDetail" style={{ color: "var(--pri)", fontWeight: "600" }}>
+                          Mixer-adjacent wallets
+                        </DLink>
+                      </td>
+                      <td className="">
+                        <span className="chip pur">
+                          Platform
+                        </span>
+                      </td>
+                      <td className="">
+                        212
+                      </td>
+                      <td className="">
+                        Score ≥ 50
+                      </td>
+                      <td className="">
+                        Hina Raza
+                      </td>
+                      <td className="">
+                        28 Oct
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>

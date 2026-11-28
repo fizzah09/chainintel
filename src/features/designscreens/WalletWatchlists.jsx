@@ -1,17 +1,6 @@
-import { fmtDate } from '../design/dashParts';
 import { DLink } from '../design/DLink';
-import { Gauge } from '../../components/ui';
-import { CFG, TN } from '../../lib/risk';
-import { fdt, ago, num, usd } from '../../lib/format';
-import { useWallet } from '../wallets/shared';
-import { shortAddr } from '../design/dashParts';
-import { useStore } from '../../mocks/store';
-import { useParams } from 'react-router-dom';
 
 export default function Screen() {
-  const s = useStore();
-  const { address } = useParams(); const sel = useStore(); const wallet = address || sel.ctx.wallet || '—';
-  const [p] = useWallet(); const onWatch = sel.watchlists.some((w) => w.wallets.some((x) => x.a.toLowerCase() === (wallet || '').toLowerCase()));
   return (
     <>
       <div className="app">
@@ -179,7 +168,7 @@ export default function Screen() {
               </span>
               {" "}
               <span>
-                {shortAddr(wallet)}
+                0x7a3f…9B21
               </span>
               {" "}
               <span style={{ color: "#A3B0C2" }}>
@@ -252,16 +241,20 @@ export default function Screen() {
                   <div>
                     <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap" }}>
                       <h1 style={{ fontSize: "20px" }} className="mono">
-                        {wallet}
+                        0x7a3f1c5e8b2d4096a1f7c3e5d8b2a49e0c619B21
                       </h1>
-                      <span className={`tier ${p.tier}`}>{TN[p.tier] || "Unknown"}</span>
+                      <span className="tier crit">
+                        Critical
+                      </span>
                       <span className="chip blue">
                         Ethereum
                       </span>
-                      {onWatch && <span className="chip warn">On watchlist</span>}
+                      <span className="chip warn">
+                        On watchlist
+                      </span>
                     </div>
                     <div className="mu" style={{ marginTop: "6px" }}>
-                      {p.first ? `First seen ${fdt(p.first)} · Last active ${fdt(p.last)}` : 'No on-chain activity loaded. The backend analyses a wallet when it is opened.'}
+                      Type: Externally owned · First seen 14 Mar 2025 · Last active 02 Nov 2026 · Data fresh 4 min ago
                     </div>
                   </div>
                 </div>
@@ -366,9 +359,49 @@ export default function Screen() {
                     </tr>
                   </thead>
                   <tbody>
-{(s.watchlists.filter((w) => w.wallets.some((x) => x.a.toLowerCase() === wallet.toLowerCase()))).length === 0 && <tr><td colSpan={5} className="mu">This wallet is not on any watchlist.</td></tr>}
-{(s.watchlists.filter((w) => w.wallets.some((x) => x.a.toLowerCase() === wallet.toLowerCase()))).map((x) => (<tr key={x.id}><td>{x.name}</td><td>{x.scope || 'Personal'}</td><td>{x.owner || '—'}</td><td>{fmtDate(x.updated)}</td><td>{x.rule === 'any' ? 'Any activity' : `Score at or above ${x.thr}`}</td></tr>))}
-</tbody>
+                    <tr>
+                      <td className="">
+                        <b>
+                          High-risk counterparties
+                        </b>
+                      </td>
+                      <td className="">
+                        <span className="chip blue">
+                          Tenant
+                        </span>
+                      </td>
+                      <td className="">
+                        Ahmed Khan
+                      </td>
+                      <td className="">
+                        02 Nov 2026
+                      </td>
+                      <td className="">
+                        Score ≥ 75
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <b>
+                          Case 00128 subjects
+                        </b>
+                      </td>
+                      <td className="">
+                        <span className="chip gray">
+                          Personal
+                        </span>
+                      </td>
+                      <td className="">
+                        Sara Ali
+                      </td>
+                      <td className="">
+                        02 Nov 2026
+                      </td>
+                      <td className="">
+                        Any new transaction
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
             </div>

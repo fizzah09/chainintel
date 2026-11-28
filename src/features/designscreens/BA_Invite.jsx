@@ -1,11 +1,6 @@
-import { useState } from 'react';
-import { act, useStore } from '../../mocks/store';
-import { useToast } from '../../context/ToastContext';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
-  const s = useStore(); const toast = useToast(); const [f, setF] = useState({ name: '', email: '', role: 'inv' }); const [err, setErr] = useState('');
-  const sendInvite = () => { if (!f.name.trim()) return setErr('Enter the full name.'); const r = act.invite({ name: f.name.trim(), email: f.email.trim(), role: f.role, tenant: 'Example Bank' }); if (!r.ok) return setErr(r.error); setF({ name: '', email: '', role: 'inv' }); setErr(''); toast('Invitation sent.'); };
   return (
     <>
       <div className="app">
@@ -243,7 +238,9 @@ export default function Screen() {
                     </i>
                   </label>
                   <div className="in">
-                    <input value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} placeholder="Full name" aria-label="Full name" />
+                    <span>
+                      Hira Baig
+                    </span>
                   </div>
                 </div>
                 <div className="fld" style={{ flex: "1 1 240px" }}>
@@ -254,7 +251,9 @@ export default function Screen() {
                     </i>
                   </label>
                   <div className="in">
-                    <input value={f.email} onChange={(e) => setF({ ...f, email: e.target.value })} placeholder="name@bank.com" aria-label="Work email" />
+                    <span>
+                      hira.baig@examplebank.com
+                    </span>
                   </div>
                 </div>
               </div>
@@ -268,7 +267,12 @@ export default function Screen() {
                     </i>
                   </label>
                   <div className="in">
-                    <select value={f.role} onChange={(e) => setF({ ...f, role: e.target.value })} aria-label="Role">{[['inv', 'Investigator'], ['rev', 'Reviewer'], ['cm', 'Compliance Manager'], ['aud', 'Auditor'], ['ba', 'Bank Admin']].map(([v, x]) => <option key={v} value={v}>{x}</option>)}</select>
+                    <span>
+                      Investigator
+                    </span>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M6 9l6 6 6-6" />
+                    </svg>
                   </div>
                   <div className="hint">
                     Role decides what the user can see and do.
@@ -279,11 +283,12 @@ export default function Screen() {
                 <a href="#" className="btn ">
                   Cancel
                 </a>
-                <button className="btn pri" onClick={sendInvite}>
+                <a href="#" className="btn pri">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M21 3L10 14M21 3l-7 18-4-7-7-4z" />
                   </svg>
-                  Send invitation</button>
+                  Send invitation
+                </a>
               </div>
             </div>
           </main>

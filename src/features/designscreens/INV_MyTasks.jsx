@@ -1,10 +1,6 @@
-import { act, useStore } from '../../mocks/store';
-import { useToast } from '../../context/ToastContext';
-import { fmtDate } from '../design/dashParts';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
-  const s = useStore(); const toast = useToast(); const mine = (s.tasks || []).filter((k) => k.assignee === s.session.name);
   return (
     <>
       <div className="app">
@@ -284,20 +280,126 @@ export default function Screen() {
                     </tr>
                   </thead>
                   <tbody>
-                    {mine.length === 0 && <tr><td colSpan={5} className="mu">No tasks assigned to you.</td></tr>}
-                    {mine.map((k) => (
-                      <tr key={k.id}>
-                        <td>{k.title || k.id}<div className="mu" style={{ fontSize: 11.5 }}>{k.caseId}</div></td>
-                        <td>{k.assignedBy || k.by || "—"}</td>
-                        <td>{fmtDate(k.due)}</td>
-                        <td>
-                          <select className="in" value={k.status} onChange={(e) => { act.taskStatus(k.id, e.target.value); toast(`Task ${e.target.value.toLowerCase()}.`); }} aria-label={`Status of ${k.id}`}>
-                            {["Open", "In Progress", "Completed", "Closed"].map((x) => <option key={x} value={x}>{x}</option>)}
-                          </select>
-                        </td>
-                        <td>{k.priority || "—"}</td>
-                      </tr>
-                    ))}
+                    <tr>
+                      <td className="">
+                        Request customer statement
+                      </td>
+                      <td className="">
+                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
+                            AK
+                          </span>
+                          <div style={{ lineHeight: "1.25" }}>
+                            <div style={{ fontWeight: "550" }}>
+                              Ahmed Khan
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="">
+                        04 Nov
+                      </td>
+                      <td className="">
+                        <span className="chip ok">
+                          Completed
+                        </span>
+                      </td>
+                      <td className="">
+                        <span className="chip blue">
+                          Medium
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        Verify mixer label with second source
+                      </td>
+                      <td className="">
+                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
+                            AK
+                          </span>
+                          <div style={{ lineHeight: "1.25" }}>
+                            <div style={{ fontWeight: "550" }}>
+                              Ahmed Khan
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="">
+                        07 Nov
+                      </td>
+                      <td className="">
+                        <span className="chip blue">
+                          In Progress
+                        </span>
+                      </td>
+                      <td className="">
+                        <span className="chip warn">
+                          High
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        Screen related wallets against sanctions lists
+                      </td>
+                      <td className="">
+                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
+                            AK
+                          </span>
+                          <div style={{ lineHeight: "1.25" }}>
+                            <div style={{ fontWeight: "550" }}>
+                              Ahmed Khan
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="">
+                        08 Nov
+                      </td>
+                      <td className="">
+                        <span className="chip warn">
+                          Waiting
+                        </span>
+                      </td>
+                      <td className="">
+                        <span className="chip warn">
+                          High
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        Draft case report
+                      </td>
+                      <td className="">
+                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
+                            AK
+                          </span>
+                          <div style={{ lineHeight: "1.25" }}>
+                            <div style={{ fontWeight: "550" }}>
+                              Ahmed Khan
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="">
+                        09 Nov
+                      </td>
+                      <td className="">
+                        <span className="chip bad">
+                          Overdue
+                        </span>
+                      </td>
+                      <td className="">
+                        <span className="chip bad">
+                          Critical
+                        </span>
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>

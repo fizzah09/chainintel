@@ -1,8 +1,6 @@
-import { act, useStore } from '../../mocks/store';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
-  const s = useStore();
   return (
     <>
       <div className="app">
@@ -348,9 +346,91 @@ export default function Screen() {
                     </tr>
                   </thead>
                   <tbody>
-{(s.wizard.subjects).length === 0 && <tr><td colSpan={3} className="mu">No subjects added yet.</td></tr>}
-{(s.wizard.subjects).map((x) => (<tr key={x.ref}><td><span className="mono">{x.ref}</span></td><td>{x.kind}</td><td>—</td></tr>))}
-</tbody>
+                    <tr>
+                      <td className="">
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                          <DLink href="/design/WalletOverview" className="mono" style={{ color: "var(--pri)", fontWeight: "550" }}>
+                            0x7a3f…9B21
+                          </DLink>
+                          <span style={{ color: "#8A99AE" }}>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <rect x="8" y="8" width="12" height="12" rx="2" />
+                              <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+                            </svg>
+                          </span>
+                        </span>
+                      </td>
+                      <td className="">
+                        Primary wallet
+                      </td>
+                      <td className="">
+                        <span className="tier crit">
+                          Critical
+                        </span>
+                      </td>
+                      <td className="">
+                        <a href="#" className="btn sm danger">
+                          Remove
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                          <DLink href="/design/WalletOverview" className="mono" style={{ color: "var(--pri)", fontWeight: "550" }}>
+                            0xE5f7…90b8
+                          </DLink>
+                          <span style={{ color: "#8A99AE" }}>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <rect x="8" y="8" width="12" height="12" rx="2" />
+                              <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+                            </svg>
+                          </span>
+                        </span>
+                      </td>
+                      <td className="">
+                        Related wallet
+                      </td>
+                      <td className="">
+                        <span className="tier crit">
+                          Critical
+                        </span>
+                      </td>
+                      <td className="">
+                        <a href="#" className="btn sm danger">
+                          Remove
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                          <DLink href="/design/TransactionDetail" className="mono" style={{ color: "var(--pri)", fontWeight: "550" }}>
+                            0x709b55…9a201b
+                          </DLink>
+                          <span style={{ color: "#8A99AE" }}>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <rect x="8" y="8" width="12" height="12" rx="2" />
+                              <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+                            </svg>
+                          </span>
+                        </span>
+                      </td>
+                      <td className="">
+                        Transaction
+                      </td>
+                      <td className="">
+                        <span className="tier high">
+                          High
+                        </span>
+                      </td>
+                      <td className="">
+                        <a href="#" className="btn sm danger">
+                          Remove
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between", marginTop: "24px" }}>

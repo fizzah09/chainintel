@@ -1,9 +1,6 @@
-import { fmtDate } from '../design/dashParts';
-import { act, useStore } from '../../mocks/store';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
-  const s = useStore();
   return (
     <>
       <div className="app">
@@ -275,9 +272,121 @@ export default function Screen() {
                     </tr>
                   </thead>
                   <tbody>
-{(s.cases.filter((c) => !c.assignee && c.status !== 'Closed')).length === 0 && <tr><td colSpan={5} className="mu">Every open case has an assignee.</td></tr>}
-{(s.cases.filter((c) => !c.assignee && c.status !== 'Closed')).map((x) => (<tr key={x.id}><td><DLink href={`/cases/${x.id}`} className="mono" style={{ color: "var(--pri)", fontWeight: 600 }}>{x.id}</DLink></td><td>{x.title}</td><td><span className={`chip${x.priority === 'Critical' ? ' bad' : ''}`}>{x.priority || '—'}</span></td><td>{fmtDate(x.opened)}</td><td>{(() => { const load = (n) => s.cases.filter((c) => c.assignee === n && c.status !== 'Closed').length; const inv = s.users.filter((u) => u.role === 'inv' && u.status === 'Active').map((u) => u.name).sort((a, b) => load(a) - load(b)); return inv[0] || '—'; })()}</td></tr>))}
-</tbody>
+                    <tr>
+                      <td className="">
+                        <b>
+                          CASE-2026-00119
+                        </b>
+                      </td>
+                      <td className="">
+                        Phishing-linked deposit
+                      </td>
+                      <td className="">
+                        <span className="chip blue">
+                          Medium
+                        </span>
+                      </td>
+                      <td className="">
+                        28 Oct
+                      </td>
+                      <td className="">
+                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
+                            MC
+                          </span>
+                          <div style={{ lineHeight: "1.25" }}>
+                            <div style={{ fontWeight: "550" }}>
+                              Maria Chen
+                            </div>
+                            <div className="mu" style={{ fontSize: "11.5px" }}>
+                              4 open cases
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="">
+                        <a href="#" className="btn sm pri">
+                          Assign
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <b>
+                          CASE-2026-00130
+                        </b>
+                      </td>
+                      <td className="">
+                        Large exchange outflow
+                      </td>
+                      <td className="">
+                        <span className="chip warn">
+                          High
+                        </span>
+                      </td>
+                      <td className="">
+                        03 Nov
+                      </td>
+                      <td className="">
+                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
+                            OS
+                          </span>
+                          <div style={{ lineHeight: "1.25" }}>
+                            <div style={{ fontWeight: "550" }}>
+                              Omar Siddiq
+                            </div>
+                            <div className="mu" style={{ fontSize: "11.5px" }}>
+                              5 open cases
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="">
+                        <a href="#" className="btn sm pri">
+                          Assign
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="">
+                        <b>
+                          CASE-2026-00131
+                        </b>
+                      </td>
+                      <td className="">
+                        Dormant wallet reactivated
+                      </td>
+                      <td className="">
+                        <span className="chip gray">
+                          Low
+                        </span>
+                      </td>
+                      <td className="">
+                        04 Nov
+                      </td>
+                      <td className="">
+                        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+                          <span className="av" style={{ width: "26px", height: "26px", fontSize: "10.5px", background: "#DCE6F5", color: "#1B3560" }}>
+                            MC
+                          </span>
+                          <div style={{ lineHeight: "1.25" }}>
+                            <div style={{ fontWeight: "550" }}>
+                              Maria Chen
+                            </div>
+                            <div className="mu" style={{ fontSize: "11.5px" }}>
+                              4 open cases
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="">
+                        <a href="#" className="btn sm pri">
+                          Assign
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
             </div>

@@ -1,14 +1,6 @@
-import { useState } from 'react';
-import { act, useStore } from '../../mocks/store';
-import { useToast } from '../../context/ToastContext';
 import { DLink } from '../design/DLink';
 
 export default function Screen() {
-  const s = useStore(); const pick = (x) => ({ orgName: x.orgName, tz: x.tz, branding: x.branding });
-  const [f, setF] = useState(() => pick(s.settings)); const dirty = Object.keys(f).filter((k) => f[k] !== s.settings[k]);
-  const save = () => { dirty.forEach((k) => act.setting(k, f[k])); toast(dirty.length ? 'Settings saved.' : 'No changes to save.'); };
-  const discard = () => setF(pick(s.settings));
-  const toast = useToast();
   return (
     <>
       <div className="app">
@@ -273,7 +265,9 @@ export default function Screen() {
                       Shown in reports and the top bar
                     </span>
                   </div>
-                  <input className="in" value={f.orgName} onChange={(e) => setF({ ...f, orgName: e.target.value })} aria-label="Organisation name" style={{ minWidth: 220 }} />
+                  <span className="chip gray">
+                    Example Bank
+                  </span>
                 </div>
                 <div className="set">
                   <div>
@@ -284,7 +278,9 @@ export default function Screen() {
                       Used in reports and exports
                     </span>
                   </div>
-                  <select className="in" value={f.tz} onChange={(e) => setF({ ...f, tz: e.target.value })} aria-label="Default time zone">{[['UTC+05:00', 'UTC+05:00'], ['UTC+00:00', 'UTC+00:00'], ['UTC+01:00', 'UTC+01:00'], ['UTC-05:00', 'UTC-05:00']].map(([v, x]) => <option key={v} value={v}>{x}</option>)}</select>
+                  <span className="chip gray">
+                    UTC+05:00
+                  </span>
                 </div>
                 <div className="set">
                   <div>
@@ -308,13 +304,19 @@ export default function Screen() {
                       Logo and footer on generated reports
                     </span>
                   </div>
-                  <span role="switch" aria-checked={!!f.branding} aria-label="Report branding" className={`tg${f.branding ? " on" : ""}`} onClick={() => setF({ ...f, branding: !f.branding })} />
+                  <span className="tg on">
+                    <i />
+                  </span>
                 </div>
               </div>
             </div>
             <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px" }}>
-              <button className="btn " onClick={discard}>Discard</button>
-              <button className="btn pri" onClick={save}>Save changes</button>
+              <a href="#" className="btn ">
+                Discard
+              </a>
+              <a href="#" className="btn pri">
+                Save changes
+              </a>
             </div>
           </main>
         </div>
